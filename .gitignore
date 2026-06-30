@@ -6,3 +6,11 @@ dist
 .env
 .env.local
 .env.*.local
+
+# Fichiers de travail internes (gardés en local, non publiés)
+PROMPT.md
+TESTS.md
+brief.md
+cahier-des-charges-site.md
+configurateur-concept.md
+contenu.md
