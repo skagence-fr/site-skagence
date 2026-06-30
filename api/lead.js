@@ -113,6 +113,13 @@ ${message.trim()}
 Reçu le ${new Date().toLocaleString('fr-FR', { timeZone: 'Europe/Paris' })}
 `.trim();
 
+  // ── Subject normalisé : [DEVIS SK] {nom client} — {type projet} ─────────────
+  // Préfixe constant "[DEVIS SK]" → permet le tri/filtre auto dans Outlook.
+  // Fallbacks propres si un champ est vide.
+  const clientName  = [prenom.trim(), nom.trim()].filter(Boolean).join(' ') || 'Nouvelle demande';
+  const projectType = type.trim() || 'Projet web';
+  const subject     = `[DEVIS SK] ${clientName} — ${projectType}`;
+
   // ── Envoi via Resend ────────────────────────────────────────────────────────
   try {
     const response = await fetch('https://api.resend.com/emails', {
@@ -124,7 +131,7 @@ Reçu le ${new Date().toLocaleString('fr-FR', { timeZone: 'Europe/Paris' })}
       body: JSON.stringify({
         from: FROM_EMAIL,
         to: [DEST_EMAIL],
-        subject: `[SK Agence] Nouveau lead — ${prenom.trim()} ${nom.trim()}`,
+        subject,
         text: emailText,
       }),
     });
