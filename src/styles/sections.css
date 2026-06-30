@@ -208,11 +208,14 @@ main { padding-top: var(--nav-h); }
   gap: var(--s-3);
   margin-top: var(--s-3);
 }
-/* Mobile : hero centré reste compact, padding réduit + neutralise le min-height desktop
-   pour que le hero garde sa hauteur dictée par le contenu (~426px, validé iPhone). */
+/* Mobile (M1 validée) : on DONNE une hauteur au hero (88vh) pour activer le
+   centrage vertical déjà présent (align-items + justify-content center hérités
+   de la base). Contenu réparti au milieu de l'écran, début de Services deviné
+   en bas, plus de vide concentré sous les boutons. Padding 48/48 inchangé.
+   Le halo doré (top/left 50% + translate) reste auto-centré, aucun ajustement. */
 @media (max-width: 720px) {
   .hero--centered {
-    min-height: auto;
+    min-height: 88vh;
     padding-top: var(--s-7);
     padding-bottom: var(--s-7);
   }
