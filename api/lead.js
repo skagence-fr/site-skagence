@@ -113,10 +113,11 @@ ${message.trim()}
 Reçu le ${new Date().toLocaleString('fr-FR', { timeZone: 'Europe/Paris' })}
 `.trim();
 
-  // ── Subject normalisé : [DEVIS SK] {nom client} — {type projet} ─────────────
+  // ── Subject normalisé : [DEVIS SK] {activité ou nom} — {type projet} ────────
   // Préfixe constant "[DEVIS SK]" → permet le tri/filtre auto dans Outlook.
-  // Fallbacks propres si un champ est vide.
-  const clientName  = [prenom.trim(), nom.trim()].filter(Boolean).join(' ') || 'Nouvelle demande';
+  // Priorité : activité (nom d'établissement type "Restaurant Le Gaya")
+  // → sinon prénom + nom du client → sinon "Nouvelle demande".
+  const clientName  = activite.trim() || [prenom.trim(), nom.trim()].filter(Boolean).join(' ') || 'Nouvelle demande';
   const projectType = type.trim() || 'Projet web';
   const subject     = `[DEVIS SK] ${clientName} — ${projectType}`;
 
