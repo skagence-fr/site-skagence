@@ -1,0 +1,1156 @@
+/* ============================================================
+   SK AGENCE — Section Méthode : Timeline or verticale
+   Concept : ligne or scrubée au scroll, marqueur unique (dot)
+   qui avance en tête de ligne, 3 états par étape (à venir /
+   active / done), détails signature SVG par étape.
+   Architecture : .methode__rail (ligne + head) + .methode__steps
+   Proxy JS : une seule valeur de progression pilote ligne ET head.
+   ============================================================ */
+
+/* ============================================================
+   SECTION CONTAINER
+   ============================================================ */
+
+.methode {
+  background: var(--c-bg);
+  /* Rythme desktop aligné sur .section et .cta : 200 → 128px (Option A).
+     Bottom : clamp inchangé (déjà compact). Mobile reste à var(--s-8) via media query plus bas. */
+  padding-top: var(--s-10);
+  padding-bottom: clamp(100px, 12vw, 160px);
+  overflow: hidden;
+}
+
+/* Mobile : aligné sur .section ≤720px (var(--s-8) = 72px) */
+@media (max-width: 720px) {
+  .methode { padding-top: var(--s-8); }
+}
+
+.methode__wrap {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 var(--pad-x);
+}
+
+/* ============================================================
+   HEADER — utilise le pattern standard .section__hd
+   (défini dans sections.css, identique aux autres sections de l'accueil :
+   grid 1fr / 1.6fr, tag à gauche, titre+intro à droite, padding-bottom var(--s-9)).
+   Aucun style spécifique méthode pour le header.
+   ============================================================ */
+
+/* ============================================================
+   CORPS TIMELINE : rail + steps en deux colonnes
+   Le rail est une colonne fixe à gauche (~40px).
+   Les steps prennent le reste.
+   ============================================================ */
+
+.methode__body {
+  display: grid;
+  grid-template-columns: 40px 1fr;
+  gap: 0 clamp(24px, 4vw, 48px);
+  align-items: start;
+}
+
+/* ============================================================
+   RAIL VERTICAL
+   Positionné en absolute dans une colonne dédiée pour que
+   la hauteur suive la hauteur réelle des steps.
+   ============================================================ */
+
+.methode__rail {
+  position: relative;
+  /* S'étire sur toute la hauteur des steps via grid align-items: stretch */
+  align-self: stretch;
+}
+
+/* Fond de piste — gris crème très discret */
+.methode__track-bg {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1.5px;
+  background: var(--c-hairline);
+}
+
+/* Ligne or qui se trace — transformée par scaleY depuis le haut */
+.methode__track-line {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%) scaleY(1); /* visible sans JS */
+  transform-origin: top center;
+  width: 1.5px;
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    var(--c-gold-3) 0%,
+    var(--c-gold) 60%,
+    var(--c-gold-2) 100%
+  );
+  will-change: transform;
+}
+
+/* Ligne masquée initialement quand JS actif — JS la trace via scaleY */
+.motion-ready .methode__track-line {
+  transform: translateX(-50%) scaleY(0);
+}
+
+/* Marqueur (dot) — tête de la ligne, UN SEUL dans le DOM
+   Le halo lumineux est porté par ce dot, pas par la ligne
+   (la ligne scaleY empêcherait de positionner un ::after à la tête).
+   Sans JS : positionné en haut (top: 0), rendu non ambigu.
+   Avec JS (motion-ready) : commencer à top: 0, GSAP écrit top inline. */
+.methode__track-head {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--c-gold);
+  border: 2px solid var(--c-gold-2);
+  /* Halo discret — sensation de point chaud à la tête */
+  box-shadow:
+    0 0 0 4px color-mix(in srgb, var(--c-gold) 18%, transparent),
+    0 0 14px color-mix(in srgb, var(--c-gold) 40%, transparent);
+  will-change: top;
+  z-index: 4;
+}
+
+/* Le track-head ne snappe pas — c'est le dot fixe de l'étape qui snappe. */
+
+/* ============================================================
+   LISTE DES STEPS
+   ============================================================ */
+
+.methode__steps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* ============================================================
+   STEP INDIVIDUEL
+   Position relative pour le dot absolu sur la gauche.
+   ============================================================ */
+
+.methode__step {
+  position: relative;
+  padding: clamp(32px, 5vw, 52px) 0 clamp(32px, 5vw, 52px) 0;
+  /* Séparateur fin entre steps */
+  border-top: 1px solid var(--c-hairline-2);
+  /* Transition globale d'état */
+  transition: opacity 0.35s var(--ease-out-soft);
+}
+
+.methode__step:first-child {
+  border-top: none;
+}
+
+/* ─── 3 états : à venir / active / done ─── */
+
+/* État par défaut — à venir (discret), uniquement quand JS est actif */
+.motion-ready .methode__step {
+  opacity: 0.35;
+}
+
+/* Active */
+.methode__step.is-active {
+  opacity: 1;
+}
+
+/* Done — retrait élégant : opacity intermédiaire, pas plate */
+.methode__step.is-done {
+  opacity: 0.62;
+}
+
+/* ============================================================
+   DOTS — dans le rail, positionnés par JS (top absolu)
+   JS lit la position de chaque step et place les dots
+   sur l'axe central du rail, alignés avec le haut du contenu.
+   ============================================================ */
+
+.methode__dot {
+  position: absolute;
+  /* top est positionné par JS */
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: 2px solid var(--c-mute-2);
+  background: var(--c-bg);
+  transition:
+    border-color 0.25s var(--ease-out),
+    background-color 0.25s var(--ease-out),
+    box-shadow 0.25s var(--ease-out);
+  z-index: 3;
+}
+
+/* Active : bordure or */
+.methode__dot.is-active {
+  border-color: var(--c-gold);
+  background: var(--c-bg);
+  box-shadow: 0 0 8px color-mix(in srgb, var(--c-gold) 35%, transparent);
+}
+
+/* Done : plein or */
+.methode__dot.is-done {
+  border-color: var(--c-gold);
+  background: var(--c-gold);
+  box-shadow: 0 0 6px color-mix(in srgb, var(--c-gold) 25%, transparent);
+}
+
+/* Snap animation sur le dot quand il passe done */
+.methode__dot.is-snap {
+  animation: dot-snap 0.25s var(--ease-out) forwards;
+}
+
+@keyframes dot-snap {
+  0%   { transform: translate(-50%, -50%) scale(1); }
+  50%  { transform: translate(-50%, -50%) scale(1.6); }
+  100% { transform: translate(-50%, -50%) scale(1); }
+}
+
+/* ============================================================
+   NUMÉRO GRAND — 01-04
+   Passe : ink atténué → ink plein (active) → or (done)
+   ============================================================ */
+
+.methode__num {
+  display: block;
+  font-family: var(--font-stress);
+  font-weight: 800;
+  font-size: clamp(64px, 9vw, 112px);
+  line-height: 0.88;
+  letter-spacing: var(--ls-stress);
+  /* État par défaut — atténué */
+  color: color-mix(in srgb, var(--c-ink) 20%, transparent);
+  transition: color 0.35s var(--ease-out-soft);
+  margin-bottom: var(--s-4);
+  user-select: none;
+}
+
+/* Active : pleine intensité bleu nuit */
+.methode__step.is-active .methode__num {
+  color: var(--c-ink);
+}
+
+/* Done : or — sensation "validée, archivée" */
+.methode__step.is-done .methode__num {
+  color: color-mix(in srgb, var(--c-gold) 70%, transparent);
+}
+
+/* ============================================================
+   EYEBROW : Jx + Nom de l'étape en cascade
+   Les 2 éléments se révèlent avec un stagger ~80ms
+   au moment où l'étape devient active.
+   ============================================================ */
+
+.methode__eyebrow {
+  display: flex;
+  align-items: baseline;
+  gap: var(--s-4);
+  margin-bottom: var(--s-3);
+  overflow: hidden;
+}
+
+.methode__day {
+  font-family: var(--font-stress);
+  font-weight: 600;
+  font-size: var(--t-xs);
+  letter-spacing: var(--ls-eyebrow);
+  text-transform: uppercase;
+  color: var(--c-gold);
+  transition:
+    opacity 0.35s var(--ease-out-soft),
+    transform 0.35s var(--ease-out-soft);
+}
+
+/* État initial — caché uniquement quand JS est actif (motion-ready) */
+.motion-ready .methode__day {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.methode__name {
+  font-family: var(--font-display);
+  font-weight: 350;
+  font-size: var(--t-d-xs);
+  line-height: 1.15;
+  letter-spacing: -0.012em;
+  color: var(--c-ink);
+  font-variation-settings: 'opsz' 36, 'SOFT' 65;
+  transition:
+    opacity 0.35s 0.08s var(--ease-out-soft),
+    transform 0.35s 0.08s var(--ease-out-soft);
+}
+
+/* État initial — caché uniquement quand JS est actif */
+.motion-ready .methode__name {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+/* Active : révélation en cascade */
+.methode__step.is-active .methode__day,
+.methode__step.is-done .methode__day {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.methode__step.is-active .methode__name,
+.methode__step.is-done .methode__name {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Done : le nom peut passer en italique subtil — "archivé" */
+.methode__step.is-done .methode__name {
+  font-style: italic;
+}
+
+/* ============================================================
+   DESCRIPTION
+   ============================================================ */
+
+.methode__desc {
+  font-family: var(--font-body);
+  font-size: var(--t-sm);
+  line-height: var(--lh-body);
+  color: var(--c-ink-soft);
+  margin: 0 0 var(--s-4);
+  max-width: 50ch;
+  transition: opacity 0.45s 0.15s var(--ease-out-soft);
+}
+
+/* État initial — caché uniquement quand JS est actif */
+.motion-ready .methode__desc {
+  opacity: 0;
+}
+
+.methode__step.is-active .methode__desc,
+.methode__step.is-done .methode__desc {
+  opacity: 1;
+}
+
+/* ============================================================
+   BADGE / MICRO-ÉTAT
+   Apparaît quand l'étape passe done.
+   Pilule or fine, Saira Condensed petits caps.
+   ============================================================ */
+
+.methode__badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border: 1px solid var(--c-gold);
+  border-radius: var(--r-full);
+  font-family: var(--font-stress);
+  font-weight: 600;
+  font-size: var(--t-xs);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--c-gold);
+  transition:
+    opacity 0.3s var(--ease-out-soft),
+    transform 0.3s var(--ease-out-soft);
+  pointer-events: none;
+}
+
+/* Masqué initialement — uniquement quand JS est actif */
+.motion-ready .methode__badge {
+  opacity: 0;
+  transform: translateY(4px);
+}
+
+/* Apparaît uniquement au state done */
+.methode__step.is-done .methode__badge {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ============================================================
+   DÉTAILS SIGNATURE SVG par étape
+   Positionnés en haut-droite du step.
+   stroke-dashoffset animé par JS à l'activation.
+   ============================================================ */
+
+.methode__sig {
+  position: absolute;
+  /* Aligné avec le haut du content — même hauteur que le numéro */
+  top: clamp(32px, 5vw, 52px);
+  /* Offset depuis le bord droit pour ne pas être "collé" */
+  right: clamp(8px, 2vw, 24px);
+  width: 28px;
+  height: 28px;
+  color: var(--c-gold);
+  transition: opacity 0.2s var(--ease-out-soft);
+  pointer-events: none;
+}
+
+/* Masqué initialement — uniquement quand JS est actif */
+.motion-ready .methode__sig {
+  opacity: 0;
+}
+
+/* SVG 03 (blocs) est un peu plus large */
+.methode__sig--03 {
+  width: 36px;
+  height: 22px;
+}
+
+/* Active : le SVG apparaît, le tracé est géré par JS */
+.methode__step.is-active .methode__sig,
+.methode__step.is-done .methode__sig {
+  opacity: 1;
+}
+
+/* Les paths du SVG : état initial pour stroke-dashoffset animation */
+.methode__sig-path {
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  fill: none;
+  stroke: currentColor;
+}
+
+/* ============================================================
+   PREFERS-REDUCED-MOTION — état final statique, lisible
+   Tout figé sur 4 étapes complètes, done, ligne à 100%.
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  /* Ligne tracée à 100% */
+  .methode__track-line {
+    transform: translateX(-50%) scaleY(1) !important;
+    transition: none !important;
+  }
+
+  /* Head en bas du rail — position 100% du rail */
+  .methode__track-head {
+    top: auto !important;
+    bottom: 0 !important;
+    transition: none !important;
+    animation: none !important;
+    transform: translate(-50%, 50%) !important;
+  }
+
+  /* Tous les steps visibles en état done */
+  .methode__step {
+    opacity: 1 !important;
+    transition: none !important;
+  }
+
+  .methode__step .methode__day,
+  .methode__step .methode__name {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+    transition: none !important;
+  }
+
+  .methode__step .methode__desc {
+    opacity: 1 !important;
+    transition: none !important;
+  }
+
+  .methode__step .methode__badge {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+    transition: none !important;
+  }
+
+  .methode__step .methode__num {
+    color: color-mix(in srgb, var(--c-gold) 70%, transparent) !important;
+    transition: none !important;
+  }
+
+  /* Dots distribués sur le rail en RM (JS ne s'exécute pas pour les positionner) */
+  .methode__dot {
+    border-color: var(--c-gold) !important;
+    background: var(--c-gold) !important;
+    transition: none !important;
+    animation: none !important;
+    opacity: 1 !important;
+    /* Positions approximatives en % du rail — GSAP les affinera si JS tourne */
+    position: absolute;
+  }
+  .methode__dot[data-dot="1"] { top: 0% !important; }
+  .methode__dot[data-dot="2"] { top: 33% !important; }
+  .methode__dot[data-dot="3"] { top: 66% !important; }
+  .methode__dot[data-dot="4"] { top: 100% !important; }
+
+  .methode__step .methode__sig {
+    opacity: 1 !important;
+    transition: none !important;
+  }
+
+  /* Paths SVG complètement tracés */
+  .methode__sig-path {
+    stroke-dashoffset: 0 !important;
+    transition: none !important;
+  }
+
+  .methode__dot.is-snap {
+    animation: none !important;
+  }
+}
+
+/* ============================================================
+   RESPONSIVE — Mobile
+   Sur mobile : le dot reste centré, le rail un peu plus fin,
+   les numbers restent grands mais proportionnés.
+   ============================================================ */
+
+@media (max-width: 640px) {
+  .methode__body {
+    grid-template-columns: 24px 1fr;
+    gap: 0 clamp(14px, 4vw, 20px);
+  }
+
+  .methode__num {
+    font-size: clamp(44px, 12vw, 68px);  /* réduit mobile (était 52-80px) */
+  }
+
+  /* Signatures SVG (croix de mire, équerre, blocs, check) :
+     décoratives, surchargent un layout déjà dense sur mobile.
+     Masquées totalement sur petit écran pour clarté maximale. */
+  .methode__sig {
+    display: none !important;
+  }
+
+  .methode__step {
+    padding: clamp(24px, 5vw, 36px) 0;  /* resserré mobile */
+  }
+}
+
+@media (max-width: 400px) {
+  .methode__body {
+    grid-template-columns: 20px 1fr;
+    gap: 0 12px;
+  }
+}
+
+/* ============================================================
+   B5 TEMPS 1 — MINI-INTERFACES ILLUSTRÉES (statique)
+   Remplacent les .methode__sig SVG géométriques.
+   1 mini-UI HTML/CSS par étape, dans .methode__content.
+   Palette stricte : crème, crème-2, bleu nuit, or, or-clair, blanc, vert.
+   ============================================================ */
+
+.methode__visual {
+  margin-top: 18px;
+  max-width: 340px;
+  font-family: var(--font-body);
+  /* Visible dans tous les états (à venir / is-active / is-done) au Temps 1 */
+}
+.methode__visual * { box-sizing: border-box; }
+
+/* ─── 01 · Messagerie ─────────────────────────────────────── */
+.ui-msg {
+  background: var(--c-blanc);
+  border-radius: 13px;
+  padding: 12px 13px 13px;
+  box-shadow: 0 8px 22px rgba(14, 31, 51, 0.12);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.ui-msg__hd {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-bottom: 8px;
+  border-bottom: 0.5px solid rgba(14, 31, 51, 0.08);
+}
+.ui-msg__avatar {
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  background: var(--c-ink);
+  color: var(--c-or-clair);
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 10px;
+  display: grid; place-items: center;
+  flex-shrink: 0;
+}
+.ui-msg__title {
+  font-size: 10.5px;
+  font-weight: 600;
+  color: var(--c-ink);
+  flex: 1;
+  letter-spacing: 0.02em;
+}
+.ui-msg__time {
+  font-size: 9.5px;
+  color: rgba(14, 31, 51, 0.45);
+  font-variant-numeric: tabular-nums;
+}
+.ui-msg__bubble {
+  font-size: 10.5px;
+  line-height: 1.45;
+  padding: 7px 10px;
+  border-radius: 11px;
+  max-width: 88%;
+}
+.ui-msg__bubble--in {
+  background: var(--c-cream-2);
+  color: var(--c-ink);
+  border-bottom-left-radius: 3px;
+  align-self: flex-start;
+}
+.ui-msg__bubble--out {
+  background: var(--c-ink);
+  color: var(--c-bg);
+  border-bottom-right-radius: 3px;
+  align-self: flex-end;
+}
+.ui-msg__quote {
+  margin-top: 4px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--c-bg);
+  border-radius: 9px;
+  padding: 8px 10px;
+}
+.ui-msg__quote-left { display: flex; flex-direction: column; gap: 1px; flex: 1; min-width: 0; }
+.ui-msg__quote-label {
+  font-size: 8.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(14, 31, 51, 0.5);
+}
+.ui-msg__quote-amount {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 15px;
+  color: var(--c-ink);
+  letter-spacing: -0.01em;
+}
+.ui-msg__quote-badge {
+  background: var(--c-vert);
+  color: var(--c-blanc);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  padding: 4px 7px;
+  border-radius: 999px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* ─── 02 · Atelier design ─────────────────────────────────── */
+.ui-design {
+  background: var(--c-blanc);
+  border-radius: 13px;
+  padding: 12px 13px 13px;
+  box-shadow: 0 8px 22px rgba(14, 31, 51, 0.12);
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+}
+.ui-design__hd {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 8px;
+  border-bottom: 0.5px solid rgba(14, 31, 51, 0.08);
+}
+.ui-design__title {
+  font-size: 10.5px;
+  font-weight: 600;
+  color: var(--c-ink);
+  letter-spacing: 0.02em;
+}
+.ui-design__dots { display: inline-flex; gap: 4px; }
+.ui-design__dots i {
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: rgba(14, 31, 51, 0.18);
+}
+.ui-design__swatches {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 7px;
+}
+.ui-design__sw {
+  height: 30px;
+  border-radius: 6px;
+  display: block;
+}
+.ui-design__sw--cream {
+  background: var(--c-bg);
+  border: 0.5px solid rgba(14, 31, 51, 0.12);
+}
+.ui-design__sw--ink { background: var(--c-ink); }
+.ui-design__sw--gold { background: var(--c-or); }
+.ui-design__sw--gold-light { background: var(--c-or-clair); }
+.ui-design__typo {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding-top: 3px;
+}
+.ui-design__aa {
+  font-family: var(--font-display);
+  font-weight: 350;
+  font-size: 26px;
+  line-height: 1;
+  color: var(--c-ink);
+  letter-spacing: -0.02em;
+  font-variation-settings: 'opsz' 36, 'SOFT' 80;
+}
+.ui-design__typo-label {
+  font-size: 9.5px;
+  color: rgba(14, 31, 51, 0.5);
+  line-height: 1.4;
+}
+
+/* ─── 03 · Éditeur de code (carte bleu nuit) ──────────────── */
+.ui-code {
+  background: var(--c-ink);
+  border-radius: 13px;
+  overflow: hidden;
+  box-shadow: 0 8px 22px rgba(14, 31, 51, 0.18);
+  font-family: ui-monospace, "JetBrains Mono", "SF Mono", Menlo, Consolas, monospace;
+}
+.ui-code__tab {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 9px 12px;
+  border-bottom: 0.5px solid rgba(245, 240, 230, 0.08);
+}
+.ui-code__pastille {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--c-or);
+  flex-shrink: 0;
+}
+.ui-code__filename {
+  font-size: 9.5px;
+  color: rgba(245, 240, 230, 0.55);
+  letter-spacing: 0.02em;
+}
+.ui-code__body {
+  padding: 10px 12px;
+  font-size: 9.5px;
+  line-height: 1.7;
+}
+.ui-code__line {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.ui-code__line--indent { padding-left: 14px; }
+.tk-tag { color: var(--c-or-clair); }
+.tk-str { color: var(--c-bg); }
+.tk-cmt { color: rgba(245, 240, 230, 0.4); font-style: italic; }
+.tk-txt { color: var(--c-bg); }
+.ui-code__foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 8px 12px;
+  border-top: 0.5px solid rgba(245, 240, 230, 0.08);
+}
+.ui-code__cmd {
+  font-size: 9.5px;
+  color: rgba(245, 240, 230, 0.55);
+  letter-spacing: 0.02em;
+}
+.ui-code__ver {
+  font-size: 9.5px;
+  color: var(--c-or-clair);
+  font-weight: 500;
+}
+.ui-code__progress {
+  height: 2px;
+  background: rgba(245, 240, 230, 0.08);
+  position: relative;
+  overflow: hidden;
+}
+.ui-code__progress > span {
+  display: block;
+  height: 100%;
+  width: 100%; /* Temps 1 : rempli statique à 100%, animation viendra au Temps 2 */
+  background: linear-gradient(90deg, var(--c-or) 0%, var(--c-or-clair) 100%);
+}
+
+/* ─── 04 · Navigateur + site live ─────────────────────────── */
+.methode__visual--04 {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+.ui-live {
+  background: var(--c-blanc);
+  border-radius: 13px;
+  overflow: hidden;
+  box-shadow: 0 8px 22px rgba(14, 31, 51, 0.12);
+  position: relative;
+}
+.ui-live__bar {
+  background: var(--c-cream-2);
+  padding: 8px 10px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+.ui-live__dots { display: inline-flex; gap: 4px; flex-shrink: 0; }
+.ui-live__dots i {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: rgba(14, 31, 51, 0.22);
+}
+.ui-live__url {
+  flex: 1;
+  background: var(--c-blanc);
+  border-radius: 6px;
+  padding: 4px 9px;
+  font-size: 9.5px;
+  color: var(--c-ink);
+  letter-spacing: 0.01em;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  border: 0.5px solid rgba(14, 31, 51, 0.08);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.ui-live__lock { font-size: 9px; opacity: 0.75; }
+.ui-live__site-hd {
+  background: var(--c-ink);
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.ui-live__site-mono {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 12px;
+  color: var(--c-or-clair);
+}
+.ui-live__site-nav { display: inline-flex; gap: 7px; }
+.ui-live__site-nav i {
+  width: 14px; height: 1px;
+  background: rgba(245, 240, 230, 0.5);
+  display: block;
+}
+.ui-live__site-hero {
+  background: var(--c-bg);
+  padding: 16px 12px 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 9px;
+  text-align: center;
+}
+.ui-live__site-title {
+  font-family: var(--font-display);
+  font-weight: 350;
+  font-size: 15px;
+  color: var(--c-ink);
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+.ui-live__site-cta {
+  background: var(--c-or);
+  color: var(--c-blanc);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  padding: 5px 14px;
+  border-radius: 999px;
+}
+.ui-live__badge {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: var(--c-blanc);
+  color: var(--c-vert);
+  font-size: 8.5px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  padding: 4px 8px;
+  border-radius: 999px;
+  box-shadow: 0 4px 10px rgba(14, 31, 51, 0.15);
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+.ui-live__pulse {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--c-vert);
+  display: inline-block;
+}
+.ui-live__foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 0 4px;
+}
+.ui-live__online {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--c-vert);
+}
+.ui-live__online i {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--c-vert);
+  display: inline-block;
+}
+.ui-live__perf {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 9.5px;
+  color: var(--c-vert);
+  font-weight: 500;
+}
+.ui-live__perf svg {
+  width: 14px; height: 14px;
+  color: var(--c-vert);
+}
+
+/* ─── Responsive : mobile étroit ──────────────────────────── */
+@media (max-width: 400px) {
+  .methode__visual { max-width: 100%; margin-top: 14px; }
+  .ui-msg, .ui-design { padding: 10px 11px 11px; }
+  .ui-msg__bubble { font-size: 10px; padding: 6px 9px; }
+  .ui-msg__quote-amount { font-size: 14px; }
+  .ui-design__sw { height: 26px; }
+  .ui-design__aa { font-size: 22px; }
+  .ui-code__body { padding: 9px 10px; font-size: 9px; }
+  .ui-code__line { font-size: 9px; }
+  .ui-live__site-hero { padding: 14px 10px 16px; }
+  .ui-live__site-title { font-size: 13.5px; }
+}
+
+/* ============================================================
+   B5 TEMPS 2 — ANIMATIONS INTERNES DES MINI-INTERFACES
+   Déclenchées par la classe .methode__visual.is-revealed
+   ajoutée par JS dans applyStepState quand le step passe is-active.
+   - Animations CSS pures (opacity + transform, GPU-friendly).
+   - Hauteurs RÉSERVÉES dès l'état initial (opacity 0, pas display:none)
+     → la synchro rail/dots/head (correctifs #2 et #3) reste INTACTE.
+   - prefers-reduced-motion : tout en état final, aucune animation.
+   ============================================================ */
+
+/* ────────── Keyframes communes ────────── */
+@keyframes methodeRevealFadeUp {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes methodeRevealFadeLeft {
+  from { opacity: 0; transform: translateX(-6px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes methodeRevealFadeRight {
+  from { opacity: 0; transform: translateX(6px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes methodeRevealPop {
+  from { opacity: 0; transform: scale(0.85); }
+  to   { opacity: 1; transform: scale(1); }
+}
+@keyframes methodeRevealScaleUp {
+  from { opacity: 0; transform: translateY(6px) scale(0.96); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes methodeProgressFill {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+@keyframes methodeTypingShow {
+  0%   { opacity: 0; transform: translateY(2px); }
+  18%  { opacity: 1; transform: translateY(0); }
+  82%  { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(0); }
+}
+@keyframes methodeTypingDot {
+  0%, 60%, 100% { opacity: 0.35; transform: translateY(0); }
+  30%           { opacity: 1;    transform: translateY(-2px); }
+}
+@keyframes methodeLivePulse {
+  0%, 100% { transform: scale(1);   opacity: 0.9; }
+  60%      { transform: scale(2.2); opacity: 0; }
+}
+
+/* ────────── États initiaux (motion-ready uniquement, fallback sans JS = tout visible) ────────── */
+html.motion-ready .methode__visual--01 .ui-msg__bubble--in,
+html.motion-ready .methode__visual--01 .ui-msg__bubble--out,
+html.motion-ready .methode__visual--01 .ui-msg__quote,
+html.motion-ready .methode__visual--02 .ui-design__sw,
+html.motion-ready .methode__visual--02 .ui-design__typo,
+html.motion-ready .methode__visual--03 .ui-code__line,
+html.motion-ready .methode__visual--03 .ui-code__foot,
+html.motion-ready .methode__visual--04 .ui-live__site-hero > *,
+html.motion-ready .methode__visual--04 .ui-live__badge,
+html.motion-ready .methode__visual--04 .ui-live__foot > * {
+  opacity: 0;
+  will-change: opacity, transform;
+}
+
+/* Barre deploy : état initial scaleX 0 (override le 100% statique du Temps 1) */
+html.motion-ready .methode__visual--03 .ui-code__progress > span {
+  transform: scaleX(0);
+  transform-origin: left center;
+}
+
+/* ────────── Wrap bulle out + indicateur typing ────────── */
+.ui-msg__out-wrap {
+  position: relative;
+  align-self: flex-end;
+  max-width: 88%;
+  display: inline-block;
+}
+.ui-msg__out-wrap .ui-msg__bubble--out {
+  max-width: 100%;
+  display: block;
+}
+.ui-msg__typing {
+  position: absolute;
+  inset: 0;
+  background: var(--c-ink);
+  border-radius: 11px;
+  border-bottom-right-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  opacity: 0;
+  pointer-events: none;
+}
+.ui-msg__typing i {
+  width: 5px;
+  height: 5px;
+  background: var(--c-bg);
+  border-radius: 50%;
+  opacity: 0.35;
+  display: block;
+}
+
+/* ────────── Pulse halo point vert LIVE (animation infinie quand visible) ────────── */
+.ui-live__pulse {
+  position: relative;
+}
+.ui-live__pulse::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: var(--c-vert);
+  opacity: 0.9;
+  animation: methodeLivePulse 1.8s ease-out infinite;
+  pointer-events: none;
+}
+
+/* ────────── Compteur perf : tabular-nums + min-width (évite saut largeur 0→100) ────────── */
+.ui-live__perf-num {
+  display: inline-block;
+  min-width: 2.5ch;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ────────── DÉCLENCHEMENT — .is-revealed sur le wrapper ────────── */
+
+/* ── Étape 01 · Messagerie ─────────────────────────────────────── */
+.methode__visual--01.is-revealed .ui-msg__bubble--in {
+  animation: methodeRevealFadeLeft 0.45s var(--ease-out, ease-out) 0.05s both;
+}
+.methode__visual--01.is-revealed .ui-msg__typing {
+  animation: methodeTypingShow 0.85s ease-in-out 0.5s both;
+}
+.methode__visual--01.is-revealed .ui-msg__typing i {
+  animation: methodeTypingDot 1.05s ease-in-out infinite;
+}
+.methode__visual--01.is-revealed .ui-msg__typing i:nth-child(2) { animation-delay: 0.15s; }
+.methode__visual--01.is-revealed .ui-msg__typing i:nth-child(3) { animation-delay: 0.30s; }
+.methode__visual--01.is-revealed .ui-msg__bubble--out {
+  animation: methodeRevealFadeRight 0.45s var(--ease-out, ease-out) 1.35s both;
+}
+.methode__visual--01.is-revealed .ui-msg__quote {
+  animation: methodeRevealScaleUp 0.5s var(--ease-out, ease-out) 1.75s both;
+}
+
+/* ── Étape 02 · Atelier design ─────────────────────────────────── */
+.methode__visual--02.is-revealed .ui-design__sw {
+  animation: methodeRevealScaleUp 0.4s var(--ease-out, ease-out) both;
+}
+.methode__visual--02.is-revealed .ui-design__sw:nth-child(1) { animation-delay: 0.10s; }
+.methode__visual--02.is-revealed .ui-design__sw:nth-child(2) { animation-delay: 0.22s; }
+.methode__visual--02.is-revealed .ui-design__sw:nth-child(3) { animation-delay: 0.34s; }
+.methode__visual--02.is-revealed .ui-design__sw:nth-child(4) { animation-delay: 0.46s; }
+.methode__visual--02.is-revealed .ui-design__typo {
+  animation: methodeRevealFadeUp 0.45s var(--ease-out, ease-out) 0.60s both;
+}
+
+/* ── Étape 03 · Éditeur de code ────────────────────────────────── */
+.methode__visual--03.is-revealed .ui-code__line {
+  animation: methodeRevealFadeUp 0.32s var(--ease-out, ease-out) both;
+}
+.methode__visual--03.is-revealed .ui-code__line:nth-child(1) { animation-delay: 0.10s; }
+.methode__visual--03.is-revealed .ui-code__line:nth-child(2) { animation-delay: 0.25s; }
+.methode__visual--03.is-revealed .ui-code__line:nth-child(3) { animation-delay: 0.40s; }
+.methode__visual--03.is-revealed .ui-code__line:nth-child(4) { animation-delay: 0.55s; }
+.methode__visual--03.is-revealed .ui-code__foot {
+  animation: methodeRevealFadeUp 0.4s var(--ease-out, ease-out) 0.75s both;
+}
+.methode__visual--03.is-revealed .ui-code__progress > span {
+  animation: methodeProgressFill 1.0s var(--ease-out, ease-out) 0.95s forwards;
+}
+
+/* ── Étape 04 · Navigateur live ────────────────────────────────── */
+.methode__visual--04.is-revealed .ui-live__site-hero > * {
+  animation: methodeRevealFadeUp 0.42s var(--ease-out, ease-out) both;
+}
+.methode__visual--04.is-revealed .ui-live__site-hero > *:nth-child(1) { animation-delay: 0.10s; }
+.methode__visual--04.is-revealed .ui-live__site-hero > *:nth-child(2) { animation-delay: 0.25s; }
+.methode__visual--04.is-revealed .ui-live__badge {
+  animation: methodeRevealPop 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) 0.45s both;
+}
+.methode__visual--04.is-revealed .ui-live__foot > * {
+  animation: methodeRevealFadeUp 0.4s var(--ease-out, ease-out) both;
+}
+.methode__visual--04.is-revealed .ui-live__foot > *:nth-child(1) { animation-delay: 0.60s; }
+.methode__visual--04.is-revealed .ui-live__foot > *:nth-child(2) { animation-delay: 0.72s; }
+
+/* ────────── REDUCED MOTION — tout en état final, aucune animation ────────── */
+@media (prefers-reduced-motion: reduce) {
+  html.motion-ready .methode__visual *,
+  html.motion-reduced .methode__visual * {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+  }
+  .methode__visual .ui-code__progress > span {
+    transform: scaleX(1) !important; /* barre remplie en état final */
+  }
+  .methode__visual .ui-msg__typing {
+    display: none !important; /* pas d'indicateur en RM */
+  }
+  .ui-live__pulse::after {
+    animation: none !important;
+    opacity: 0 !important; /* pas de halo */
+  }
+}

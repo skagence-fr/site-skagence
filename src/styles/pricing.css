@@ -1,0 +1,475 @@
+/* ============================================================
+   SK AGENCE — Pricing Vitrine prototype
+   Isolé ici pour revert facile. Importer après sections.css,
+   avant motion.css dans style.css.
+   ============================================================ */
+
+/* ------ Variables locales ------ */
+:root {
+  --pricing-gap:         clamp(16px, 2.5vw, 28px);
+  --pricing-pad-side:    clamp(28px, 3.5vw, 44px);
+  --pricing-pad-v:       clamp(36px, 4vw, 52px);
+  --pricing-pad-center:  clamp(44px, 5vw, 68px);
+  --pricing-lift:        -32px;          /* remontée verticale de la centrale */
+  --pricing-r:           var(--r-4);
+
+  /* Ombres — B1 : recalibrées pour profondeur détachée (cartes blanches sur fond crème) */
+  --shadow-card:       var(--shadow-card-light);                  /* 0 8px 24px rgba(14,31,51,0.10) */
+  --shadow-card-hover: 0 16px 48px rgba(14, 31, 51, 0.14), 0 4px 12px rgba(14, 31, 51, 0.08);
+  --shadow-center:     var(--shadow-card-dark);                   /* 0 10px 30px rgba(0,0,0,0.30) */
+  --shadow-center-hov: 0 24px 60px rgba(0, 0, 0, 0.40), 0 8px 20px rgba(0, 0, 0, 0.24);
+}
+
+/* ============================================================
+   GRILLE
+   ============================================================ */
+.pricing-vitrine {
+  display: grid;
+  /* Centrale ~15% plus large que les latérales (ratio 1 : 1.15 : 1) */
+  grid-template-columns: 1fr 1.15fr 1fr;
+  gap: var(--pricing-gap);
+  align-items: end;   /* les latérales s'alignent en bas de la centrale surélevée */
+}
+
+/* ============================================================
+   CARTE BASE
+   ============================================================ */
+.pcard {
+  position: relative;
+  border-radius: var(--pricing-r);
+  padding: var(--pricing-pad-v) var(--pricing-pad-side);
+  display: grid;
+  gap: 0;
+  align-content: start;
+  cursor: default;
+  /* état initial visible — le JS anime opacity/transform */
+  background: var(--c-blanc);            /* B1 : blanc pur détaché */
+  border: 1px solid var(--c-hairline);
+  box-shadow: var(--shadow-card);
+  transition:
+    transform  0.22s cubic-bezier(0.33, 1, 0.68, 1),
+    box-shadow 0.22s cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+/* hover latérales */
+.pcard:not(.pcard--center):hover {
+  transform: translateY(-7px);
+  box-shadow: var(--shadow-card-hover);
+}
+/* hover ne tire pas l'autre carte */
+.pricing-vitrine:has(.pcard:not(.pcard--center):hover) .pcard:not(:hover) {
+  /* volontairement sans effet sur les voisines */
+}
+
+/* ============================================================
+   CARTE LATÉRALE — détails
+   ============================================================ */
+.pcard__eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-body);
+  font-size: var(--t-xs);
+  font-weight: 600;
+  letter-spacing: var(--ls-eyebrow);
+  text-transform: uppercase;
+  color: var(--c-muted);
+  margin-bottom: var(--s-5);
+}
+
+/* Filet or sous le nom du palier (Option A — signature) */
+.pcard__name {
+  font-family: var(--font-display);
+  font-weight: 350;
+  font-size: clamp(28px, 2.8vw, 40px);
+  line-height: 1.05;
+  letter-spacing: -0.018em;
+  color: var(--c-ink);
+  font-variation-settings: 'opsz' 64, 'SOFT' 80;
+  margin: 0 0 var(--s-3);
+  padding-bottom: var(--s-4);
+  position: relative;
+}
+
+/* Filet or — tracé au scroll via scaleX 0→1 */
+.pcard__name::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 48px;
+  height: 1.5px;
+  background: var(--c-gold);
+  transform-origin: left center;
+  /* état initial déclaré dans motion.css section pricing */
+}
+
+/* Prix */
+.pcard__price-wrap {
+  margin: var(--s-5) 0;
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+.pcard__currency {
+  font-family: var(--font-stress);
+  font-weight: 800;
+  font-size: clamp(20px, 2vw, 28px);
+  letter-spacing: -0.02em;
+  color: var(--c-gold);
+  line-height: 1;
+  align-self: flex-start;
+  padding-top: 10px;
+}
+.pcard__amount {
+  font-family: var(--font-stress);
+  font-weight: 800;
+  font-size: clamp(64px, 8vw, 96px);
+  line-height: 0.88;
+  letter-spacing: -0.03em;
+  color: var(--c-ink);
+}
+.pcard__suffix {
+  display: flex;
+  flex-direction: column;
+  align-self: flex-end;
+  padding-bottom: 6px;
+  gap: 2px;
+}
+.pcard__ht {
+  font-family: var(--font-body);
+  font-size: var(--t-xs);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--c-muted);
+}
+.pcard__partir {
+  font-family: var(--font-body);
+  font-size: 11px;
+  color: var(--c-muted);
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+/* Maintenance */
+.pcard__maint {
+  font-family: var(--font-body);
+  font-size: var(--t-sm);
+  color: var(--c-ink-soft);
+  padding: var(--s-4) 0;
+  border-top: 1px solid var(--c-hairline);
+  margin-bottom: var(--s-5);
+}
+.pcard__maint strong {
+  color: var(--c-ink);
+  font-weight: 600;
+}
+
+/* Sous-bloc Facilité 24 mois (vitrine uniquement) */
+.pcard__finance {
+  font-family: var(--font-body);
+  font-size: var(--t-xs);
+  color: var(--c-ink-soft);
+  padding: var(--s-3) 0 var(--s-4);
+  margin: 0 0 var(--s-4);
+  border-bottom: 1px dashed var(--c-gold);
+  line-height: 1.5;
+}
+.pcard__finance strong {
+  color: var(--c-gold);
+  font-weight: 600;
+}
+.pcard--center .pcard__finance {
+  color: var(--c-ink-on-dark);
+  border-bottom-color: var(--c-gold-2);
+}
+.pcard--center .pcard__finance strong {
+  color: var(--c-gold-2);
+}
+
+/* Mention paiement comptant (e-com + app) */
+.pcard__comptant {
+  font-family: var(--font-body);
+  font-size: var(--t-xs);
+  color: var(--c-muted);
+  margin: 0 0 var(--s-4);
+  font-style: italic;
+}
+.pcard--center .pcard__comptant {
+  color: var(--c-ink-on-dark);
+}
+
+/* Liste avantages */
+.pcard__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+.pcard__item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-family: var(--font-body);
+  font-size: var(--t-sm);
+  color: var(--c-ink-soft);
+  line-height: 1.45;
+}
+/* Coche SVG inline */
+.pcard__check {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  margin-top: 2px;
+}
+.pcard__check path {
+  stroke: var(--c-gold);
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  fill: none;
+  stroke-dasharray: 20;
+  stroke-dashoffset: 20;   /* sera animé en JS → 0 */
+}
+
+/* ============================================================
+   CARTE CENTRALE — surcharge
+   ============================================================ */
+.pcard--center {
+  background: var(--c-ink);
+  border-color: transparent;
+  box-shadow: var(--shadow-center);
+  padding: var(--pricing-pad-center) var(--pricing-pad-side);
+  margin-bottom: var(--pricing-lift);  /* remontée asymétrique */
+  position: relative;
+  overflow: visible;
+}
+
+/* Eyebrow spéciale centrale : "Le plus demandé" en or */
+.pcard--center .pcard__eyebrow {
+  color: var(--c-gold);
+  letter-spacing: 0.24em;
+  font-size: 11px;
+  gap: 8px;
+}
+
+/* Filet court à gauche du eyebrow */
+.pcard--center .pcard__eyebrow::before {
+  content: '';
+  display: block;
+  width: 20px;
+  height: 1.5px;
+  background: var(--c-gold);
+  flex-shrink: 0;
+}
+
+.pcard--center .pcard__name {
+  color: var(--c-ink-on-dark);
+  font-size: clamp(32px, 3.2vw, 48px);
+}
+
+/* Filet sous le nom — en or, un peu plus long sur la centrale */
+.pcard--center .pcard__name::after {
+  width: 64px;
+  background: var(--c-gold);
+}
+
+.pcard--center .pcard__currency {
+  color: var(--c-gold-2);
+  font-size: clamp(22px, 2.2vw, 32px);
+}
+.pcard--center .pcard__amount {
+  color: var(--c-ink-on-dark);
+  font-size: clamp(80px, 10vw, 120px);
+}
+.pcard--center .pcard__ht,
+.pcard--center .pcard__partir {
+  color: var(--c-ink-soft-on-dark);
+}
+
+.pcard--center .pcard__maint {
+  border-top-color: var(--c-hairline-on);
+  color: var(--c-ink-on-dark); /* monté en pleine intensité — c-ink-soft-on-dark manquait de contraste perçu */
+}
+.pcard--center .pcard__maint strong {
+  color: var(--c-ink-on-dark);
+}
+
+.pcard--center .pcard__item {
+  color: var(--c-ink-soft-on-dark);
+  transition: color 0.22s cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+.pcard--center .pcard__check path {
+  stroke: var(--c-gold-2);
+}
+
+/* Hover centrale : remonte + allonge ombre + pulse or → géré en GSAP */
+.pcard--center:hover {
+  transform: translateY(-7px);
+  box-shadow: var(--shadow-center-hov);
+}
+/* Les items passent en crème pleine au hover */
+.pcard--center:hover .pcard__item {
+  color: var(--c-ink-on-dark);
+}
+
+/* ============================================================
+   LISERÉ or en pointillé autour de la centrale (dessiné en CSS,
+   sera révélé/animé au scroll via clip-path ou opacity en JS)
+   ============================================================ */
+.pcard--center::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: calc(var(--pricing-r) + 1px);
+  border: 1.5px solid var(--c-gold);
+  opacity: 0;             /* visible à l'entrée via JS */
+  pointer-events: none;
+}
+
+/* ============================================================
+   FILET ANIMÉ SOUS LES NOMS DE PALIERS
+   Déclenché par la classe .is-revealed ajoutée par JS.
+   CSS transition sur ::after : pas de GSAP sur pseudo-éléments.
+   ============================================================ */
+.pcard__name::after {
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1) 0.2s;
+}
+.pcard__name.is-revealed::after {
+  transform: scaleX(1);
+}
+
+/* ============================================================
+   LISERÉ OR + PULSE SUR LA CENTRALE
+   .border-revealed → opacity 0→0.7 au scroll
+   :hover → pulse CSS infinie, opacity 1
+   ============================================================ */
+@keyframes gold-pulse {
+  0%   { opacity: 1; }
+  50%  { opacity: 0.72; }
+  100% { opacity: 1; }
+}
+
+/* Liseré visible après entrée scroll */
+.pcard--center.border-revealed::before {
+  opacity: 0.7;
+  transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Hover : pulse permanente + opacity pleine */
+.pcard--center:hover::before {
+  opacity: 1;
+  animation: gold-pulse 2s ease-in-out infinite;
+}
+
+/* ============================================================
+   ÉTATS INITIAUX MOTION
+   Conditionnés à motion-ready comme le reste du système
+   ============================================================ */
+
+/* Cartes — invisible au départ (toutes les grilles pricing) */
+html.motion-ready .pricing-vitrine .pcard,
+html.motion-ready .pricing-ecommerce .pcard,
+html.motion-ready .pricing-app .pcard {
+  opacity: 0;
+  transform: translateY(24px);
+  will-change: transform, opacity;
+}
+
+/* Filets sous les noms — scaleX(0) au départ ; sera déclenché par .is-revealed */
+html.motion-ready .pcard__name::after {
+  transform: scaleX(0);
+}
+
+/* Coches — stroke-dashoffset déjà à 20 dans le CSS de base (OK) */
+
+/* Chiffres prix — masqués jusqu'au déclenchement ScrollTrigger.
+   La carte entière est déjà opacity:0 via la règle ci-dessus,
+   mais on cache aussi l'amount pour éviter tout flash si une carte
+   devenait visible avant l'animation (ex. scroll rapide). */
+html.motion-ready .pcard__amount {
+  opacity: 0;
+}
+
+/* ============================================================
+   ÉTAT REDUCED MOTION
+   ============================================================ */
+html.motion-reduced .pricing-vitrine .pcard,
+html.motion-reduced .pricing-ecommerce .pcard,
+html.motion-reduced .pricing-app .pcard {
+  opacity: 1 !important;
+  transform: none !important;
+}
+/* Les montants restent lisibles sans JS d'animation */
+html.motion-reduced .pcard__amount {
+  opacity: 1 !important;
+}
+html.motion-reduced .pcard__name::after {
+  transform: scaleX(1) !important;
+}
+html.motion-reduced .pcard__check path {
+  stroke-dashoffset: 0 !important;
+}
+html.motion-reduced .pcard--center:hover {
+  animation: none !important;
+}
+
+/* ============================================================
+   GRILLES E-COMMERCE ET APPLICATION
+   Même traitement visuel que .pricing-vitrine — classes séparées
+   pour que le JS puisse cibler chaque grille indépendamment.
+   ============================================================ */
+.pricing-ecommerce,
+.pricing-app {
+  display: grid;
+  grid-template-columns: 1fr 1.15fr 1fr;
+  gap: var(--pricing-gap);
+  align-items: end;
+}
+
+/* Hover des latérales — reprend le sélecteur vitrine */
+.pricing-ecommerce:has(.pcard:not(.pcard--center):hover) .pcard:not(:hover),
+.pricing-app:has(.pcard:not(.pcard--center):hover) .pcard:not(:hover) {
+  /* sans effet sur les voisines — cohérent vitrine */
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 880px) {
+  .pricing-vitrine,
+  .pricing-ecommerce,
+  .pricing-app {
+    grid-template-columns: 1fr;
+    gap: var(--s-5);
+  }
+
+  /* Mobile : ordre naturel Essentiel → Standard → Premium.
+     La centrale reste distinctive par son fond bleu nuit, pas besoin de la déplacer. */
+  .pricing-vitrine .pcard--center,
+  .pricing-ecommerce .pcard--center,
+  .pricing-app .pcard--center {
+    margin-bottom: 0; /* annule le décalage vertical desktop */
+  }
+
+  .pricing-vitrine .pcard--center .pcard__amount,
+  .pricing-ecommerce .pcard--center .pcard__amount,
+  .pricing-app .pcard--center .pcard__amount {
+    font-size: clamp(64px, 14vw, 96px);
+  }
+}
+
+@media (max-width: 480px) {
+  .pcard {
+    padding: var(--s-6) var(--s-5);
+  }
+  .pcard--center {
+    padding: var(--s-7) var(--s-5);
+  }
+  .pcard__amount {
+    font-size: clamp(56px, 16vw, 80px);
+  }
+}

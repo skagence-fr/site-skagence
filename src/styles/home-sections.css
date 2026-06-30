@@ -1,0 +1,686 @@
+/* ============================================================
+   SK AGENCE — Home Sections (craft layer)
+   Sections : Pourquoi, Services, Méthode bref, Contact.
+   Importé dans style.css après pricing.css, avant motion.css.
+   Aucune valeur dupliquée de pricing.css ou hero-mockup.css.
+   ============================================================ */
+
+/* ============================================================
+   SECTION 1 — POURQUOI SK AGENCE
+   Bento asymétrique 2×2 — grille 1.4fr 1fr / 1fr 1.4fr
+   ============================================================ */
+
+.pourquoi__grid {
+  max-width: var(--maxw-wide);
+  margin: 0 auto;
+  padding: 0 var(--pad-x);
+  /* Grille bento : 2 colonnes asymétriques, 2 rangées */
+  display: grid;
+  grid-template-columns: 1.35fr 1fr;
+  grid-template-rows: auto auto;
+  gap: clamp(14px, 1.8vw, 22px);
+}
+
+/* Placement bento :
+   Carte 1 (Livré 7 jours)   → col 1 row 1  — héros
+   Carte 2 (Design)           → col 2 row 1
+   Carte 3 (Maintenance)      → col 1 row 2
+   Carte 4 (1 interlocuteur)  → col 2 row 2  — plus petite
+*/
+.diff__block:nth-child(1) { grid-column: 1; grid-row: 1; }
+.diff__block:nth-child(2) { grid-column: 2; grid-row: 1; }
+.diff__block:nth-child(3) { grid-column: 1; grid-row: 2; }
+.diff__block:nth-child(4) { grid-column: 2; grid-row: 2; }
+
+/* Variables de padding partagées pour toutes les cartes */
+:root {
+  --card-pad-y: clamp(28px, 3.5vw, 44px);
+  --card-pad-x: clamp(28px, 3.5vw, 44px);
+  --card-pad-hero-y: calc(var(--card-pad-y) * 1.2);
+}
+
+/* Carte de base — B1 : blanc pur + ombre détachée */
+.diff__block {
+  position: relative;
+  background: var(--c-blanc);
+  border: 1px solid var(--c-hairline);
+  border-radius: var(--r-4);
+  padding: var(--card-pad-y) var(--card-pad-x);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--s-4);
+  box-shadow: var(--shadow-card-light); /* B1 : profondeur au repos */
+  transition:
+    transform   0.22s cubic-bezier(0.33, 1, 0.68, 1),
+    box-shadow  0.22s cubic-bezier(0.33, 1, 0.68, 1),
+    border-color 0.22s cubic-bezier(0.33, 1, 0.68, 1);
+  /* Perspective pour le flip 3D des digits */
+  perspective: 600px;
+}
+
+/* Hover franc — -6 px sur cartes standard */
+.diff__block:hover,
+.diff__block:focus-within {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-diff-hover); /* tokenisé */
+  border-color: var(--c-gold-3);
+}
+
+/* Carte héros (première) : highlight or + lift -8px + padding légèrement plus généreux */
+.diff__block:nth-child(1) {
+  padding-top: var(--card-pad-hero-y);
+  padding-bottom: var(--card-pad-hero-y);
+  border-color: rgba(164, 119, 49, 0.25);
+  box-shadow: var(--shadow-card-hero); /* tokenisé Route B P3 */
+}
+.diff__block:nth-child(1):hover,
+.diff__block:nth-child(1):focus-within {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-card-hero-hover); /* tokenisé Route B P3 */
+  border-color: var(--c-gold);
+}
+
+/* ─── B2 correctif : renfort ombres cartes sur fond crème-2 (.section--alt) ───
+   Cible uniquement les cartes diff__block dans une section --alt (= Pourquoi SK).
+   Cartes sur fond crème normal (Services, etc.) : INCHANGÉES.
+   Hovers : variantes spécifiques pour battre la spécificité du repos cream2
+   (sinon le repos écrase le hover en cascade). */
+.section--alt .diff__block {
+  box-shadow: var(--shadow-card-cream2);
+}
+.section--alt .diff__block:hover,
+.section--alt .diff__block:focus-within {
+  box-shadow: var(--shadow-diff-hover);
+}
+.section--alt .diff__block:nth-child(1) {
+  box-shadow: var(--shadow-card-hero-cream2);
+}
+.section--alt .diff__block:nth-child(1):hover,
+.section--alt .diff__block:nth-child(1):focus-within {
+  box-shadow: var(--shadow-card-hero-hover);
+}
+
+/* Filet or en bas-gauche de la carte héros — détail signature */
+.diff__block:nth-child(1)::after {
+  content: '';
+  position: absolute;
+  bottom: 24px;
+  left: 24px;
+  width: 32px;
+  height: 2px;
+  background: var(--c-gold);
+  border-radius: 1px;
+  transform-origin: left center;
+  transform: scaleX(1);
+  transition: width 0.3s cubic-bezier(0.33, 1, 0.68, 1);
+}
+.diff__block:nth-child(1):hover::after {
+  width: 56px;
+}
+
+/* Icône petite sur chaque carte */
+.diff__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  margin-bottom: var(--s-2);
+  /* Pas de border-radius ni de background : icône simple, non cerclée */
+}
+.diff__icon svg {
+  display: block;
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+  stroke: var(--c-muted);
+  transition: stroke 0.22s cubic-bezier(0.33, 1, 0.68, 1);
+}
+.diff__block:hover .diff__icon svg,
+.diff__block:focus-within .diff__icon svg {
+  stroke: var(--c-gold);
+}
+
+.diff__title {
+  font-family: var(--font-display);
+  font-weight: 350;
+  font-size: clamp(20px, 2vw, 28px);
+  line-height: 1.18;
+  letter-spacing: -0.014em;
+  color: var(--c-ink);
+  margin: 0;
+  font-variation-settings: 'opsz' 48, 'SOFT' 70;
+}
+.diff__title em {
+  font-style: italic;
+  color: var(--c-gold);
+  font-weight: 350;
+}
+.diff__body {
+  font-family: var(--font-body);
+  font-size: var(--t-sm);
+  line-height: 1.6;
+  color: var(--c-ink-soft);
+  margin: 0;
+  max-width: 38ch;
+}
+
+/* === Digits flip — éléments injectés par JS === */
+.flip-digit-wrap {
+  display: inline-flex;
+  gap: 0;
+  perspective: 600px;
+  /* préserve l'alignement en ligne dans le titre */
+  vertical-align: baseline;
+}
+.flip-digit {
+  display: inline-block;
+  transform-origin: center bottom;
+  will-change: transform, opacity;
+  /* l'état initial JS est injecté via gsap.set */
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* Garantie Lighthouse — bloc en bas */
+.pourquoi__garantie {
+  max-width: var(--maxw-wide);
+  margin: clamp(20px, 2.5vw, 32px) auto 0;
+  padding: var(--s-5) var(--pad-x);
+  border-top: 1px solid var(--c-hairline);
+  display: flex;
+  align-items: baseline;
+  gap: var(--s-5);
+  flex-wrap: wrap;
+}
+.garantie__label {
+  font-family: var(--font-stress);
+  font-weight: 600;
+  font-size: var(--t-xs);
+  letter-spacing: var(--ls-eyebrow);
+  text-transform: uppercase;
+  color: var(--c-gold-3);
+  white-space: nowrap;
+}
+.garantie__text {
+  font-family: var(--font-body);
+  font-size: var(--t-sm);
+  color: var(--c-ink-soft);
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* ============================================================
+   SECTION 2 — CE QUE JE FAIS
+   3 blocs service avec pictogramme SVG tracé au reveal
+   ============================================================ */
+
+.services__grid {
+  max-width: var(--maxw-wide);
+  margin: 0 auto;
+  padding: 0 var(--pad-x);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(16px, 2.2vw, 28px);
+}
+
+.service__block {
+  position: relative;
+  background: var(--c-blanc); /* B1 : blanc pur — détaché du fond crème */
+  border: 1px solid var(--c-hairline);
+  border-radius: var(--r-4); /* 14px — dans la cible B1 (14-16) */
+  padding: clamp(28px, 3.5vw, 44px) clamp(24px, 3vw, 36px);
+  display: grid;
+  gap: var(--s-4);
+  align-content: start;
+  cursor: default;
+  box-shadow: var(--shadow-card-light); /* B1 : profondeur au repos */
+  transition:
+    transform   0.22s cubic-bezier(0.33, 1, 0.68, 1),
+    box-shadow  0.22s cubic-bezier(0.33, 1, 0.68, 1),
+    border-color 0.22s cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+.service__block:hover,
+.service__block:focus-within {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-service-hover); /* tokenisé */
+  border-color: var(--c-gold-3);
+}
+
+/* Pictogramme SVG */
+.service__picto {
+  display: block;
+  width: 56px;
+  height: 56px;
+  margin-bottom: var(--s-3);
+  overflow: visible;
+  flex-shrink: 0;
+}
+
+/* Tous les paths du picto — état initial pour le tracé */
+.service__picto .picto-stroke {
+  fill: none;
+  stroke: var(--c-ink);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  /* stroke-dasharray et stroke-dashoffset injectés par JS (getTotalLength) */
+}
+
+/* Détail or dans chaque picto */
+.service__picto .picto-accent {
+  fill: var(--c-gold);
+  stroke: none;
+  opacity: 0; /* apparaît après tracé — géré par JS */
+}
+.service__picto .picto-accent-stroke {
+  fill: none;
+  stroke: var(--c-gold);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0; /* apparaît après tracé */
+}
+
+.service__num {
+  font-family: var(--font-stress);
+  font-weight: 800;
+  font-size: clamp(11px, 1vw, 13px);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--c-muted);
+  margin: 0;
+}
+.service__name {
+  font-family: var(--font-display);
+  font-weight: 350;
+  font-size: clamp(24px, 2.4vw, 34px);
+  line-height: 1.1;
+  letter-spacing: -0.016em;
+  color: var(--c-ink);
+  margin: 0;
+  font-variation-settings: 'opsz' 64, 'SOFT' 70;
+}
+.service__name em {
+  font-style: italic;
+  color: var(--c-gold);
+  font-weight: 350;
+}
+.service__line {
+  font-family: var(--font-body);
+  font-size: var(--t-sm);
+  line-height: 1.6;
+  color: var(--c-ink-soft);
+  margin: 0;
+  max-width: 34ch;
+}
+/* Prix services — Route B P4 : canonique unifié (or + Fraunces + italique) sur TOUTES les cartes,
+   repos ET hover, indépendamment de la souris. Plus de différence visuelle Vitrine/E-com/App. */
+.service__price {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 350;
+  font-size: clamp(15px, 1.4vw, 19px);
+  letter-spacing: -0.01em;
+  color: var(--c-gold);
+  margin: var(--s-3) 0 0;
+  padding-top: var(--s-4);
+  border-top: 1px solid var(--c-hairline);
+  transition: color 0.22s cubic-bezier(0.33, 1, 0.68, 1);
+}
+/* Hover : intensification subtile de l'or, mais pas de changement de famille/style (cohérence repos↔hover) */
+.service__block:hover .service__price,
+.service__block:focus-within .service__price {
+  color: var(--c-gold-2);
+  font-size: clamp(15px, 1.4vw, 19px);
+}
+
+/* ============================================================
+   SECTION 3 — MÉTHODE EN BREF
+   Frise horizontale 4 étapes — ligne or qui se trace
+   ============================================================ */
+
+.methode-bref {
+  /* Hérite de .section--paper (fond blanc) */
+}
+
+.methode-bref__list {
+  max-width: var(--maxw-wide);
+  margin: 0 auto;
+  padding: 0 var(--pad-x);
+  list-style: none;
+  /* Desktop : frise horizontale 4 colonnes */
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  position: relative;
+}
+
+/* Ligne or horizontale — tracée par JS (scaleX 0→1)
+   Positionnée absolue dans la ol (qui a padding 0 var(--pad-x)).
+   top: 36px aligne approximativement sur le mi-corps des numéros clamp(40→64px). */
+.methode-bref__line {
+  position: absolute;
+  top: 36px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--c-gold);
+  opacity: 0.55;
+  transform-origin: left center;
+  /* état initial géré par JS (scaleX 0) */
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Chaque étape */
+.methode-bref__step {
+  position: relative;
+  z-index: 1;
+  padding: 0 clamp(20px, 2.5vw, 36px) var(--s-7);
+  /* Séparateur vertical entre étapes */
+  border-right: 1px solid var(--c-hairline);
+  display: grid;
+  gap: var(--s-3);
+  align-content: start;
+}
+.methode-bref__step:first-child { padding-left: 0; }
+.methode-bref__step:last-child {
+  border-right: 0;
+  padding-right: 0;
+}
+
+/* Grand numéro de l'étape — "01", "02"... */
+.methode-bref__num {
+  font-family: var(--font-stress);
+  font-weight: 800;
+  font-size: clamp(40px, 5vw, 64px);
+  line-height: 0.88;
+  letter-spacing: -0.02em;
+  color: var(--c-ink);
+  display: block;
+  margin-bottom: var(--s-3);
+  /* Transition d'opacité gérée par JS (étape s'allume au passage de la ligne) */
+  transition: color 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* État initial (avant animation) — géré via classe JS */
+.methode-bref__num.is-dim {
+  color: var(--c-mute-2);
+}
+.methode-bref__num.is-lit {
+  color: var(--c-ink);
+}
+
+/* Label "J1", "J2"... */
+.methode-bref__day {
+  font-family: var(--font-body);
+  font-size: var(--t-xs);
+  font-weight: 600;
+  letter-spacing: var(--ls-eyebrow);
+  text-transform: uppercase;
+  color: var(--c-gold);
+  display: block;
+}
+
+/* Titre de l'étape */
+.methode-bref__name {
+  font-family: var(--font-display);
+  font-weight: 350;
+  font-size: clamp(18px, 1.8vw, 24px);
+  line-height: 1.2;
+  letter-spacing: -0.012em;
+  color: var(--c-ink);
+  margin: 0;
+  font-variation-settings: 'opsz' 36, 'SOFT' 60;
+}
+.methode-bref__name em {
+  font-style: italic;
+  color: var(--c-gold);
+  font-weight: 350;
+}
+
+/* Pas de description dans cette version allégée — supprimée via JS ou cachée */
+.methode-bref__desc {
+  display: none;
+}
+
+/* Hover sobre : scale sur le numéro */
+.methode-bref__step:hover .methode-bref__num,
+.methode-bref__step:focus-within .methode-bref__num {
+  transform: scale(1.05);
+  transform-origin: left center;
+}
+
+/* Lien "Voir le détail" */
+.methode-bref__more {
+  max-width: var(--maxw-wide);
+  margin: var(--s-7) auto 0;
+  padding: 0 var(--pad-x);
+}
+.methode-bref__link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-3);
+  font-family: var(--font-body);
+  font-size: var(--t-sm);
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--c-muted);
+  text-decoration: none;
+  transition: color 0.22s cubic-bezier(0.33, 1, 0.68, 1);
+}
+.methode-bref__link:hover,
+.methode-bref__link:focus-visible {
+  color: var(--c-gold);
+}
+.methode-bref__link svg {
+  width: 16px; height: 16px;
+  stroke: currentColor;
+  transition: transform 0.22s cubic-bezier(0.33, 1, 0.68, 1);
+}
+.methode-bref__link:hover svg,
+.methode-bref__link:focus-visible svg {
+  transform: translateX(4px);
+}
+
+/* ============================================================
+   SECTION 4 — CONTACT
+   Titre clip-path + formulaire qui s'assemble
+   ============================================================ */
+
+/* Titre principal de la section */
+.cta__title--reveal-wrap {
+  overflow: hidden; /* masque le clip-path pendant l'animation */
+  display: block;
+}
+
+/* Focus accentué or sur les inputs du formulaire — halo box-shadow (cohérent refonte FORME) */
+.quote__field input:focus-visible,
+.quote__field textarea:focus-visible,
+.quote__field select:focus-visible {
+  outline: none;
+  border-color: var(--c-or);
+  background: rgba(164, 119, 49, 0.07);
+  box-shadow: 0 0 0 3px rgba(164, 119, 49, 0.18);
+}
+
+/* Micro-copy de réassurance sous le bouton submit */
+.quote__reassurance {
+  margin-top: var(--s-3);
+  text-align: right;
+  font-family: var(--font-stress);
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--c-ink-soft-on-dark);
+  opacity: 0.7;
+}
+
+/* ============================================================
+   ÉTATS INITIAUX MOTION — home sections
+   Conditionnés à html.motion-ready
+   ============================================================ */
+
+/* Cartes Pourquoi — cachées au départ */
+html.motion-ready .diff__block {
+  opacity: 0;
+  transform: translateY(24px);
+  will-change: transform, opacity;
+}
+
+/* Blocks services — cachés au départ */
+html.motion-ready .service__block {
+  opacity: 0;
+  transform: translateY(24px);
+  will-change: transform, opacity;
+}
+
+/* Digits flip — état initial via JS (rotateX -90) + classe flip-digit */
+
+/* Méthode bref — étapes cachées, ligne à scaleX 0 */
+html.motion-ready .methode-bref__step {
+  opacity: 0;
+  transform: translateY(16px);
+  will-change: transform, opacity;
+}
+html.motion-ready .methode-bref__line {
+  transform: scaleX(0);
+}
+
+/* Contact — titre masqué par clip-path uniquement si JS a confirmé l'init
+   (classe .cta__title--clipped ajoutée par JS, jamais par CSS seul)
+   Par défaut : titre TOUJOURS visible — sécurité si JS échoue ou ScrollTrigger ne fire pas */
+html.motion-ready .cta__title--clipped {
+  clip-path: inset(0 100% 0 0);
+  will-change: clip-path;
+}
+html.motion-ready .cta__sub {
+  opacity: 0;
+  transform: translateY(12px);
+  will-change: transform, opacity;
+}
+
+/* Contact — champs cachés, titre révélé par clip-path JS
+   [hidden] exclus : gérés par la logique tab email/téléphone de main.js */
+html.motion-ready .quote__field:not([hidden]),
+html.motion-ready .quote__consent,
+html.motion-ready .quote__submit-row,
+html.motion-ready .quote__reassurance {
+  opacity: 0;
+  transform: translateY(16px);
+  will-change: transform, opacity;
+}
+
+/* ============================================================
+   ÉTAT REDUCED MOTION — tout visible immédiatement
+   ============================================================ */
+html.motion-reduced .diff__block,
+html.motion-reduced .service__block,
+html.motion-reduced .methode-bref__step,
+html.motion-reduced .methode-bref__line,
+html.motion-reduced .quote__field:not([hidden]),
+html.motion-reduced .quote__consent,
+html.motion-reduced .quote__submit-row,
+html.motion-reduced .quote__reassurance {
+  opacity: 1 !important;
+  transform: none !important;
+}
+html.motion-reduced .cta__title,
+html.motion-reduced .cta__title--clipped {
+  clip-path: none !important;
+}
+html.motion-reduced .cta__sub {
+  opacity: 1 !important;
+  transform: none !important;
+}
+html.motion-reduced .methode-bref__num {
+  color: var(--c-ink) !important;
+}
+html.motion-reduced .service__picto .picto-accent,
+html.motion-reduced .service__picto .picto-accent-stroke {
+  opacity: 1 !important;
+}
+html.motion-reduced .service__picto .picto-stroke {
+  /* stroke-dashoffset = 0 immédiatement */
+  stroke-dashoffset: 0 !important;
+}
+html.motion-reduced .flip-digit {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+
+/* Tablette — bento à 2 colonnes égales */
+@media (max-width: 1024px) {
+  .pourquoi__grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .services__grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .services__grid .service__block:last-child {
+    grid-column: 1 / -1;
+  }
+}
+
+/* Mobile — toutes sections en stack */
+@media (max-width: 768px) {
+  .pourquoi__grid {
+    grid-template-columns: 1fr;
+  }
+  .diff__block:nth-child(1),
+  .diff__block:nth-child(2),
+  .diff__block:nth-child(3),
+  .diff__block:nth-child(4) {
+    grid-column: 1;
+    grid-row: auto;
+  }
+
+  .services__grid {
+    grid-template-columns: 1fr;
+  }
+  .services__grid .service__block:last-child {
+    grid-column: 1;
+  }
+
+  /* Méthode bref : frise verticale sur mobile */
+  .methode-bref__list {
+    grid-template-columns: 1fr;
+  }
+  .methode-bref__step {
+    border-right: 0;
+    border-bottom: 1px solid var(--c-hairline);
+    padding: var(--s-6) 0;
+  }
+  .methode-bref__step:last-child {
+    border-bottom: 0;
+  }
+  /* Ligne or verticale sur mobile */
+  .methode-bref__line {
+    /* En vertical, recalculée par JS en mode vertical */
+    top: 0;
+    bottom: 0;
+    left: 6px;
+    right: auto;
+    width: 1px;
+    height: auto;
+    transform-origin: top center;
+    /* JS adapte scaleY au lieu de scaleX */
+  }
+}
+
+@media (max-width: 520px) {
+  .diff__block {
+    padding: var(--s-6) var(--s-5);
+  }
+  .service__block {
+    padding: var(--s-6) var(--s-5);
+  }
+}

@@ -1,0 +1,167 @@
+/* ============================================================
+   SK AGENCE — Motion states & hover/focus transitions
+   États initiaux [data-reveal] + micro-interactions CSS.
+   Tout conditionné à html.motion-ready pour garantir la lisibilité
+   si JS échoue ou si prefers-reduced-motion est actif.
+   ============================================================ */
+
+/* ------ ÉTATS INITIAUX : seulement quand motion-ready ------ */
+
+html.motion-ready [data-reveal] {
+  opacity: 0;
+  transform: translateY(20px);
+  will-change: transform, opacity;
+}
+
+/* Mots du hero découpés par SplitType */
+html.motion-ready [data-reveal-text] .word {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(16px);
+  will-change: transform, opacity;
+}
+
+/* Éléments cascade hero (tag, sub, accroche, cta-row, media, foot) */
+html.motion-ready .hero__text > .tag,
+html.motion-ready .hero__text > .hero__sub,
+html.motion-ready .hero__text > .hero__accroche,
+html.motion-ready .hero__text > .hero__cta-row,
+html.motion-ready .hero__media,
+html.motion-ready .hero__foot,
+html.motion-ready .p2-hero__kicker,
+html.motion-ready .p2-hero__lead {
+  opacity: 0;
+  transform: translateY(20px);
+  will-change: transform, opacity;
+}
+
+/* ------ REDUCED MOTION : désactivation totale ------ */
+html.motion-reduced *,
+html.motion-reduced *::before,
+html.motion-reduced *::after {
+  transition-duration: 0.01ms !important;
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+}
+
+/* Garantie lisibilité si reduced-motion */
+html.motion-reduced [data-reveal],
+html.motion-reduced [data-reveal-text] .word,
+html.motion-reduced .hero__text > .tag,
+html.motion-reduced .hero__text > .hero__sub,
+html.motion-reduced .hero__text > .hero__accroche,
+html.motion-reduced .hero__text > .hero__cta-row,
+html.motion-reduced .hero__media,
+html.motion-reduced .hero__foot,
+html.motion-reduced .p2-hero__kicker,
+html.motion-reduced .p2-hero__lead {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+/* ------ MICRO-INTERACTIONS HOVER / FOCUS (CSS uniquement) ------ */
+
+/* Boutons : translateY + arrow SVG */
+.btn {
+  transition:
+    background-color 0.22s cubic-bezier(0.33, 1, 0.68, 1),
+    border-color     0.22s cubic-bezier(0.33, 1, 0.68, 1),
+    color            0.22s cubic-bezier(0.33, 1, 0.68, 1),
+    transform        0.22s cubic-bezier(0.33, 1, 0.68, 1);
+}
+.btn:hover,
+.btn:focus-visible {
+  transform: translateY(-3px);
+}
+.btn:active {
+  transform: translateY(-1px);
+  transition-duration: 0.08s;
+}
+.btn svg {
+  transition: transform 0.22s cubic-bezier(0.33, 1, 0.68, 1);
+}
+.btn:hover svg,
+.btn:focus-visible svg {
+  transform: translateX(4px);
+}
+
+/* Cartes service */
+.service__block {
+  transition:
+    transform   0.22s cubic-bezier(0.33, 1, 0.68, 1),
+    box-shadow  0.22s cubic-bezier(0.33, 1, 0.68, 1),
+    border-color 0.22s cubic-bezier(0.33, 1, 0.68, 1);
+}
+.service__block:hover {
+  transform: translateY(-3px);
+}
+
+/* Cartes diff */
+.diff__block {
+  transition:
+    transform   0.22s cubic-bezier(0.33, 1, 0.68, 1),
+    border-color 0.22s cubic-bezier(0.33, 1, 0.68, 1);
+}
+.diff__block:hover {
+  transform: translateY(-3px);
+}
+
+/* Liens de nav : underline animé de gauche à droite (déjà en place dans components.css)
+   Le fichier components.css gère déjà ce comportement via ::after scaleX.
+   On s'assure juste que les durées correspondent aux tokens. */
+.nav__links a {
+  transition: color 0.22s cubic-bezier(0.33, 1, 0.68, 1);
+}
+.nav__links a::after {
+  transition: transform 0.22s cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+/* Liens footer */
+.footer a {
+  transition: color 0.22s cubic-bezier(0.33, 1, 0.68, 1);
+}
+.footer a:hover,
+.footer a:focus-visible {
+  color: var(--c-gold);
+}
+
+/* Lien méthode-bref */
+.methode-bref__link {
+  transition: color 0.22s cubic-bezier(0.33, 1, 0.68, 1);
+}
+.methode-bref__link svg {
+  transition: transform 0.22s cubic-bezier(0.33, 1, 0.68, 1);
+}
+.methode-bref__link:hover svg,
+.methode-bref__link:focus-visible svg {
+  transform: translateX(4px);
+}
+
+/* Étapes méthode */
+.methode-bref__step {
+  transition: transform 0.22s cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+/* FAQ items */
+.faq__item {
+  transition: background-color 0.22s cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+/* Icônes circulaires */
+.icon-circle {
+  transition:
+    background-color 0.22s cubic-bezier(0.33, 1, 0.68, 1),
+    border-color     0.22s cubic-bezier(0.33, 1, 0.68, 1),
+    transform        0.22s cubic-bezier(0.33, 1, 0.68, 1);
+}
+.diff__block:hover .icon-circle {
+  transform: scale(1.08);
+  border-color: var(--c-gold);
+}
+
+/* Focus visible universel — ring or cohérent */
+:focus-visible {
+  outline: 2px solid var(--c-gold);
+  outline-offset: 4px;
+  border-radius: var(--r-1);
+}

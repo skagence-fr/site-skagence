@@ -1,0 +1,1618 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#F5F0E6" />
+    <meta name="description" content="Grille Essentiel / Standard / Premium pour vitrine, e-commerce et application, délais par type et FAQ — SK Agence, studio web à Aubagne. Prix affichés, délai contractuel selon le projet." />
+    <meta name="robots" content="index,follow" />
+    <link rel="canonical" href="https://sk-agence.fr/en-savoir-plus.html" />
+
+    <!-- Open Graph -->
+    <meta property="og:site_name" content="SK Agence" />
+    <meta property="og:locale" content="fr_FR" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://sk-agence.fr/en-savoir-plus.html" />
+    <meta property="og:title" content="Offres &amp; tarifs — SK Agence" />
+    <meta property="og:description" content="La grille tarifaire complète, les délais par type de projet et les réponses aux questions concrètes." />
+    <meta property="og:image" content="https://sk-agence.fr/assets/og-cover.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="SK Agence — offres et tarifs détaillés." />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Offres &amp; tarifs — SK Agence" />
+    <meta name="twitter:description" content="Grille tarifaire complète, délais par type et FAQ." />
+    <meta name="twitter:image" content="https://sk-agence.fr/assets/og-cover.jpg" />
+
+    <title>Offres &amp; tarifs — SK Agence</title>
+
+    <!-- Font critique préchargée (self-hosted) -->
+    <link rel="preload" as="font" type="font/woff2" href="/fonts/fraunces-normal-variable.woff2" crossorigin />
+
+    <!-- B3 — Caveat (Google Fonts, accent manuscrit rare : 5 occurrences max sur le site) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&display=swap" />
+
+    <script type="module" src="/src/main.js"></script>
+
+    <style>
+      /* ── Styles propres à en-savoir-plus ── */
+
+      /* Grille de la page 2 */
+      .p2-hero {
+        padding: calc(var(--nav-h) + var(--s-9)) var(--pad-x) var(--s-10);
+        max-width: var(--maxw-wide);
+        margin: 0 auto;
+      }
+      .p2-hero__kicker {
+        font-family: var(--font-body);
+        font-size: var(--t-xs);
+        font-weight: 500;
+        letter-spacing: var(--ls-eyebrow);
+        text-transform: uppercase;
+        color: var(--c-gold);
+        margin-bottom: var(--s-4);
+        display: flex;
+        align-items: center;
+        gap: 14px;
+      }
+      .p2-hero__kicker::before {
+        content: '';
+        width: 24px; height: 1px;
+        background: var(--c-gold);
+      }
+      .p2-hero__title {
+        font-family: var(--font-display);
+        font-weight: 350;
+        font-size: var(--t-h1); /* B3 V2 — harmonisé sur token H1 unique (clamp 28/5vw/60) */
+        line-height: 1;
+        letter-spacing: -0.024em;
+        color: var(--c-ink);
+        margin: 0 0 var(--s-5);
+        font-variation-settings: 'opsz' 144, 'SOFT' 100;
+        text-wrap: balance;
+      }
+      .p2-hero__title em { font-style: italic; color: var(--c-gold); font-weight: 350; }
+      .p2-hero__lead {
+        font-family: var(--font-display);
+        font-style: italic;
+        font-weight: 350;
+        font-size: clamp(20px, 1.8vw, 26px);
+        line-height: 1.4;
+        color: var(--c-ink-soft);
+        max-width: 56ch;
+        margin: 0;
+      }
+
+      /* Ancres section */
+      .p2-section {
+        padding: var(--s-12) 0;
+        position: relative;
+      }
+      .p2-section + .p2-section {
+        border-top: 1px solid var(--c-hairline);
+      }
+      .p2-section--alt { background: var(--c-cream-2); } /* crème d'alternance Route B */
+      .p2-section--paper { background: var(--c-paper); }
+      .p2-section--dark {
+        background: var(--c-ink);
+        color: var(--c-ink-on-dark);
+      }
+
+      .p2-wrap {
+        max-width: var(--maxw-wide);
+        margin: 0 auto;
+        padding: 0 var(--pad-x);
+      }
+
+      .p2-hd {
+        display: grid;
+        grid-template-columns: 1fr 1.6fr;
+        gap: var(--s-7);
+        align-items: start;
+        margin-bottom: var(--s-9);
+      }
+      .p2-hd__left { display: grid; gap: var(--s-4); }
+      .p2-hd__right { display: grid; gap: var(--s-5); padding-top: 4px; }
+      .p2-hd__title {
+        font-family: var(--font-display);
+        font-weight: 350;
+        font-size: var(--t-d-lg);
+        line-height: var(--lh-display);
+        letter-spacing: var(--ls-display);
+        color: var(--c-ink);
+        margin: 0;
+        font-variation-settings: 'opsz' 96, 'SOFT' 80;
+        text-wrap: balance;
+      }
+      .p2-hd__title em { font-style: italic; color: var(--c-gold); font-weight: 350; }
+      .p2-hd__intro {
+        font-family: var(--font-display);
+        font-weight: 350;
+        font-style: italic;
+        font-size: var(--t-d-xs);
+        line-height: 1.35;
+        color: var(--c-ink-soft);
+        max-width: 52ch;
+        margin: 0;
+      }
+      .p2-section--dark .p2-hd__title { color: var(--c-ink-on-dark); }
+      .p2-section--dark .p2-hd__title em { color: var(--c-gold-2); }
+      .p2-section--dark .p2-hd__intro { color: var(--c-ink-soft-on-dark); }
+      .p2-section--dark .tag { color: var(--c-gold-2); }
+      .p2-section--dark .tag::before { background: var(--c-gold-2); }
+
+      @media (max-width: 880px) { .p2-hd { grid-template-columns: 1fr; } }
+
+      /* ── MOBILE — rythme vertical resserré (page 2) ── */
+      @media (max-width: 720px) {
+        .p2-hero {
+          padding-top: calc(var(--nav-h) + var(--s-5));
+          padding-bottom: var(--s-7);
+        }
+        .p2-section {
+          padding: var(--s-8) 0;          /* 72px au lieu de 128px */
+        }
+        .p2-hd {
+          margin-bottom: var(--s-6);      /* 32px au lieu de 96px */
+        }
+        .p2-hd {
+          margin-bottom: var(--s-7);
+        }
+      }
+
+      /* ── MÉTHODE DÉTAILLÉE ── */
+      .methode-detail__steps {
+        display: grid;
+        gap: 0;
+      }
+      .methode-detail__step {
+        display: grid;
+        grid-template-columns: 120px 1fr;
+        gap: var(--s-7);
+        align-items: start;
+        padding: var(--s-7) 0;
+        border-bottom: 1px solid var(--c-hairline);
+      }
+      .methode-detail__step:first-child { border-top: 1px solid var(--c-hairline); }
+      .methode-detail__day {
+        font-family: var(--font-stress);
+        font-weight: 800;
+        font-size: clamp(28px, 3vw, 44px);
+        line-height: var(--lh-stress);
+        letter-spacing: var(--ls-stress);
+        color: var(--c-gold);
+        text-transform: uppercase;
+        padding-top: 4px;
+      }
+      .methode-detail__body { display: grid; gap: var(--s-4); }
+      .methode-detail__name {
+        font-family: var(--font-display);
+        font-weight: 350;
+        font-size: clamp(26px, 2.5vw, 36px);
+        line-height: 1.15;
+        letter-spacing: -0.018em;
+        color: var(--c-ink);
+        margin: 0;
+        font-variation-settings: 'opsz' 64, 'SOFT' 80;
+      }
+      .methode-detail__name em { font-style: italic; color: var(--c-gold); font-weight: 350; }
+      .methode-detail__desc {
+        font-family: var(--font-body);
+        font-size: var(--t-base);
+        line-height: 1.65;
+        color: var(--c-ink-soft);
+        max-width: 60ch;
+        margin: 0;
+      }
+
+      .methode-detail__clause {
+        margin-top: var(--s-8);
+        padding: var(--s-6);
+        border-left: 3px solid var(--c-gold);
+        background: var(--c-bg-2);
+        border-radius: 0 var(--r-3) var(--r-3) 0;
+      }
+      .methode-detail__clause p {
+        font-family: var(--font-display);
+        font-style: italic;
+        font-weight: 350;
+        font-size: clamp(18px, 1.5vw, 22px);
+        line-height: 1.45;
+        color: var(--c-ink);
+        margin: 0;
+      }
+      .methode-detail__clause p em { color: var(--c-gold); font-style: italic; }
+      @media (max-width: 640px) {
+        .methode-detail__step { grid-template-columns: 80px 1fr; gap: var(--s-5); }
+      }
+
+      /* ── OFFRES EN DÉTAIL ── */
+      .offres-detail__intro-prix {
+        margin-bottom: var(--s-9);
+        padding: var(--s-6);
+        background: var(--c-surface);
+        border-radius: var(--r-4);
+        max-width: 64ch;
+      }
+      .offres-detail__intro-prix p {
+        font-family: var(--font-body);
+        font-size: var(--t-base);
+        line-height: 1.65;
+        color: var(--c-ink-soft);
+        margin: 0 0 var(--s-4); /* aération entre lignes (idée par idée) */
+      }
+      .offres-detail__intro-prix p:last-child { margin-bottom: 0; }
+      .offres-detail__intro-prix strong { color: var(--c-ink); }
+
+      /* Dernière ligne — signature aérée, ink renforcée + italique or sur "on s'en occupe" */
+      .offres-detail__intro-prix p.offres-detail__intro-signature {
+        margin-top: var(--s-5);
+        color: var(--c-ink);
+        font-weight: 500;
+      }
+      .offres-detail__intro-signature em {
+        font-family: var(--font-display);
+        font-style: italic;
+        font-weight: 350;
+        color: var(--c-gold);
+        font-size: 1.05em;
+      }
+
+      .offres-detail__group {
+        margin-bottom: var(--s-10);
+      }
+      .offres-detail__group-title {
+        font-family: var(--font-display);
+        font-weight: 350;
+        font-size: var(--t-h3); /* B3 V2 — harmonisé H3 unique (vitrine/e-commerce/Application = même taille stricte) */
+        line-height: 1.1;
+        letter-spacing: -0.018em;
+        color: var(--c-ink);
+        margin: 0 0 var(--s-6);
+        font-variation-settings: 'opsz' 64, 'SOFT' 80;
+        padding-bottom: var(--s-5);
+        border-bottom: 1px solid var(--c-hairline);
+      }
+      .offres-detail__group-title em { font-style: italic; color: var(--c-gold); }
+
+      .offres-detail__cards {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--s-5);
+      }
+      .offres-detail__card {
+        border: 1px solid var(--c-hairline);
+        border-radius: var(--r-4);
+        padding: var(--s-6);
+        background: var(--c-paper);
+        display: grid;
+        gap: var(--s-5);
+        align-content: start;
+      }
+      .offres-detail__card--highlight {
+        border-color: var(--c-gold-3);
+        background: var(--c-bg);
+        position: relative;
+      }
+      .offres-detail__card--highlight::before {
+        content: 'Le plus demandé';
+        position: absolute;
+        top: -1px; right: var(--s-5);
+        transform: translateY(-50%);
+        font-family: var(--font-body);
+        font-size: var(--t-xs);
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--c-paper);
+        background: var(--c-gold);
+        padding: 4px 12px;
+        border-radius: var(--r-full);
+      }
+      .offres-detail__tier {
+        font-family: var(--font-body);
+        font-size: var(--t-xs);
+        font-weight: 600;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--c-muted);
+      }
+      .offres-detail__price {
+        font-family: var(--font-stress);
+        font-weight: 800;
+        font-size: clamp(28px, 2.5vw, 40px);
+        line-height: 1;
+        letter-spacing: -0.01em;
+        color: var(--c-ink);
+      }
+      .offres-detail__price em {
+        display: block;
+        font-family: var(--font-body);
+        font-style: normal;
+        font-weight: 400;
+        font-size: var(--t-sm);
+        color: var(--c-muted);
+        letter-spacing: 0;
+        margin-top: 4px;
+      }
+      .offres-detail__maint {
+        font-family: var(--font-body);
+        font-size: var(--t-sm);
+        color: var(--c-ink-soft);
+        padding-top: var(--s-4);
+        border-top: 1px solid var(--c-hairline);
+      }
+      .offres-detail__maint strong { color: var(--c-ink); }
+      .offres-detail__inclus {
+        font-family: var(--font-body);
+        font-size: var(--t-sm);
+        color: var(--c-ink-soft);
+        line-height: 1.5;
+      }
+      .offres-detail__inclus li { padding: 4px 0; padding-left: 16px; position: relative; }
+      .offres-detail__inclus li::before {
+        content: '';
+        position: absolute;
+        left: 0; top: 50%;
+        transform: translateY(-50%);
+        width: 5px; height: 5px;
+        border-radius: 50%;
+        background: var(--c-gold);
+      }
+
+      .offres-detail__financement {
+        margin-top: var(--s-7);
+        padding: var(--s-6);
+        background: var(--c-ink);
+        color: var(--c-ink-on-dark);
+        border-radius: var(--r-4);
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--s-5);
+      }
+      .offres-detail__financement p {
+        font-family: var(--font-display);
+        font-style: italic;
+        font-weight: 350;
+        font-size: clamp(18px, 1.6vw, 23px);
+        line-height: 1.4;
+        margin: 0;
+        max-width: 52ch;
+      }
+      .offres-detail__financement p em { color: var(--c-gold-2); font-style: italic; }
+      .offres-detail__financement a {
+        flex-shrink: 0;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 14px 24px;
+        background: var(--c-gold);
+        color: var(--c-paper);
+        border-radius: var(--r-full);
+        font-family: var(--font-body);
+        font-size: var(--t-sm);
+        font-weight: 500;
+        letter-spacing: 0.02em;
+        transition: background-color .25s var(--ease-out);
+      }
+      .offres-detail__financement a:hover { background: var(--c-gold-2); }
+      .offres-detail__financement a svg { width: 14px; height: 14px; }
+
+      .offres-detail__note {
+        margin-top: var(--s-6);
+        font-family: var(--font-body);
+        font-size: var(--t-sm);
+        color: var(--c-muted);
+        line-height: 1.6;
+      }
+
+      /* Argument transparence prix */
+      .offres-detail__why {
+        margin-top: var(--s-8);
+        padding: var(--s-6);
+        background: var(--c-bg-2);
+        border: 1px solid var(--c-hairline);
+        border-radius: var(--r-4);
+        max-width: 72ch;
+      }
+      .offres-detail__why-title {
+        font-family: var(--font-display);
+        font-weight: 350;
+        font-size: var(--t-h3); /* B3 V2 — harmonisé H3 unique */
+        line-height: 1.3;
+        color: var(--c-ink);
+        margin: 0 0 var(--s-4);
+      }
+      .offres-detail__why-title em { font-style: italic; color: var(--c-gold); }
+      .offres-detail__why p {
+        font-family: var(--font-body);
+        font-size: var(--t-base);
+        line-height: 1.65;
+        color: var(--c-ink-soft);
+        margin: 0 0 var(--s-3);
+      }
+      .offres-detail__why p:last-child { margin: 0; }
+      .offres-detail__why p strong { color: var(--c-ink); }
+
+      /* Mobile : densifier les pavés longs (offres-detail__why, p2-hero__lead, p2-hd__intro)
+         sans tasser — un cran de font + interligne plus serré. */
+      @media (max-width: 720px) {
+        .offres-detail__why {
+          padding: var(--s-5);
+        }
+        .offres-detail__why p {
+          font-size: var(--t-sm);
+          line-height: 1.5;
+        }
+        .p2-hero__lead {
+          font-size: clamp(17px, 4.2vw, 21px);
+          line-height: 1.35;
+        }
+        .p2-hd__intro {
+          font-size: var(--t-base);
+          line-height: 1.4;
+        }
+      }
+
+      @media (max-width: 880px) {
+        .offres-detail__cards { grid-template-columns: 1fr; }
+        .offres-detail__card--highlight::before { display: none; }
+      }
+
+      /* ── DÉLAIS ── */
+      .delais__table-wrap {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        border-radius: var(--r-3);
+        border: 1px solid var(--c-hairline);
+      }
+      .delais__table {
+        width: 100%;
+        border-collapse: collapse;
+        font-family: var(--font-body);
+        font-size: var(--t-base);
+      }
+      .delais__table thead tr {
+        background: var(--c-ink);
+        color: var(--c-ink-on-dark);
+      }
+      .delais__table th {
+        padding: var(--s-4) var(--s-6);
+        text-align: left;
+        font-weight: 600;
+        font-size: var(--t-sm);
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+      .delais__table td {
+        padding: var(--s-4) var(--s-6);
+        border-bottom: 1px solid var(--c-hairline);
+        color: var(--c-ink-soft);
+        vertical-align: top;
+      }
+      .delais__table tr:last-child td { border-bottom: 0; }
+      .delais__table tr:nth-child(even) td { background: var(--c-bg-2); }
+      .delais__table td:first-child { font-weight: 600; color: var(--c-ink); }
+      .delais__table td strong { color: var(--c-gold); font-weight: 700; }
+
+      /* ── DÉLAIS — layout empilé sur mobile (chaque ligne = une carte verticale) ── */
+      @media (max-width: 720px) {
+        .delais__table-wrap {
+          overflow-x: visible;  /* plus de scroll horizontal */
+        }
+        .delais__table,
+        .delais__table tbody,
+        .delais__table tr,
+        .delais__table td {
+          display: block;
+          width: 100%;
+        }
+        .delais__table thead {
+          display: none;  /* labels intégrés dans chaque cellule via data-label */
+        }
+        .delais__table tr {
+          padding: var(--s-5) var(--s-5);
+          border-bottom: 1px solid var(--c-hairline);
+        }
+        .delais__table tr:last-child { border-bottom: 0; }
+        .delais__table tr:nth-child(even) { background: var(--c-bg-2); }
+        .delais__table tr:nth-child(even) td { background: transparent; }  /* override */
+        .delais__table td {
+          padding: 0;
+          border-bottom: 0;
+          background: transparent;
+        }
+        .delais__table td:first-child {
+          font-family: var(--font-display);
+          font-size: var(--t-lg);
+          color: var(--c-ink);
+          margin-bottom: var(--s-3);
+        }
+        .delais__table td[data-label] {
+          font-size: var(--t-sm);
+          margin-top: var(--s-2);
+          color: var(--c-ink-soft);
+        }
+        .delais__table td[data-label]::before {
+          content: attr(data-label) " · ";
+          font-family: var(--font-body);
+          font-weight: 600;
+          font-size: var(--t-xs);
+          letter-spacing: 0.06em;
+          text-transform: uppercase;
+          color: var(--c-ink);
+          margin-right: 4px;
+        }
+      }
+
+      .delais__note {
+        margin-top: var(--s-5);
+        font-family: var(--font-body);
+        font-size: var(--t-sm);
+        color: var(--c-muted);
+        line-height: 1.6;
+        max-width: 68ch;
+      }
+
+      /* ── FAQ ── */
+      .faq__list {
+        max-width: 800px;
+      }
+      .faq__item {
+        border-bottom: 1px solid var(--c-hairline);
+      }
+      .faq__item:first-child { border-top: 1px solid var(--c-hairline); }
+      .faq__item summary {
+        display: flex;
+        align-items: center;
+        gap: var(--s-5);
+        padding: var(--s-6) 0;
+        cursor: pointer;
+        list-style: none;
+        -webkit-appearance: none;
+        appearance: none;
+      }
+      .faq__item summary::-webkit-details-marker { display: none; }
+      .faq__num {
+        font-family: var(--font-stress);
+        font-weight: 800;
+        font-size: var(--t-s-sm);
+        color: var(--c-gold);
+        line-height: 1;
+        flex-shrink: 0;
+      }
+      .faq__q {
+        font-family: var(--font-display);
+        font-weight: 350;
+        font-size: clamp(20px, 1.8vw, 26px);
+        line-height: 1.25;
+        color: var(--c-ink);
+        font-variation-settings: 'opsz' 36, 'SOFT' 80;
+        flex: 1;
+      }
+      .faq__icon {
+        width: 28px; height: 28px;
+        border-radius: 50%;
+        border: 1px solid var(--c-hairline);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        color: var(--c-muted);
+        font-size: var(--t-lg);
+        line-height: 1;
+        transition: background-color .25s var(--ease-out), color .25s var(--ease-out);
+        user-select: none;
+      }
+      .faq__icon::after { content: '+'; }
+      .faq__item[open] .faq__icon { background: var(--c-ink); color: var(--c-bg); border-color: var(--c-ink); }
+      .faq__item[open] .faq__icon::after { content: '−'; }
+      .faq__a {
+        overflow: hidden;
+      }
+      .faq__a > div {
+        padding: 0 0 var(--s-6) calc(28px + var(--s-5) + var(--s-5));
+      }
+      .faq__a p {
+        font-family: var(--font-body);
+        font-size: var(--t-base);
+        line-height: 1.65;
+        color: var(--c-ink-soft);
+        margin: 0;
+        max-width: 58ch;
+      }
+      @media (max-width: 640px) {
+        .faq__a > div { padding-left: 0; }
+        .faq__num { display: none; }
+      }
+
+      /* ── MENTIONS LÉGALES BLOC ── */
+      .legal-links__block {
+        padding: var(--s-7) var(--s-8);
+        background: var(--c-bg-2);
+        border: 1px solid var(--c-hairline);
+        border-radius: var(--r-4);
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--s-5);
+        align-items: center;
+        justify-content: space-between;
+        max-width: 680px;
+      }
+      .legal-links__text {
+        font-family: var(--font-display);
+        font-style: italic;
+        font-weight: 350;
+        font-size: clamp(18px, 1.5vw, 22px);
+        color: var(--c-ink);
+        margin: 0;
+        line-height: 1.4;
+      }
+      .legal-links__nav {
+        display: flex;
+        flex-direction: column;
+        gap: var(--s-3);
+      }
+      .legal-links__nav a {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-family: var(--font-body);
+        font-size: var(--t-sm);
+        font-weight: 500;
+        color: var(--c-ink);
+        border-bottom: 1px solid var(--c-gold);
+        padding-bottom: 2px;
+        transition: color .25s var(--ease-out);
+      }
+      .legal-links__nav a:hover { color: var(--c-gold); }
+
+      /* ── SECTION LÉGALE : variante sobre (annexe) ── */
+      .p2-section--legal {
+        padding: var(--s-9) 0;
+      }
+      /* Supprime le border-top entre sections pour la légale : déjà traitée comme annexe */
+      .p2-section + .p2-section--legal {
+        border-top: 1px solid var(--c-hairline);
+      }
+      /* Header de section compact : espacement réduit */
+      .p2-hd--compact {
+        margin-bottom: var(--s-6);
+      }
+      /* Titre de section nettement plus petit — niveau h3 visuel */
+      .p2-hd__title--sm {
+        font-size: clamp(22px, 2.5vw, 34px);
+        font-variation-settings: 'opsz' 48, 'SOFT' 60;
+        color: var(--c-ink-soft);
+        text-wrap: balance;
+      }
+    </style>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Le site m'appartient ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Oui. En paiement comptant, il est à vous dès le solde réglé. En Facilité 24 mois (vitrine uniquement), il devient votre propriété au paiement intégral du solde — clause de réserve de propriété, art. 2367 C. civ. Rachat anticipé possible à tout moment."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Que couvre l'abonnement de maintenance ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Hébergement, sauvegardes, mises à jour de sécurité. Vos modifications chaque mois. Conformité légale tenue à jour, et un rapport simple. Vous travaillez, votre site aussi."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Et si je veux arrêter l'abonnement ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Engagement de 12 mois, puis sans engagement (préavis 30 jours). Vous repartez avec votre site et vos contenus. Aucune rétention, aucune pénalité."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Vous travaillez à distance ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Oui, partout en France. Cadrage en visio ou par téléphone, livraison en ligne. Le studio est à Aubagne — même exigence partout, aucune limite géographique."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Aussi vite, c'est sérieux ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "La vitesse vient de l'organisation, pas du bâclage. Une chaîne de production outillée, affinée projet après projet. Des jours dédiés vous sont réservés pour ajuster. Et la date de mise en ligne est dans le contrat — pas une promesse marketing."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Quels contenus dois-je fournir, et quand ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Dès le J1, on vous remet une checklist claire. Textes de chaque page, photos en haute définition, logo (SVG, AI, PDF ou PNG haute résolution). Et les accès aux outils existants si refonte (hébergeur, domaine, analytics, réseaux). Vous êtes guidé, jamais livré à vous-même. Rappel : les délais démarrent à réception de tous vos contenus. Un retard de votre côté ne devient jamais un retard du nôtre — c'est inscrit au contrat."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Comment se passe le paiement ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Paiement comptant : un acompte de 30 % à la signature, le solde à la livraison. Facturation micro-entreprise (TVA non applicable, art. 293 B du CGI). Moyens : virement ou carte. Pour étaler (vitrine uniquement), voir la formule Facilité 24 mois. Aucun coût caché, aucune facturation au temps passé — le prix du devis est le prix final."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Et après la livraison, si je veux des modifications ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "L'abonnement maintenance prend le relais dès le lendemain de la mise en ligne. Inclus chaque mois : vos modifications de contenu, ajout/retrait d'une section, mises à jour techniques, support email. En supplément (devis ferme à l'unité) : nouvelle page complète, fonctionnalité majeure (réservation, paiement, espace client, multilingue), refonte graphique. Vous savez toujours ce qui est inclus — et ce qui ne l'est pas."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Je peux étaler le paiement ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Oui, sur la vitrine. Vous réglez 30 % à la signature, puis le reste en 24 fois — autour de 193 €/mois tout compris (création + maintenance), selon la formule. Au-delà des 24 mois, il ne reste que la maintenance. E-commerce et application : paiement comptant. Demandez la formule dans votre message, on cale tout ensemble."
+          }
+        }
+      ]
+    }
+    </script>
+  </head>
+  <body>
+
+    <!-- ============== PRÉLOADER ============== -->
+    <div class="loader" id="loader" aria-hidden="true">
+      <p class="loader__mark">SK<span class="sk-dot" aria-hidden="true"></span><em>Agence</em></p>
+    </div>
+
+    <!-- ============== CURSEUR CUSTOM ============== -->
+    <div class="cursor" id="cursor" aria-hidden="true">
+      <div class="cursor__ring"></div>
+      <div class="cursor__dot"></div>
+    </div>
+
+    <!-- ============== HEADER / NAV ============== -->
+    <!-- ============== HEADER / NAV — pilule flottante ============== -->
+    <header class="nav" role="banner">
+      <a class="nav__brand" href="/" aria-label="SK Agence — accueil">SK</a>
+      <span class="nav__spacer" aria-hidden="true"></span>
+      <a class="nav__cta" href="/#contact">Demander un devis</a>
+      <button class="nav__burger" id="burger" aria-label="Ouvrir le menu" aria-controls="menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+      </button>
+    </header>
+
+    <!-- ============== MENU PLEIN ÉCRAN bleu nuit ============== -->
+    <div class="menu-overlay" id="menu" aria-hidden="true" role="dialog" aria-label="Menu principal">
+      <div class="menu-overlay__nav">
+        <span class="menu-overlay__brand" aria-hidden="true">SK</span>
+        <span class="menu-overlay__spacer" aria-hidden="true"></span>
+        <a class="menu-overlay__cta" href="/#contact">Demander un devis</a>
+        <button class="menu-overlay__close" id="menu-close" aria-label="Fermer le menu">✕</button>
+      </div>
+      <ol class="menu-overlay__list">
+        <li><a href="/"><span>Accueil</span><span class="menu-overlay__num">01</span></a></li>
+        <li><a href="/#services"><span>Ce que je fais</span><span class="menu-overlay__num">02</span></a></li>
+        <li><a href="/#pourquoi"><span>Pourquoi SK</span><span class="menu-overlay__num">03</span></a></li>
+        <li><a href="/#methode"><span>Ma méthode</span><span class="menu-overlay__num">04</span></a></li>
+        <li><a href="/en-savoir-plus.html"><span>Offres &amp; tarifs</span><span class="menu-overlay__num">05</span></a></li>
+        <li class="menu-overlay__link--highlight"><a href="/en-savoir-plus.html#faq"><span>FAQ</span><span class="menu-overlay__num">06</span></a></li>
+      </ol>
+      <div class="menu-overlay__foot">
+        <a class="menu-overlay__foot-mail" href="mailto:sk.agence@outlook.fr">sk.agence@outlook.fr</a>
+        <p class="menu-overlay__foot-loc">Aubagne — partout en France</p>
+        <p class="menu-overlay__foot-copy">© 2026</p>
+      </div>
+    </div>
+
+    <main>
+
+      <!-- ── Intro hero page 2 ── -->
+      <div class="p2-hero">
+        <p class="p2-hero__kicker">Offres &amp; tarifs</p>
+        <h1 class="p2-hero__title" data-reveal-text>Le détail <span class="accent-script">complet.</span></h1>
+        <p class="p2-hero__lead">Les détails qui comptent.<br />Grille tarifaire, délais par type de projet, et vos questions fréquentes.</p>
+      </div>
+
+      <!-- ==========================================================
+           1 · OFFRES EN DÉTAIL (ancre #offres)
+           ========================================================== -->
+      <section class="p2-section p2-section--alt" id="offres" aria-labelledby="offres-det-title">
+        <div class="p2-wrap">
+          <div class="p2-hd">
+            <div class="p2-hd__left">
+              <p class="tag">Tarifs</p>
+            </div>
+            <div class="p2-hd__right">
+              <h2 class="p2-hd__title" id="offres-det-title">Les offres <span class="accent-script">en détail.</span></h2>
+              <p class="p2-hd__intro">Trois niveaux pour chaque type de projet.</p>
+            </div>
+          </div>
+
+          <div class="offres-detail__intro-prix">
+            <p>Tous les prix sont des «&nbsp;à partir de&nbsp;» HT — sans astérisque, sans devis mystère.</p>
+            <p>Ce que vous payez, c'est le résultat&nbsp;: un site en ligne qui fonctionne, conforme, performant, maintenu. Pas des heures facturées, pas une liste de tâches.</p>
+            <p>Et ça ne s'arrête pas à la livraison.</p>
+            <p>Chaque projet inclut la maintenance mensuelle — hébergement, sauvegardes, modifications, conformité à jour.</p>
+            <p class="offres-detail__intro-signature">On ne vous livre pas un site, <em>on s'en occupe.</em></p>
+          </div>
+
+          <!-- Site vitrine — prototype pricing -->
+          <div class="offres-detail__group">
+            <h3 class="offres-detail__group-title">Site <span class="accent-script accent-script--service" data-word="vitrine">vitrine</span></h3>
+
+            <div class="pricing-vitrine" aria-label="Paliers Vitrine : Essentiel, Standard, Premium">
+
+              <!-- ── Essentiel ── -->
+              <article class="pcard" aria-labelledby="vitrine-essentiel-name">
+
+                <h4 class="pcard__name" id="vitrine-essentiel-name">Essentiel</h4>
+
+                <div class="pcard__price-wrap" aria-label="1 490 euros à partir de, hors taxes">
+                  <span class="pcard__currency" aria-hidden="true">€</span>
+                  <span class="pcard__amount" data-price="1490" aria-hidden="true">1&nbsp;490</span>
+                  <span class="pcard__suffix" aria-hidden="true">
+                    <span class="pcard__ht">HT</span>
+                    <span class="pcard__partir">à partir de</span>
+                  </span>
+                </div>
+
+                <div class="pcard__maint">
+                  <strong>Maintenance&nbsp;:</strong> 119&nbsp;€/mois
+                </div>
+
+                <p class="pcard__finance"><strong>Aussi en 24 fois&nbsp;:</strong> ~193&nbsp;€/mois tout compris<sup>*</sup></p>
+
+                <ul class="pcard__list" aria-label="Inclus dans l'Essentiel">
+                  <li class="pcard__item">
+                    <svg class="pcard__check" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+                      <path d="M3 8L6.5 11.5L13 5"/>
+                    </svg>
+                    <span>1 à 5 pages</span>
+                  </li>
+                  <li class="pcard__item">
+                    <svg class="pcard__check" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+                      <path d="M3 8L6.5 11.5L13 5"/>
+                    </svg>
+                    <span>Design sur-mesure</span>
+                  </li>
+                  <li class="pcard__item">
+                    <svg class="pcard__check" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+                      <path d="M3 8L6.5 11.5L13 5"/>
+                    </svg>
+                    <span>Mobile-first + Safari iOS</span>
+                  </li>
+                  <li class="pcard__item">
+                    <svg class="pcard__check" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+                      <path d="M3 8L6.5 11.5L13 5"/>
+                    </svg>
+                    <span>2 séries de retours</span>
+                  </li>
+                  <li class="pcard__item">
+                    <svg class="pcard__check" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+                      <path d="M3 8L6.5 11.5L13 5"/>
+                    </svg>
+                    <span>RGPD + mentions légales</span>
+                  </li>
+                  <li class="pcard__item">
+                    <svg class="pcard__check" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+                      <path d="M3 8L6.5 11.5L13 5"/>
+                    </svg>
+                    <span>Lighthouse 90+ garanti</span>
+                  </li>
+                </ul>
+              </article>
+
+              <!-- ── Standard (centrale, le plus demandé) ── -->
+              <article class="pcard pcard--center" aria-labelledby="vitrine-standard-name">
+
+                <p class="pcard__eyebrow">Le plus demandé</p>
+                <h4 class="pcard__name" id="vitrine-standard-name">Standard</h4>
+
+                <div class="pcard__price-wrap" aria-label="2 490 euros à partir de, hors taxes">
+                  <span class="pcard__currency" aria-hidden="true">€</span>
+                  <span class="pcard__amount" data-price="2490" aria-hidden="true">2&nbsp;490</span>
+                  <span class="pcard__suffix" aria-hidden="true">
+                    <span class="pcard__ht">HT</span>
+                    <span class="pcard__partir">à partir de</span>
+                  </span>
+                </div>
+
+                <div class="pcard__maint">
+                  <strong>Maintenance&nbsp;:</strong> 119&nbsp;€/mois
+                </div>
+
+                <p class="pcard__finance"><strong>Aussi en 24 fois&nbsp;:</strong> ~222&nbsp;€/mois tout compris<sup>*</sup></p>
+
+                <ul class="pcard__list" aria-label="Inclus dans le Standard">
+                  <li class="pcard__item">
+                    <svg class="pcard__check" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+                      <path d="M3 8L6.5 11.5L13 5"/>
+                    </svg>
+                    <span>Tout l'Essentiel</span>
+                  </li>
+                  <li class="pcard__item">
+                    <svg class="pcard__check" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+                      <path d="M3 8L6.5 11.5L13 5"/>
+                    </svg>
+                    <span>Jusqu'à 10 pages</span>
+                  </li>
+                  <li class="pcard__item">
+                    <svg class="pcard__check" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+                      <path d="M3 8L6.5 11.5L13 5"/>
+                    </svg>
+                    <span>Animations avancées</span>
+                  </li>
+                  <li class="pcard__item">
+                    <svg class="pcard__check" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+                      <path d="M3 8L6.5 11.5L13 5"/>
+                    </svg>
+                    <span>Formulaire de contact avancé</span>
+                  </li>
+                  <li class="pcard__item">
+                    <svg class="pcard__check" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+                      <path d="M3 8L6.5 11.5L13 5"/>
+                    </svg>
+                    <span>Optimisation SEO renforcée</span>
+                  </li>
+                </ul>
+              </article>
+
+              <!-- ── Premium ── -->
+              <article class="pcard" aria-labelledby="vitrine-premium-name">
+
+                <h4 class="pcard__name" id="vitrine-premium-name">Premium</h4>
+
+                <div class="pcard__price-wrap" aria-label="3 490 euros à partir de, hors taxes">
+                  <span class="pcard__currency" aria-hidden="true">€</span>
+                  <span class="pcard__amount" data-price="3490" aria-hidden="true">3&nbsp;490</span>
+                  <span class="pcard__suffix" aria-hidden="true">
+                    <span class="pcard__ht">HT</span>
+                    <span class="pcard__partir">à partir de</span>
+                  </span>
+                </div>
+
+                <div class="pcard__maint">
+                  <strong>Maintenance&nbsp;:</strong> 119&nbsp;€/mois
+                </div>
+
+                <p class="pcard__finance"><strong>Aussi en 24 fois&nbsp;:</strong> ~251&nbsp;€/mois tout compris<sup>*</sup></p>
+
+                <ul class="pcard__list" aria-label="Inclus dans le Premium">
+                  <li class="pcard__item">
+                    <svg class="pcard__check" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+                      <path d="M3 8L6.5 11.5L13 5"/>
+                    </svg>
+                    <span>Tout le Standard</span>
+                  </li>
+                  <li class="pcard__item">
+                    <svg class="pcard__check" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+                      <path d="M3 8L6.5 11.5L13 5"/>
+                    </svg>
+                    <span>Pages illimitées</span>
+                  </li>
+                  <li class="pcard__item">
+                    <svg class="pcard__check" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+                      <path d="M3 8L6.5 11.5L13 5"/>
+                    </svg>
+                    <span>Intégrations sur-mesure</span>
+                  </li>
+                  <li class="pcard__item">
+                    <svg class="pcard__check" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+                      <path d="M3 8L6.5 11.5L13 5"/>
+                    </svg>
+                    <span>Blog ou espace actualités</span>
+                  </li>
+                  <li class="pcard__item">
+                    <svg class="pcard__check" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+                      <path d="M3 8L6.5 11.5L13 5"/>
+                    </svg>
+                    <span>Support prioritaire</span>
+                  </li>
+                </ul>
+              </article>
+
+            </div><!-- /.pricing-vitrine -->
+          </div><!-- /.offres-detail__group -->
+
+          <!-- E-commerce -->
+          <div class="offres-detail__group">
+            <h3 class="offres-detail__group-title">Site <span class="accent-script accent-script--service" data-word="e-commerce">e-commerce</span></h3>
+
+            <div class="pricing-ecommerce" aria-label="Paliers E-commerce : Essentiel, Standard, Premium">
+
+              <!-- ── Essentiel ── -->
+              <article class="pcard" aria-labelledby="ecom-essentiel-name">
+
+                <h4 class="pcard__name" id="ecom-essentiel-name">Essentiel</h4>
+
+                <div class="pcard__price-wrap" aria-label="2 900 euros à partir de, hors taxes">
+                  <span class="pcard__currency" aria-hidden="true">€</span>
+                  <span class="pcard__amount" data-price="2900" data-price-start="2000" aria-hidden="true">2&nbsp;900</span>
+                  <span class="pcard__suffix" aria-hidden="true">
+                    <span class="pcard__ht">HT</span>
+                    <span class="pcard__partir">à partir de</span>
+                  </span>
+                </div>
+
+                <div class="pcard__maint">
+                  <strong>Maintenance&nbsp;:</strong> 199&nbsp;€/mois
+                </div>
+
+                <p class="pcard__comptant">Paiement comptant uniquement.</p>
+
+                <ul class="pcard__list" aria-label="Inclus dans l'Essentiel E-commerce">
+                  <li class="pcard__item">
+                    <svg class="pcard__check" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+                      <path d="M3 8L6.5 11.5L13 5"/>
+                    </svg>
+                    <span>Catalogue produits jusqu'à 50 réf.</span>
+                  </li>
+                  <li class="pcard__item">
+                    <svg class="pcard__check" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+                      <path d="M3 8L6.5 11.5L13 5"/>
+                    </svg>
+                    <span>Paiement Stripe intégré</span>
+                  </li>
+                  <li class="pcard__item">
+                    <svg class="pcard__check" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+                      <path d="M3 8L6.5 11.5L13 5"/>
+                    </svg>
+                    <span>Gestion des commandes</span>
+                  </li>
+                  <li class="pcard__item">
+                    <svg class="pcard__check" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+                      <path d="M3 8L6.5 11.5L13 5"/>
+                    </svg>
+                    <span>Mobile-first + Lighthouse 90+</span>
+                  </li>
+                  <li class="pcard__item">
+                    <svg class="pcard__check" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+                      <path d="M3 8L6.5 11.5L13 5"/>
+                    </svg>
+                    <span>RGPD + CGV conformes</span>
+                  </li>
+                </ul>
+              </article>
+
+              <!-- ── Standard (centrale, le plus demandé) ── -->
+              <article class="pcard pcard--center" aria-labelledby="ecom-standard-name">
+
+                <p class="pcard__eyebrow">Le plus demandé</p>
+                <h4 class="pcard__name" id="ecom-standard-name">Standard</h4>
+
+                <div class="pcard__price-wrap" aria-label="4 900 euros à partir de, hors taxes">
+                  <span class="pcard__currency" aria-hidden="true">€</span>
+                  <span class="pcard__amount" data-price="4900" data-price-start="4000" aria-hidden="true">4&nbsp;900</span>
+                  <span class="pcard__suffix" aria-hidden="true">
+                    <span class="pcard__ht">HT</span>
+                    <span class="pcard__partir">à partir de</span>
+                  </span>
+                </div>
+
+                <div class="pcard__maint">
+                  <strong>Maintenance&nbsp;:</strong> 199&nbsp;€/mois
+                </div>
+
+                <p class="pcard__comptant">Paiement comptant uniquement.</p>
+
+                <ul class="pcard__list" aria-label="Inclus dans le Standard E-commerce">
+                  <li class="pcard__item">
+                    <svg class="pcard__check" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+                      <path d="M3 8L6.5 11.5L13 5"/>
+                    </svg>
+                    <span>Tout l'Essentiel</span>
+                  </li>
+                  <li class="pcard__item">
+                    <svg class="pcard__check" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+                      <path d="M3 8L6.5 11.5L13 5"/>
+                    </svg>
+                    <span>Catalogue illimité + filtres</span>
+                  </li>
+                  <li class="pcard__item">
+                    <svg class="pcard__check" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+                      <path d="M3 8L6.5 11.5L13 5"/>
+                    </svg>
+                    <span>Codes promo + emails transac.</span>
+                  </li>
+                  <li class="pcard__item">
+                    <svg class="pcard__check" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+                      <path d="M3 8L6.5 11.5L13 5"/>
+                    </svg>
+                    <span>Tableau de bord étendu</span>
+                  </li>
+                  <li class="pcard__item">
+                    <svg class="pcard__check" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+                      <path d="M3 8L6.5 11.5L13 5"/>
+                    </svg>
+                    <span>SEO e-commerce renforcé</span>
+                  </li>
+                </ul>
+              </article>
+
+              <!-- ── Premium ── -->
+              <article class="pcard" aria-labelledby="ecom-premium-name">
+
+                <h4 class="pcard__name" id="ecom-premium-name">Premium</h4>
+
+                <div class="pcard__price-wrap" aria-label="6 900 euros et plus à partir de, hors taxes">
+                  <span class="pcard__currency" aria-hidden="true">€</span>
+                  <span class="pcard__amount" data-price="6900" data-price-start="6000" aria-hidden="true">6&nbsp;900</span>
+                  <span class="pcard__suffix" aria-hidden="true">
+                    <span class="pcard__ht">HT +</span>
+                    <span class="pcard__partir">à partir de</span>
+                  </span>
+                </div>
+
+                <div class="pcard__maint">
+                  <strong>Maintenance&nbsp;:</strong> 199&nbsp;€/mois
+                </div>
+
+                <p class="pcard__comptant">Paiement comptant uniquement.</p>
+
+                <ul class="pcard__list" aria-label="Inclus dans le Premium E-commerce">
+                  <li class="pcard__item">
+                    <svg class="pcard__check" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+                      <path d="M3 8L6.5 11.5L13 5"/>
+                    </svg>
+                    <span>Tout le Standard</span>
+                  </li>
+                  <li class="pcard__item">
+                    <svg class="pcard__check" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+                      <path d="M3 8L6.5 11.5L13 5"/>
+                    </svg>
+                    <span>Multi-devise / multilingue</span>
+                  </li>
+                  <li class="pcard__item">
+                    <svg class="pcard__check" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+                      <path d="M3 8L6.5 11.5L13 5"/>
+                    </svg>
+                    <span>Gestion des stocks avancée</span>
+                  </li>
+                  <li class="pcard__item">
+                    <svg class="pcard__check" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+                      <path d="M3 8L6.5 11.5L13 5"/>
+                    </svg>
+                    <span>Intégrations ERP / CRM</span>
+                  </li>
+                  <li class="pcard__item">
+                    <svg class="pcard__check" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+                      <path d="M3 8L6.5 11.5L13 5"/>
+                    </svg>
+                    <span>Support prioritaire</span>
+                  </li>
+                </ul>
+              </article>
+
+            </div><!-- /.pricing-ecommerce -->
+          </div><!-- /.offres-detail__group -->
+
+          <!-- Application web -->
+          <div class="offres-detail__group">
+            <h3 class="offres-detail__group-title"><span class="accent-script accent-script--service" data-word="Application">Application</span> web / PWA</h3>
+
+            <div class="pricing-app" aria-label="Paliers Application : Essentiel, Standard, Premium">
+
+              <!-- ── Essentiel ── -->
+              <article class="pcard" aria-labelledby="app-essentiel-name">
+
+                <h4 class="pcard__name" id="app-essentiel-name">Essentiel</h4>
+
+                <div class="pcard__price-wrap" aria-label="4 900 euros à partir de, hors taxes">
+                  <span class="pcard__currency" aria-hidden="true">€</span>
+                  <span class="pcard__amount" data-price="4900" data-price-start="4000" aria-hidden="true">4&nbsp;900</span>
+                  <span class="pcard__suffix" aria-hidden="true">
+                    <span class="pcard__ht">HT</span>
+                    <span class="pcard__partir">à partir de</span>
+                  </span>
+                </div>
+
+                <div class="pcard__maint">
+                  <strong>Maintenance&nbsp;:</strong> 259&nbsp;€/mois
+                </div>
+
+                <p class="pcard__comptant">Paiement comptant uniquement.</p>
+
+                <ul class="pcard__list" aria-label="Inclus dans l'Essentiel Application">
+                  <li class="pcard__item">
+                    <svg class="pcard__check" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+                      <path d="M3 8L6.5 11.5L13 5"/>
+                    </svg>
+                    <span>PWA installable sur mobile</span>
+                  </li>
+                  <li class="pcard__item">
+                    <svg class="pcard__check" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+                      <path d="M3 8L6.5 11.5L13 5"/>
+                    </svg>
+                    <span>Authentification sécurisée</span>
+                  </li>
+                  <li class="pcard__item">
+                    <svg class="pcard__check" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+                      <path d="M3 8L6.5 11.5L13 5"/>
+                    </svg>
+                    <span>Interface métier sur-mesure</span>
+                  </li>
+                  <li class="pcard__item">
+                    <svg class="pcard__check" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+                      <path d="M3 8L6.5 11.5L13 5"/>
+                    </svg>
+                    <span>Sprints visibles à chaque étape</span>
+                  </li>
+                  <li class="pcard__item">
+                    <svg class="pcard__check" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+                      <path d="M3 8L6.5 11.5L13 5"/>
+                    </svg>
+                    <span>Accessibilité WCAG AA</span>
+                  </li>
+                </ul>
+              </article>
+
+              <!-- ── Standard (centrale, le plus demandé) ── -->
+              <article class="pcard pcard--center" aria-labelledby="app-standard-name">
+
+                <p class="pcard__eyebrow">Le plus demandé</p>
+                <h4 class="pcard__name" id="app-standard-name">Standard</h4>
+
+                <div class="pcard__price-wrap" aria-label="7 900 euros à partir de, hors taxes">
+                  <span class="pcard__currency" aria-hidden="true">€</span>
+                  <span class="pcard__amount" data-price="7900" data-price-start="7000" aria-hidden="true">7&nbsp;900</span>
+                  <span class="pcard__suffix" aria-hidden="true">
+                    <span class="pcard__ht">HT</span>
+                    <span class="pcard__partir">à partir de</span>
+                  </span>
+                </div>
+
+                <div class="pcard__maint">
+                  <strong>Maintenance&nbsp;:</strong> 259&nbsp;€/mois
+                </div>
+
+                <p class="pcard__comptant">Paiement comptant uniquement.</p>
+
+                <ul class="pcard__list" aria-label="Inclus dans le Standard Application">
+                  <li class="pcard__item">
+                    <svg class="pcard__check" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+                      <path d="M3 8L6.5 11.5L13 5"/>
+                    </svg>
+                    <span>Tout l'Essentiel</span>
+                  </li>
+                  <li class="pcard__item">
+                    <svg class="pcard__check" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+                      <path d="M3 8L6.5 11.5L13 5"/>
+                    </svg>
+                    <span>Rôles et permissions</span>
+                  </li>
+                  <li class="pcard__item">
+                    <svg class="pcard__check" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+                      <path d="M3 8L6.5 11.5L13 5"/>
+                    </svg>
+                    <span>Notifications push</span>
+                  </li>
+                  <li class="pcard__item">
+                    <svg class="pcard__check" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+                      <path d="M3 8L6.5 11.5L13 5"/>
+                    </svg>
+                    <span>Tableau de bord analytique</span>
+                  </li>
+                  <li class="pcard__item">
+                    <svg class="pcard__check" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+                      <path d="M3 8L6.5 11.5L13 5"/>
+                    </svg>
+                    <span>API REST documentée</span>
+                  </li>
+                </ul>
+              </article>
+
+              <!-- ── Premium ── -->
+              <article class="pcard" aria-labelledby="app-premium-name">
+
+                <h4 class="pcard__name" id="app-premium-name">Premium</h4>
+
+                <div class="pcard__price-wrap" aria-label="9 900 euros et plus à partir de, hors taxes">
+                  <span class="pcard__currency" aria-hidden="true">€</span>
+                  <span class="pcard__amount" data-price="9900" data-price-start="9000" aria-hidden="true">9&nbsp;900</span>
+                  <span class="pcard__suffix" aria-hidden="true">
+                    <span class="pcard__ht">HT +</span>
+                    <span class="pcard__partir">à partir de</span>
+                  </span>
+                </div>
+
+                <div class="pcard__maint">
+                  <strong>Maintenance&nbsp;:</strong> 259&nbsp;€/mois
+                </div>
+
+                <p class="pcard__comptant">Paiement comptant uniquement.</p>
+
+                <ul class="pcard__list" aria-label="Inclus dans le Premium Application">
+                  <li class="pcard__item">
+                    <svg class="pcard__check" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+                      <path d="M3 8L6.5 11.5L13 5"/>
+                    </svg>
+                    <span>Tout le Standard</span>
+                  </li>
+                  <li class="pcard__item">
+                    <svg class="pcard__check" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+                      <path d="M3 8L6.5 11.5L13 5"/>
+                    </svg>
+                    <span>Architecture complexe sur-mesure</span>
+                  </li>
+                  <li class="pcard__item">
+                    <svg class="pcard__check" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+                      <path d="M3 8L6.5 11.5L13 5"/>
+                    </svg>
+                    <span>Intégrations tierces multiples</span>
+                  </li>
+                  <li class="pcard__item">
+                    <svg class="pcard__check" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+                      <path d="M3 8L6.5 11.5L13 5"/>
+                    </svg>
+                    <span>Déploiement infra dédié</span>
+                  </li>
+                  <li class="pcard__item">
+                    <svg class="pcard__check" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+                      <path d="M3 8L6.5 11.5L13 5"/>
+                    </svg>
+                    <span>Support dédié</span>
+                  </li>
+                </ul>
+              </article>
+
+            </div><!-- /.pricing-app -->
+          </div><!-- /.offres-detail__group -->
+
+          <p class="offres-detail__note">
+            Prix nets HT — TVA non applicable, art. 293 B du CGI.<br />
+            <sup>*</sup> «&nbsp;Facilité 24 mois&nbsp;» réservée à la vitrine&nbsp;: acompte 30&nbsp;% à la signature, solde étalé sur 24 mensualités, maintenance au tarif facilité 149&nbsp;€/mois pendant les 24 mois (puis retour à 119&nbsp;€/mois). E-commerce et Application&nbsp;: paiement comptant uniquement.
+          </p>
+
+          <!-- Argument transparence des prix -->
+          <div class="offres-detail__why" data-reveal>
+            <h3 class="offres-detail__why-title">Pourquoi afficher ses prix <span class="accent-script">publiquement</span>&nbsp;?</h3>
+            <p>Personne ne le fait dans le secteur. Si vous demandez aujourd'hui un devis à dix agences françaises, neuf vous répondront par un formulaire d'appel. Le devis-mystère est une technique commerciale : plus vous attendez d'avoir le prix, plus vous êtes engagé dans la relation avant de connaître le coût.</p>
+            <p><strong>En affichant nos fourchettes, on perd les visiteurs pour qui le budget ne passe pas.</strong> C'est exactement le but. L'auto-sélection se fait sur le site, en 30 secondes. Les visiteurs restants sont ceux pour qui le prix est compatible — la conversation démarre sur le "comment" au lieu de buter sur le "combien".</p>
+            <p>Ce qu'on engage, c'est <strong>le prix annoncé au devis</strong>. Une fois signé : plus de variable, pas de facturation au temps passé, pas de surprise sur la facture finale.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================================
+           2 · DÉLAIS PAR TYPE (ancre #delais)
+           ========================================================== -->
+      <section class="p2-section p2-section--paper" id="delais" aria-labelledby="delais-title">
+        <div class="p2-wrap">
+          <div class="p2-hd">
+            <div class="p2-hd__left">
+              <p class="tag">Délais</p>
+            </div>
+            <div class="p2-hd__right">
+              <h2 class="p2-hd__title" id="delais-title">Délais <span class="accent-script">par type.</span></h2>
+              <p class="p2-hd__intro">Chaque type de projet a son délai juste, annoncé clairement.</p>
+            </div>
+          </div>
+
+          <div class="delais__table-wrap" data-reveal>
+            <table class="delais__table">
+              <thead>
+                <tr>
+                  <th scope="col">Type de projet</th>
+                  <th scope="col">Délai annoncé</th>
+                  <th scope="col">Note</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Site vitrine (template adapté)</td>
+                  <td data-label="Délai"><strong>7 jours</strong></td>
+                  <td data-label="Note">L'accroche de l'agence — notre spécialité.</td>
+                </tr>
+                <tr>
+                  <td>E-commerce</td>
+                  <td data-label="Délai"><strong>2 – 3 semaines</strong></td>
+                  <td data-label="Note">Selon le volume de produits et les intégrations.</td>
+                </tr>
+                <tr>
+                  <td>Application / PWA simple</td>
+                  <td data-label="Délai"><strong>2 – 4 semaines</strong></td>
+                  <td data-label="Note">Cadrage renforcé en début de projet.</td>
+                </tr>
+                <tr>
+                  <td>Application complexe / sur-mesure</td>
+                  <td data-label="Délai"><strong>Sur devis</strong></td>
+                  <td data-label="Note">Délai défini au cadrage — sans date arbitraire.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p class="delais__note" data-reveal>
+            Rappel : les délais démarrent à réception de tous les contenus du client (textes, photos, logo, validations), pas à la signature. Un retard de livraison des contenus n'est jamais imputé au projet.
+          </p>
+        </div>
+      </section>
+
+      <!-- ==========================================================
+           3 · FAQ (ancre #faq)
+           ========================================================== -->
+      <section class="p2-section" id="faq" aria-labelledby="faq-title">
+        <div class="p2-wrap">
+          <div class="p2-hd">
+            <div class="p2-hd__left">
+              <p class="tag">Questions</p>
+            </div>
+            <div class="p2-hd__right">
+              <h2 class="p2-hd__title" id="faq-title">Neuf questions, <span class="accent-script">neuf réponses.</span></h2>
+              <p class="p2-hd__intro">Les objections réelles, traitées sans détour.</p>
+            </div>
+          </div>
+
+          <div class="faq__list" role="list" data-reveal-group>
+
+            <details class="faq__item" data-reveal>
+              <summary>
+                <span class="faq__num">01</span>
+                <span class="faq__q">Le site m'appartient&nbsp;?</span>
+                <span class="faq__icon" aria-hidden="true"></span>
+              </summary>
+              <div class="faq__a"><div><p>Oui.<br />En paiement comptant, il est à vous dès le solde réglé.<br />En <strong>Facilité 24 mois</strong> (vitrine uniquement), il devient votre propriété au paiement intégral du solde — clause de réserve de propriété (art. 2367 C. civ.).<br />Rachat anticipé possible à tout moment.</p></div></div>
+            </details>
+
+            <details class="faq__item" data-reveal>
+              <summary>
+                <span class="faq__num">02</span>
+                <span class="faq__q">Que couvre l'abonnement de maintenance&nbsp;?</span>
+                <span class="faq__icon" aria-hidden="true"></span>
+              </summary>
+              <div class="faq__a"><div><p>Hébergement, sauvegardes, mises à jour de sécurité.<br />Vos modifications chaque mois.<br />Conformité légale tenue à jour, et un rapport simple.<br />Vous travaillez, votre site aussi.</p></div></div>
+            </details>
+
+            <details class="faq__item" data-reveal>
+              <summary>
+                <span class="faq__num">03</span>
+                <span class="faq__q">Et si je veux arrêter l'abonnement&nbsp;?</span>
+                <span class="faq__icon" aria-hidden="true"></span>
+              </summary>
+              <div class="faq__a"><div><p>Engagement de 12 mois, puis sans engagement (préavis 30 jours).<br />Vous repartez avec votre site et vos contenus.<br />Aucune rétention, aucune pénalité.</p></div></div>
+            </details>
+
+            <details class="faq__item" data-reveal>
+              <summary>
+                <span class="faq__num">04</span>
+                <span class="faq__q">Vous travaillez à distance&nbsp;?</span>
+                <span class="faq__icon" aria-hidden="true"></span>
+              </summary>
+              <div class="faq__a"><div><p>Oui, partout en France.<br />Cadrage en visio ou par téléphone, livraison en ligne.<br />Le studio est à Aubagne — même exigence partout, aucune limite géographique.</p></div></div>
+            </details>
+
+            <details class="faq__item" data-reveal>
+              <summary>
+                <span class="faq__num">05</span>
+                <span class="faq__q">Aussi vite, c'est sérieux&nbsp;?</span>
+                <span class="faq__icon" aria-hidden="true"></span>
+              </summary>
+              <div class="faq__a"><div><p>La vitesse vient de l'organisation, pas du bâclage.<br />Une chaîne de production outillée, affinée projet après projet.<br />Des jours dédiés vous sont réservés pour ajuster.<br />Et la date de mise en ligne est dans le contrat — pas une promesse marketing.</p></div></div>
+            </details>
+
+            <details class="faq__item" data-reveal>
+              <summary>
+                <span class="faq__num">06</span>
+                <span class="faq__q">Quels contenus dois-je fournir, et quand&nbsp;?</span>
+                <span class="faq__icon" aria-hidden="true"></span>
+              </summary>
+              <div class="faq__a"><div><p>Dès le J1, on vous remet une checklist claire.<br />Textes de chaque page, photos en haute définition, logo (SVG, AI, PDF ou PNG haute résolution).<br />Et les accès aux outils existants si refonte (hébergeur, domaine, analytics, réseaux).<br />Vous êtes guidé, jamais livré à vous-même.<br />Rappel&nbsp;: <em>les délais démarrent à réception de tous vos contenus.</em><br />Un retard de votre côté ne devient jamais un retard du nôtre — c'est inscrit au contrat.</p></div></div>
+            </details>
+
+            <details class="faq__item" data-reveal>
+              <summary>
+                <span class="faq__num">07</span>
+                <span class="faq__q">Comment se passe le paiement&nbsp;?</span>
+                <span class="faq__icon" aria-hidden="true"></span>
+              </summary>
+              <div class="faq__a"><div><p>Paiement comptant&nbsp;: un <strong>acompte de 30&nbsp;%</strong> à la signature, le solde à la livraison.<br />Facturation micro-entreprise (TVA non applicable, art. 293 B du CGI).<br />Moyens&nbsp;: virement ou carte.<br />Pour étaler (vitrine uniquement), voir la formule <strong>Facilité 24 mois</strong> (question 09).<br />Aucun coût caché, aucune facturation au temps passé — le prix du devis est le prix final.</p></div></div>
+            </details>
+
+            <details class="faq__item" data-reveal>
+              <summary>
+                <span class="faq__num">08</span>
+                <span class="faq__q">Et après la livraison, si je veux des modifications&nbsp;?</span>
+                <span class="faq__icon" aria-hidden="true"></span>
+              </summary>
+              <div class="faq__a"><div><p>L'abonnement maintenance prend le relais dès le lendemain de la mise en ligne.<br /><strong>Inclus chaque mois</strong>&nbsp;: vos modifications de contenu, ajout/retrait d'une section, mises à jour techniques, support email.<br /><strong>En supplément</strong> (devis ferme à l'unité)&nbsp;: nouvelle page complète, fonctionnalité majeure (réservation, paiement, espace client, multilingue), refonte graphique.<br />Vous savez toujours ce qui est inclus — et ce qui ne l'est pas.</p></div></div>
+            </details>
+
+            <details class="faq__item" data-reveal>
+              <summary>
+                <span class="faq__num">09</span>
+                <span class="faq__q">Je peux étaler le paiement&nbsp;?</span>
+                <span class="faq__icon" aria-hidden="true"></span>
+              </summary>
+              <div class="faq__a"><div><p>Oui, sur la <strong>vitrine</strong>.<br />Vous réglez 30&nbsp;% à la signature, puis le reste en 24 fois — autour de 193&nbsp;€/mois tout compris (création + maintenance), selon la formule.<br />Au-delà des 24 mois, il ne reste que la maintenance.<br />E-commerce et application&nbsp;: paiement comptant.<br />Demandez la formule dans votre message, on cale tout ensemble.</p></div></div>
+            </details>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================================
+           4 · MENTIONS LÉGALES (ancre #mentions)
+           ========================================================== -->
+      <section class="p2-section p2-section--alt p2-section--legal" id="mentions" aria-labelledby="mentions-title">
+        <div class="p2-wrap">
+          <div class="p2-hd p2-hd--compact">
+            <div class="p2-hd__left">
+              <p class="tag">Légal</p>
+            </div>
+            <div class="p2-hd__right">
+              <h2 class="p2-hd__title p2-hd__title--sm" id="mentions-title">Mentions <span class="accent-script">légales.</span></h2>
+              <p class="p2-hd__intro">Les pages dédiées sont accessibles ici. À jour et conformes au droit français.</p>
+            </div>
+          </div>
+
+          <div class="legal-links__block" data-reveal>
+            <p class="legal-links__text">Toutes les informations légales obligatoires, le traitement de vos données et vos droits.</p>
+            <nav class="legal-links__nav" aria-label="Pages légales">
+              <a href="/mentions-legales.html">
+                Mentions légales
+                <svg viewBox="0 0 24 24" aria-hidden="true" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+              </a>
+              <a href="/politique-confidentialite.html">
+                Politique de confidentialité
+                <svg viewBox="0 0 24 24" aria-hidden="true" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+              </a>
+            </nav>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- ============== FOOTER ============== -->
+    <footer class="footer" role="contentinfo">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <span class="footer__mark">SK<span class="sk-dot" aria-hidden="true"></span><em>Agence</em></span>
+          <p>Studio indépendant à Aubagne — Livré vite, maintenu chaque mois.</p>
+        </div>
+        <div class="footer__col">
+          <h2 class="footer__col-title">Navigation</h2>
+          <ul>
+            <li><a href="/">Accueil</a></li>
+            <li><a href="/en-savoir-plus.html" aria-current="page">Offres &amp; tarifs</a></li>
+            <li><a href="/#contact">Demander un devis</a></li>
+          </ul>
+        </div>
+        <div class="footer__col">
+          <h2 class="footer__col-title">Studio</h2>
+          <ul>
+            <li><a href="mailto:sk.agence@outlook.fr">sk.agence@outlook.fr</a></li>
+            <li><a href="/mentions-legales.html">Mentions légales</a></li>
+            <li><a href="/politique-confidentialite.html">Politique de confidentialité</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer__bottom">
+        <span>© <span id="year">2026</span> SK Agence — SIREN 105 940 159 · Aubagne (13400), France · TVA non applicable, art. 293 B du CGI · <a href="/mentions-legales.html">Mentions légales</a> · <a href="/politique-confidentialite.html">Politique de confidentialité</a></span>
+        <span class="footer__proof">Ce site a été produit en 7 jours — la même méthode que pour le vôtre.</span>
+      </div>
+    </footer>
+  </body>
+</html>

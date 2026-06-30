@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" role="img" aria-label="GAYA VALENTINE">
+  <defs>
+    <radialGradient id="g" cx="0.25" cy="0.3" r="0.9">
+      <stop offset="0" stop-color="#451019"/><stop offset="0.55" stop-color="#16090C"/><stop offset="1" stop-color="#0B0B0D"/>
+    </radialGradient>
+  </defs>
+  <rect width="1600" height="1000" fill="url(#g)"/>
+  <text x="80" y="150" font-family="'IBM Plex Mono','Courier New',monospace" font-size="34" letter-spacing="6" fill="#C8102E">RESTAURANT — MARSEILLE</text>
+  <rect x="80" y="180" width="120" height="6" fill="#C8102E"/>
+  <text x="74" y="620" font-family="Anton,'Arial Narrow','Impact',sans-serif" font-size="150" fill="#F5F2EC" textLength="1450" lengthAdjust="spacingAndGlyphs">GAYA VALENTINE</text>
+  <text x="80" y="700" font-family="'IBM Plex Mono','Courier New',monospace" font-size="30" fill="#B9B2A8">Site complet livré en une journée de production</text>
+  <text x="1390" y="950" font-family="Anton,'Arial Narrow',sans-serif" font-size="160" fill="none" stroke="#2E2A28" stroke-width="2">gaya-valentine.svg_IDX</text>
+</svg>

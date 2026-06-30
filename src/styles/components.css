@@ -1,0 +1,881 @@
+/* ============================================================
+   SK AGENCE — Composants UI (v3)
+   loader · cursor · nav · burger · menu · button · pill ·
+   tag · rule · counter · marquee · service-card · overlay-img
+   ============================================================ */
+
+/* ============ PRÉLOADER ============ */
+.loader {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-loader);
+  background: var(--c-bg);
+  display: grid;
+  place-items: center;
+  transition: opacity .6s var(--ease-out);
+}
+.loader.is-hidden { opacity: 0; pointer-events: none; }
+.loader__mark {
+  font-family: var(--font-display);
+  font-size: clamp(36px, 5vw, 56px);
+  font-weight: 350;
+  letter-spacing: -.02em;
+  color: var(--c-ink);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  opacity: 0;
+  animation: fadeIn .8s var(--ease-out) .1s forwards;
+  font-variation-settings: 'opsz' 144, 'SOFT' 100;
+}
+.loader__mark em { color: var(--c-gold); font-style: italic; font-weight: 350; }
+@keyframes fadeIn { to { opacity: 1; } }
+
+/* ============ CURSEUR CUSTOM ============ */
+.cursor {
+  position: fixed;
+  top: 0; left: 0;
+  pointer-events: none;
+  z-index: var(--z-cursor);
+}
+.cursor__dot {
+  position: fixed;
+  width: 6px; height: 6px;
+  background: var(--c-gold);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  transition: width .25s var(--ease-out), height .25s var(--ease-out), opacity .25s;
+  will-change: transform;
+}
+.cursor__ring {
+  position: fixed;
+  width: 36px; height: 36px;
+  border: 1px solid rgba(14, 31, 51, 0.28);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  transition: width .35s var(--ease-out), height .35s var(--ease-out),
+              border-color .25s, background-color .25s;
+  will-change: transform;
+}
+.cursor.is-hover .cursor__dot { width: 3px; height: 3px; }
+.cursor.is-hover .cursor__ring {
+  width: 54px; height: 54px;
+  border-color: var(--c-gold);
+  background: rgba(164, 119, 49, 0.08);
+}
+.cursor.is-down .cursor__ring { transform: translate(-50%, -50%) scale(.82); }
+.cursor.is-hidden .cursor__dot, .cursor.is-hidden .cursor__ring { opacity: 0; }
+@media (hover: none), (pointer: coarse) {
+  .cursor { display: none; }
+}
+
+/* ============================================================
+   B4 — NAV PILULE FLOTTANTE
+   Détachée des bords, fond translucide + blur, contenu : monogramme
+   SK · spacer · bouton "Demander un devis" · burger
+   ============================================================ */
+.nav {
+  position: fixed;
+  top: 14px;
+  left: 14px;
+  right: 14px;
+  z-index: var(--z-nav);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 8px 8px 14px;
+  border-radius: 30px;
+  background: rgba(255, 255, 255, 0.85);
+  -webkit-backdrop-filter: blur(10px) saturate(1.1);
+  backdrop-filter: blur(10px) saturate(1.1);
+  border: 0.5px solid rgba(14, 31, 51, 0.08);
+  box-shadow: 0 6px 20px rgba(14, 31, 51, 0.08);
+}
+/* La pilule garde son apparence quelle que soit la position scroll
+   (l'ancien .is-stuck restait au cas où, mais la pilule est toujours flottante) */
+.nav.is-stuck { /* override neutralisé — pilule conserve son fond translucide */ }
+
+/* Monogramme SK : cercle bleu nuit, SK Fraunces italique or-clair.
+   Provisoire — sera remplacé par l'avatar de marque au lot B5. */
+.nav__brand {
+  width: 33px;
+  height: 33px;
+  border-radius: 50%;
+  background: var(--c-ink);
+  color: var(--c-or-clair);
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 350;
+  font-size: 14px;
+  letter-spacing: -0.02em;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  text-decoration: none;
+  line-height: 1;
+}
+/* Les anciens .nav__brand em / .sk-dot ne sont plus utilisés mais on les neutralise */
+.nav__brand em, .nav__brand .sk-dot { display: none; }
+
+/* Spacer flex entre monogramme et bouton devis */
+.nav__spacer { flex: 1; }
+
+/* Liens desktop legacy : masqués sur toutes tailles (la pilule fait route via burger) */
+.nav__links { display: none !important; }
+
+/* Bouton "Demander un devis" pilule bleu nuit */
+.nav a.nav__cta {
+  background: var(--c-ink);
+  color: var(--c-bg);
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 11.5px;
+  letter-spacing: 0.02em;
+  padding: 9px 14px;
+  min-height: 44px; /* zone tactile HIG ≥44px sans changer apparence visible */
+  border-radius: var(--r-full);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  transition: background-color .25s var(--ease-out);
+  flex-shrink: 0;
+}
+.nav a.nav__cta:hover { background: var(--c-or); color: var(--c-ink); }
+
+/* Burger : visible toutes tailles (la pilule remplace les liens desktop) */
+.nav__burger {
+  width: 44px;
+  height: 44px;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  color: var(--c-ink);
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.nav__burger span {
+  display: block;
+  width: 18px;
+  height: 1.5px;
+  background: currentColor;
+  border-radius: 1px;
+}
+
+/* ============================================================
+   B4 — MENU PLEIN ÉCRAN BLEU NUIT
+   Pilule top adaptée fond sombre + 6 liens Fraunces numérotés
+   ============================================================ */
+.menu-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-menu);
+  background: var(--c-ink);
+  color: var(--c-bg);
+  display: flex;
+  flex-direction: column;
+  padding: 14px 14px max(20px, env(safe-area-inset-bottom)) 14px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .42s var(--ease-out), visibility .42s var(--ease-out);
+  pointer-events: none;
+}
+.menu-overlay.is-open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+/* Pilule top dans le menu — variante fond sombre */
+.menu-overlay__nav {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 8px 8px 14px;
+  border-radius: 30px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 0.5px solid rgba(245, 240, 230, 0.1);
+  flex-shrink: 0;
+}
+.menu-overlay__brand {
+  width: 33px;
+  height: 33px;
+  border-radius: 50%;
+  background: rgba(201, 162, 75, 0.15);
+  color: var(--c-or-clair);
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 350;
+  font-size: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.menu-overlay__spacer { flex: 1; }
+.menu-overlay__cta {
+  background: var(--c-or);
+  color: var(--c-ink);
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 11.5px;
+  letter-spacing: 0.02em;
+  padding: 9px 14px;
+  min-height: 44px; /* zone tactile HIG ≥44px sans changer apparence visible */
+  border-radius: var(--r-full);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  transition: background-color .25s var(--ease-out);
+  flex-shrink: 0;
+}
+.menu-overlay__cta:hover { background: var(--c-or-clair); }
+.menu-overlay__close {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid rgba(245, 240, 230, 0.2);
+  background: transparent;
+  color: var(--c-bg);
+  font-size: 18px;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  font-family: var(--font-body);
+}
+.menu-overlay__close:hover { background: rgba(245, 240, 230, 0.08); }
+
+/* Liste 6 liens — Fraunces ~27px crème, numéro à droite or, hairline rgba */
+.menu-overlay__list {
+  list-style: none;
+  margin: var(--s-7) 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.menu-overlay__list li {
+  border-bottom: 0.5px solid rgba(245, 240, 230, 0.1);
+}
+.menu-overlay__list li:last-child {
+  border-bottom: 0;
+}
+.menu-overlay__list a {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 6px;
+  min-height: 44px;
+  font-family: var(--font-display);
+  font-weight: 350;
+  font-size: clamp(24px, 6.5vw, 32px);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  color: var(--c-bg);
+  text-decoration: none;
+  font-variation-settings: 'opsz' 72, 'SOFT' 100;
+  transition: color .2s var(--ease-out);
+}
+.menu-overlay__list a:hover {
+  color: var(--c-or-clair);
+}
+.menu-overlay__list .menu-overlay__num {
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  color: var(--c-or);
+  flex-shrink: 0;
+}
+/* Dernière entrée (Contact) mise en valeur */
+.menu-overlay__list .menu-overlay__link--highlight a {
+  color: var(--c-or-clair);
+}
+.menu-overlay__list .menu-overlay__link--highlight .menu-overlay__num {
+  color: var(--c-or-clair);
+}
+
+/* Footer menu — mailto + localisation cliquables (joindre SK directement) */
+.menu-overlay__foot {
+  margin-top: var(--s-6);
+  padding-top: var(--s-5);
+  border-top: 0.5px solid rgba(245, 240, 230, 0.08);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  text-align: center;
+}
+.menu-overlay__foot-mail {
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  color: var(--c-or-clair);
+  text-decoration: none;
+  padding: 10px 16px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  border-radius: var(--r-full);
+  transition: color .22s var(--ease-out), background-color .22s var(--ease-out);
+}
+.menu-overlay__foot-mail:hover {
+  color: var(--c-or);
+  background: rgba(245, 240, 230, 0.04);
+}
+.menu-overlay__foot-loc {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 12px;
+  color: rgba(245, 240, 230, 0.5);
+  letter-spacing: 0.06em;
+}
+.menu-overlay__foot-copy {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(245, 240, 230, 0.3);
+}
+
+/* ─── Cascade animations liens menu (apparition séquentielle) ─── */
+.menu-overlay__list li {
+  opacity: 0;
+  transform: translateX(-10px);
+}
+.menu-overlay.is-open .menu-overlay__list li {
+  animation: menuLinkSlideIn 0.42s var(--ease-out) both;
+}
+.menu-overlay.is-open .menu-overlay__list li:nth-child(1) { animation-delay: 0.10s; }
+.menu-overlay.is-open .menu-overlay__list li:nth-child(2) { animation-delay: 0.18s; }
+.menu-overlay.is-open .menu-overlay__list li:nth-child(3) { animation-delay: 0.26s; }
+.menu-overlay.is-open .menu-overlay__list li:nth-child(4) { animation-delay: 0.34s; }
+.menu-overlay.is-open .menu-overlay__list li:nth-child(5) { animation-delay: 0.42s; }
+.menu-overlay.is-open .menu-overlay__list li:nth-child(6) { animation-delay: 0.50s; }
+@keyframes menuLinkSlideIn {
+  to { opacity: 1; transform: translateX(0); }
+}
+
+/* prefers-reduced-motion : pas d'animation, apparition directe */
+@media (prefers-reduced-motion: reduce) {
+  .menu-overlay { transition: none; }
+  .menu-overlay__list li {
+    opacity: 1;
+    transform: none;
+    animation: none !important;
+  }
+}
+
+/* ============ BUTTON ============ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  font-family: var(--font-body);
+  font-size: var(--t-sm);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  line-height: 1.15;
+  padding: 16px 28px;
+  border: 1px solid transparent;
+  border-radius: var(--r-full);
+  background: transparent;
+  color: var(--c-ink);
+  transition: background-color .3s var(--ease-out),
+              border-color .3s var(--ease-out),
+              color .3s var(--ease-out);
+  min-height: 48px;
+  white-space: nowrap;
+}
+.btn svg { width: 14px; height: 14px; transition: transform .35s var(--ease-out); }
+.btn:hover svg { transform: translateX(4px); }
+
+.btn--primary {
+  background: var(--c-ink);
+  color: var(--c-bg);
+  border-color: var(--c-ink);
+}
+.btn--primary:hover { background: var(--c-gold); border-color: var(--c-gold); color: var(--c-paper); }
+
+.btn--gold {
+  background: var(--c-gold);
+  color: var(--c-paper);
+  border-color: var(--c-gold);
+}
+.btn--gold:hover { background: var(--c-gold-2); border-color: var(--c-gold-2); }
+
+.btn--ghost {
+  border-color: var(--c-ink);
+  color: var(--c-ink);
+}
+.btn--ghost:hover { background: var(--c-ink); color: var(--c-bg); }
+
+.btn--on-dark {
+  background: var(--c-gold);
+  color: var(--c-paper);
+  border-color: var(--c-gold);
+}
+.btn--on-dark:hover { background: var(--c-gold-2); border-color: var(--c-gold-2); }
+
+.btn--ghost-on-dark {
+  background: transparent;
+  border-color: rgba(245, 240, 230, 0.35);
+  color: var(--c-ink-on-dark);
+}
+.btn--ghost-on-dark:hover { background: var(--c-ink-on-dark); color: var(--c-ink); border-color: var(--c-ink-on-dark); }
+
+/* ============ TAG (eyebrow avec trait) ============ */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  font-family: var(--font-body);
+  font-size: var(--t-xs);
+  font-weight: 500;
+  letter-spacing: var(--ls-eyebrow);
+  text-transform: uppercase;
+  color: var(--c-muted);
+}
+.tag::before {
+  content: '';
+  width: 24px; height: 1px;
+  background: var(--c-gold);
+}
+.tag--on-dark { color: var(--c-gold-2); }
+.tag--on-dark::before { background: var(--c-gold-2); }
+
+/* ============ SECTION-NUM (libellé latin) ============ */
+.section-num {
+  font-family: var(--font-body);
+  font-size: var(--t-xs);
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  color: var(--c-muted);
+  font-style: italic;
+}
+
+/* ============ STAT COUNTER (Saira Condensed) ============ */
+.stat {
+  display: grid;
+  gap: var(--s-3);
+  padding: var(--s-6) 0;
+}
+.stat__num {
+  font-family: var(--font-stress);
+  font-weight: 800;
+  font-size: var(--t-s-lg);
+  line-height: var(--lh-stress);
+  letter-spacing: var(--ls-stress);
+  color: var(--c-ink);
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+}
+.stat__num em {
+  font-family: var(--font-display);
+  font-weight: 350;
+  font-style: italic;
+  font-size: 0.36em;
+  color: var(--c-gold);
+  letter-spacing: 0;
+  align-self: end;
+  transform: translateY(-12%);
+}
+.stat__lbl {
+  font-family: var(--font-body);
+  font-size: var(--t-xs);
+  font-weight: 500;
+  letter-spacing: var(--ls-eyebrow);
+  text-transform: uppercase;
+  color: var(--c-muted);
+}
+.stat__desc {
+  font-family: var(--font-body);
+  font-size: var(--t-sm);
+  color: var(--c-ink-soft);
+  line-height: 1.5;
+  max-width: 28ch;
+}
+.on-dark .stat__num { color: var(--c-ink-on-dark); }
+.on-dark .stat__num em { color: var(--c-gold-2); }
+.on-dark .stat__lbl { color: var(--c-gold-2); }
+.on-dark .stat__desc { color: var(--c-ink-soft-on-dark); }
+
+/* ============ ICÔNE CIRCULAIRE ============ */
+.icon-circle {
+  width: 56px; height: 56px;
+  border-radius: 50%;
+  border: 1px solid var(--c-hairline);
+  display: grid;
+  place-items: center;
+  background: var(--c-bg-2);
+  flex-shrink: 0;
+  transition: background-color .35s var(--ease-out), border-color .35s var(--ease-out);
+}
+.icon-circle svg {
+  width: 22px; height: 22px;
+  stroke: var(--c-ink);
+  stroke-width: 1.4;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.on-dark .icon-circle {
+  background: transparent;
+  border-color: rgba(245, 240, 230, 0.18);
+}
+.on-dark .icon-circle svg { stroke: var(--c-gold-2); }
+
+/* ============ PILL (specs) ============ */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-body);
+  font-size: var(--t-xs);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--c-ink-soft);
+  padding: 6px 12px;
+  background: var(--c-bg);
+  border: 1px solid var(--c-hairline);
+  border-radius: var(--r-full);
+}
+.pill--minimal {
+  padding: 4px 10px;
+  background: transparent;
+}
+
+/* ============ KEYSTRIP — ruban mots-clés (sous hero) ============ */
+.keystrip {
+  background: var(--c-bg);
+  border-top: 1px solid var(--c-hairline);
+  border-bottom: 1px solid var(--c-hairline);
+  padding: var(--s-3) 0;
+  /* Stable layout — pas de CLS, hauteur fixée par le contenu */
+  contain: layout paint;
+}
+.keystrip__viewport {
+  overflow: hidden;
+  /* Fondu propre aux 2 extrémités */
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 8%, #000 92%, transparent 100%);
+          mask-image: linear-gradient(90deg, transparent 0, #000 8%, #000 92%, transparent 100%);
+  display: flex;
+  width: 100%;
+}
+.keystrip__track {
+  display: flex;
+  align-items: center;
+  gap: var(--s-7);
+  flex-shrink: 0;
+  white-space: nowrap;
+  padding-right: var(--s-7);
+  margin: 0;
+  list-style: none;
+  /* Anim transform-only, GPU-friendly, sans saut (deux pistes identiques) */
+  animation: keystrip-scroll 38s linear infinite;
+  will-change: transform;
+}
+.keystrip__item {
+  font-family: var(--font-body);
+  font-size: var(--t-xs);
+  font-weight: 500;
+  letter-spacing: var(--ls-eyebrow);
+  text-transform: uppercase;
+  color: var(--c-ink-soft);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-7);
+}
+/* Séparateur or entre items (sauf le dernier de chaque piste) */
+.keystrip__item::after {
+  content: '';
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--c-gold);
+  flex-shrink: 0;
+}
+/* Pause + ralentissement doux au survol desktop */
+@media (hover: hover) and (pointer: fine) {
+  .keystrip:hover .keystrip__track {
+    animation-play-state: paused;
+  }
+}
+@keyframes keystrip-scroll {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(-100%, 0, 0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .keystrip__viewport {
+    -webkit-mask-image: none;
+            mask-image: none;
+    justify-content: center;
+  }
+  .keystrip__track {
+    animation: none;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 0 var(--pad-x);
+  }
+  .keystrip__track[aria-hidden="true"] { display: none; }
+}
+
+/* ============ MARQUEE SOBRE ============ */
+.marquee {
+  overflow: hidden;
+  padding: var(--s-5) 0;
+  border-top: 1px solid var(--c-hairline);
+  border-bottom: 1px solid var(--c-hairline);
+}
+.marquee__track {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-7);
+  width: max-content;
+  white-space: nowrap;
+  animation: marquee 40s linear infinite;
+  font-family: var(--font-display);
+  font-weight: 350;
+  font-style: italic;
+  font-size: clamp(24px, 3vw, 40px);
+  color: var(--c-ink-soft);
+  letter-spacing: -0.012em;
+}
+.marquee__track span {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-7);
+}
+.marquee__sep {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--c-gold);
+  display: inline-block;
+  flex-shrink: 0;
+}
+@keyframes marquee {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(-50%, 0, 0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .marquee__track { animation: none; }
+}
+
+/* ============ MEDIA OVERLAY (works hover) ============ */
+.overlay-img {
+  position: relative;
+  overflow: hidden;
+  background: var(--c-surface);
+  border-radius: var(--r-3);
+  isolation: isolate;
+}
+.overlay-img img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform 1.2s var(--ease-out);
+  will-change: transform;
+}
+.overlay-img__veil {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 30%, rgba(14, 31, 51, 0.88) 100%);
+  opacity: 0;
+  transition: opacity .5s var(--ease-out);
+  pointer-events: none;
+}
+.overlay-img__info {
+  position: absolute;
+  left: var(--s-5); right: var(--s-5);
+  bottom: var(--s-5);
+  color: var(--c-paper);
+  transform: translateY(16px);
+  opacity: 0;
+  transition: opacity .5s var(--ease-out), transform .5s var(--ease-out);
+  pointer-events: none;
+  z-index: 2;
+}
+.overlay-img:hover img { transform: scale(1.06); }
+.overlay-img:hover .overlay-img__veil { opacity: 1; }
+.overlay-img:hover .overlay-img__info { opacity: 1; transform: translateY(0); }
+
+/* ============ DIVIDER ============ */
+.rule { height: 1px; background: var(--c-hairline); }
+.on-dark .rule { background: var(--c-hairline-on); }
+
+/* ============ STICKY CTA BAR ============ */
+.sticky-cta {
+  position: fixed;
+  left: 50%;
+  bottom: var(--s-5);
+  transform: translate(-50%, 200%);
+  z-index: 60;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-4);
+  padding: 12px 16px 12px 20px;
+  background: var(--c-ink);
+  color: var(--c-ink-on-dark);
+  border-radius: var(--r-full);
+  box-shadow: 0 12px 40px -12px rgba(14, 31, 51, 0.45);
+  font-family: var(--font-body);
+  font-size: var(--t-sm);
+  letter-spacing: 0.02em;
+  transition: transform .5s var(--ease-out), opacity .4s var(--ease-out);
+  opacity: 0;
+  max-width: calc(100vw - 32px);
+}
+.sticky-cta.is-visible { transform: translate(-50%, 0); opacity: 1; }
+.sticky-cta__dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--c-gold-2);
+  animation: pulse-dot 2s ease-in-out infinite;
+  flex-shrink: 0;
+}
+@keyframes pulse-dot {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(164, 119, 49, .5); }
+  50% { box-shadow: 0 0 0 8px rgba(164, 119, 49, 0); }
+}
+.sticky-cta__label { color: var(--c-ink-soft-on-dark); }
+.sticky-cta__action {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  background: var(--c-gold);
+  color: var(--c-paper);
+  border-radius: var(--r-full);
+  font-weight: 500;
+  transition: background-color .25s var(--ease-out);
+}
+.sticky-cta__action svg { width: 12px; height: 12px; }
+.sticky-cta:hover .sticky-cta__action { background: var(--c-gold-2); }
+@media (max-width: 520px) {
+  .sticky-cta__label { display: none; }
+  .sticky-cta { padding: 10px 12px 10px 14px; gap: 10px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sticky-cta__dot { animation: none; }
+}
+
+/* ============ CTA BANNER (mini, inter-sections) ============ */
+.cta-banner {
+  max-width: var(--maxw-wide);
+  margin: 0 auto;
+  padding: var(--s-6) var(--pad-x);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-4);
+  border-top: 1px solid var(--c-hairline);
+  border-bottom: 1px solid var(--c-hairline);
+}
+.cta-banner__text {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 350;
+  font-size: clamp(20px, 1.8vw, 28px);
+  line-height: 1.35;
+  color: var(--c-ink);
+  margin: 0;
+  max-width: 38em;
+}
+.cta-banner__text em { color: var(--c-gold); font-style: italic; }
+.cta-banner__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-body);
+  font-size: var(--t-sm);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  padding: 14px 24px;
+  background: var(--c-ink);
+  color: var(--c-bg);
+  border-radius: var(--r-full);
+  transition: background-color .25s var(--ease-out);
+}
+.cta-banner__btn svg { width: 14px; height: 14px; transition: transform .35s var(--ease-out); }
+.cta-banner__btn:hover { background: var(--c-gold); color: var(--c-paper); }
+.cta-banner__btn:hover svg { transform: translateX(4px); }
+@media (max-width: 640px) {
+  .cta-banner { flex-direction: column; align-items: flex-start; padding: var(--s-5) var(--pad-x); }
+  .cta-banner__btn { width: 100%; justify-content: center; }
+}
+
+/* ============ REVEAL utilitaire ============
+   Les états initiaux sont désormais dans motion.css (conditionnés à html.motion-ready).
+   GSAP anime directement les propriétés — pas de classe is-in.
+   ============ */
+
+
+/* ============================================================
+   B3 — UTILITAIRE ACCENT MANUSCRIT (.accent-script)
+   Rare et stratégique : remplace <em> italique or sur 5 mots-clés
+   précis seulement (cf. brief B3). Partout ailleurs : <em> Fraunces
+   italique or reste INCHANGÉ.
+   Taille plancher : ~1.4-1.6× la taille du titre qu'il accompagne
+   (Caveat a une hauteur d'œil plus petite que Fraunces).
+   ============================================================ */
+/* B3 AJUSTEMENT — système cohérent basé sur le ratio em.
+   Le manuscrit fait toujours 1.5× la taille du parent (peu importe le niveau
+   de titre H1/H2/H3) → ratio constant garanti par construction.
+   Plus de magic numbers clamp() incohérents. */
+.accent-script {
+  font-family: var(--font-script);
+  font-weight: 700;
+  color: var(--c-or);
+  font-style: normal;        /* override l'italique éventuel hérité */
+  font-size: 1.5em;           /* ratio constant : 1.5× le parent */
+  line-height: 0.9;
+  display: inline-block;
+  vertical-align: -0.06em;    /* compense l'asymétrie baseline Caveat vs Fraunces */
+}
+
+/* Variante hero : sur sa propre ligne (block) + ratio un cran plus marqué
+   (le manuscrit hero domine, c'est l'héros). Duo typographique V1 — taille
+   ABSOLUE en clamp (et non em) pour décorréler de la taille du titre et
+   garantir que "date promise." domine clairement sans wrap à toutes tailles. */
+.accent-script--hero {
+  display: block;
+  font-size: clamp(46px, 11vw, 120px);
+  line-height: 0.92;
+  margin: var(--s-2) 0 0;
+  vertical-align: 0;
+}
+
+/* ─── Variante --service : noms d'offres côte à côte ───────
+   Problème : à font-size égal, Caveat rend les mots de tailles visuelles
+   différentes selon leur composition (cap-height, ascender, descender).
+   Solution : compensation font-size par mot via data-word, pour égaliser
+   la hauteur perçue à l'œil malgré la composition lexicale.
+   Base théorique : Caveat cap-height ~0.7em, x-height ~0.55em, descender ~0.25em
+   Hauteur visuelle effective par mot :
+     - "vitrine" (tout minuscules avec ascenders v/t)    ≈ 0.85em → besoin de +17%
+     - "E-commerce" / "e-commerce" (cap E ou minuscule)  ≈ 0.7em  → besoin de +3%
+     - "Application" (cap A + double descender pp)       ≈ 1.1em  → besoin de -7%
+   ────────────────────────────────────────────────────── */
+.accent-script--service {
+  display: inline-block;
+  line-height: 1.05;
+  vertical-align: -0.06em;
+}
+.accent-script--service[data-word="vitrine"]    { font-size: 1.75em; } /* +17% pour compenser absence cap-height */
+.accent-script--service[data-word="e-commerce"] { font-size: 1.55em; } /* +3% (tiret + minuscule) */
+.accent-script--service[data-word="E-commerce"] { font-size: 1.55em; } /* idem version services index */
+.accent-script--service[data-word="Application"]{ font-size: 1.40em; } /* -7% (cap A + descender pp = visuellement gros déjà) */

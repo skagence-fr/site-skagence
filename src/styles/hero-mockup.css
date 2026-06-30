@@ -1,0 +1,399 @@
+/* ============================================================
+   SK AGENCE — Hero Mockup (navigateur animé)
+   Cadre navigateur abstrait + mini-site qui se construit en boucle.
+   Dimensions fixes dès le frame 1 — zéro CLS.
+   ============================================================ */
+
+/* ---------- WRAPPER REMPLACE .hero__media--graphic ---------- */
+.hero__mockup-wrap {
+  position: relative;
+  /* Indicateur "livré" — pastille or absolue hors du cadre */
+}
+
+/* ---------- CADRE NAVIGATEUR ---------- */
+.browser-frame {
+  position: relative;
+  width: 100%;
+  /* ratio 4/3 — plus carré, plus "écran", plus premium */
+  aspect-ratio: 4 / 3;
+  border-radius: 10px;
+  border: 1px solid var(--c-hairline);
+  box-shadow:
+    0 4px 16px rgba(14, 31, 51, 0.08),
+    0 1px 3px  rgba(14, 31, 51, 0.06);
+  background: var(--c-bg);
+  overflow: hidden;
+  /* Fixe les dimensions — l'animation ne les change JAMAIS */
+  contain: layout style paint;
+  /* Flex column pour distribuer chrome + stage sans calc(100%) */
+  display: flex;
+  flex-direction: column;
+}
+
+/* ---------- BARRE CHROME ---------- */
+.browser-chrome {
+  position: relative;
+  height: 30px;
+  background: color-mix(in srgb, var(--c-bg) 92%, var(--c-ink) 8%);
+  border-bottom: 1px solid var(--c-hairline);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 12px;
+  flex-shrink: 0;    /* ne rétrécit jamais — hauteur fixe garantie */
+}
+
+/* 3 dots outline — sobre, pas macOS */
+.browser-chrome__dots {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  flex-shrink: 0;
+}
+.browser-chrome__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: 1.5px solid color-mix(in srgb, var(--c-ink) 30%, transparent);
+  background: transparent;
+}
+
+/* Fausse URL bar — pilule fine */
+.browser-chrome__url {
+  flex: 1;
+  max-width: 160px;
+  margin: 0 auto;
+  height: 16px;
+  background: var(--c-bg);
+  border: 1px solid var(--c-hairline);
+  border-radius: var(--r-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.browser-chrome__url-text {
+  font-family: var(--font-stress);
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--c-muted);
+  white-space: nowrap;
+  user-select: none;
+}
+
+/* ---------- STAGE — zone de contenu du mini-site ---------- */
+.browser-stage {
+  position: relative;
+  width: 100%;
+  flex: 1;          /* prend tout l'espace restant sous la chrome */
+  min-height: 0;    /* nécessaire pour que flex:1 soit calculable correctement */
+  background: var(--c-bg);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ============================================================
+   MINI-SITE : STRUCTURE FIXE
+   Tout est en blocs/rectangles stylisés — proportions crédibles.
+   ============================================================ */
+
+/* --- Header du mini-site --- */
+.ms-header {
+  flex-shrink: 0;
+  height: 20px;
+  padding: 0 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid transparent; /* épaisseur tenue */
+  background-color: var(--ms-header-bg, transparent);
+  transition: none; /* transitions gérées par GSAP */
+}
+
+/* Logo placeholder */
+.ms-header__logo {
+  width: 28px;
+  height: 6px;
+  border-radius: 1px;
+  background-color: var(--ms-el-skel, color-mix(in srgb, var(--c-ink) 18%, transparent));
+}
+
+/* Nav 3 items */
+.ms-header__nav {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+.ms-header__nav-item {
+  width: 18px;
+  height: 4px;
+  border-radius: 1px;
+  background-color: var(--ms-el-skel, color-mix(in srgb, var(--c-ink) 18%, transparent));
+  transform-origin: right center;
+}
+
+/* --- Hero intérieur --- */
+.ms-hero {
+  flex-shrink: 0;
+  padding: 8px 10px 6px;
+  display: grid;
+  gap: 5px;
+}
+
+/* Eyebrow — petite pilule */
+.ms-hero__eyebrow {
+  width: 32px;
+  height: 4px;
+  border-radius: var(--r-full);
+  background-color: var(--ms-el-gold, color-mix(in srgb, var(--c-ink) 18%, transparent));
+  opacity: 0; /* apparaît à l'étape 4 */
+  transform-origin: left center;
+}
+
+/* Titre — 2 lignes distinctes */
+.ms-hero__title-line {
+  height: 9px;
+  border-radius: 2px;
+  background-color: var(--ms-el-skel, color-mix(in srgb, var(--c-ink) 18%, transparent));
+}
+.ms-hero__title-line:first-of-type { width: 88%; }
+.ms-hero__title-line:last-of-type  { width: 64%; }
+
+/* Sous-titre */
+.ms-hero__sub {
+  width: 72%;
+  height: 5px;
+  border-radius: 1px;
+  background-color: var(--ms-el-skel, color-mix(in srgb, var(--c-ink) 18%, transparent));
+  opacity: 0.7;
+  margin-top: 2px;
+}
+
+/* Boutons */
+.ms-hero__btns {
+  display: flex;
+  gap: 5px;
+  margin-top: 4px;
+}
+.ms-hero__btn {
+  height: 12px;
+  border-radius: 2px;
+  background-color: var(--ms-el-skel, color-mix(in srgb, var(--c-ink) 18%, transparent));
+}
+.ms-hero__btn--primary { width: 52px; }
+.ms-hero__btn--ghost   {
+  width: 36px;
+  background-color: transparent;
+  border: 1px solid var(--ms-el-skel, color-mix(in srgb, var(--c-ink) 18%, transparent));
+}
+
+/* --- Section visuelle --- */
+.ms-section {
+  flex: 1;
+  padding: 6px 10px 4px;
+  display: grid;
+  grid-template-columns: 1fr 0.9fr;
+  gap: 8px;
+  align-items: start;
+}
+
+/* Colonne texte (gauche) */
+.ms-section__text {
+  display: grid;
+  gap: 5px;
+  padding-top: 4px;
+}
+.ms-section__text-line {
+  height: 4px;
+  border-radius: 1px;
+  background-color: var(--ms-el-skel, color-mix(in srgb, var(--c-ink) 18%, transparent));
+  transform-origin: left center;
+}
+.ms-section__text-line:nth-child(1) { width: 90%; }
+.ms-section__text-line:nth-child(2) { width: 78%; }
+.ms-section__text-line:nth-child(3) { width: 55%; }
+
+/* Bloc visuel (droite) */
+.ms-section__visual {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  border-radius: 3px;
+  background-color: var(--ms-el-skel, color-mix(in srgb, var(--c-ink) 18%, transparent));
+  overflow: visible;
+}
+
+/* Équerre dorée sur le bloc visuel (apparaît étape 3) */
+.ms-visual__bracket {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  width: 14px;
+  height: 14px;
+  opacity: 0;
+}
+.ms-visual__bracket::before,
+.ms-visual__bracket::after {
+  content: '';
+  position: absolute;
+  background: var(--c-gold);
+  border-radius: 1px;
+}
+.ms-visual__bracket::before {
+  top: 0; left: 0;
+  width: 100%; height: 1.5px;
+}
+.ms-visual__bracket::after {
+  top: 0; left: 0;
+  width: 1.5px; height: 100%;
+}
+
+/* Shape géométrique dans le bloc visuel (apparaît étape 4) */
+.ms-visual__shape {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  width: 18px;
+  height: 18px;
+  opacity: 0;
+}
+.ms-visual__circle {
+  position: absolute;
+  top: 50%; left: 50%;
+  border-radius: 50%;
+  border: 1.5px solid var(--c-gold);
+  transform: translate(-50%, -50%);
+}
+.ms-visual__circle:nth-child(1) { width: 18px; height: 18px; }
+.ms-visual__circle:nth-child(2) { width: 11px; height: 11px; opacity: 0.7; }
+.ms-visual__circle:nth-child(3) { width: 5px;  height: 5px;  background: var(--c-gold); border: none; opacity: 0.9; }
+
+/* --- Footer mini-site --- */
+.ms-footer {
+  flex-shrink: 0;
+  height: 12px;
+  padding: 0 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border-top: 1px solid var(--c-hairline);
+  background-color: var(--ms-footer-bg, transparent);
+}
+.ms-footer__item {
+  width: 20px;
+  height: 3px;
+  border-radius: 1px;
+  background-color: var(--ms-el-skel, color-mix(in srgb, var(--c-ink) 18%, transparent));
+  opacity: 0; /* apparaît étape 4 */
+}
+.ms-footer__item:nth-child(2) { width: 14px; }
+.ms-footer__item:nth-child(3) { width: 18px; }
+
+/* ---------- PASTILLE "LIVRÉ" ---------- */
+.browser-delivered {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--c-gold);
+  opacity: 0;
+  /* Garantit que la pastille est au-dessus du cadre */
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+
+/* Desktop — mockup à droite, taille naturelle */
+@media (min-width: 1024px) {
+  .hero__mockup-wrap {
+    /* Léger recul vertical pour aligner optiquement avec le texte */
+    align-self: center;
+  }
+}
+
+/* Tablette — légèrement réduit */
+@media (max-width: 1024px) and (min-width: 768px) {
+  .browser-chrome { height: 26px; }
+  .ms-header { height: 18px; }
+}
+
+/* Mobile — stack vertical, mockup sous le texte (aligné sur le breakpoint hero 880px) */
+@media (max-width: 880px) {
+  .hero__mockup-wrap {
+    width: 100%;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 767px) {
+  .hero__mockup-wrap {
+    width: 100%;
+    max-width: 380px;
+    margin: 0 auto;
+  }
+  .browser-chrome {
+    height: 24px;
+    padding: 0 8px;
+    gap: 5px;
+  }
+  .browser-chrome__dot { width: 6px; height: 6px; }
+  .browser-chrome__url { max-width: 120px; }
+  .browser-chrome__url-text { font-size: 8px; }
+
+  .ms-header { height: 16px; padding: 0 8px; }
+  .ms-header__logo { width: 22px; height: 5px; }
+  .ms-header__nav-item { width: 14px; height: 3px; }
+
+  .ms-hero { padding: 6px 8px 4px; gap: 4px; }
+  .ms-hero__title-line { height: 7px; }
+  .ms-hero__btn--primary { width: 40px; }
+  .ms-hero__btn--ghost   { width: 28px; }
+
+  .ms-section { padding: 4px 8px 2px; gap: 6px; }
+}
+
+/* ============================================================
+   PREFERS-REDUCED-MOTION : état "livré" statique
+   Le mini-site est figé sur l'étape 5 complète — premium, lisible.
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  /* Header bleu nuit */
+  .ms-header {
+    background-color: var(--c-ink);
+    border-bottom-color: var(--c-hairline);
+  }
+  .ms-header__logo { background-color: var(--c-bg); }
+  .ms-header__nav-item { background-color: color-mix(in srgb, var(--c-bg) 70%, transparent); }
+
+  /* Titre bleu nuit */
+  .ms-hero__title-line { background-color: var(--c-ink); }
+  .ms-hero__sub { background-color: color-mix(in srgb, var(--c-ink) 45%, transparent); }
+
+  /* Eyebrow visible */
+  .ms-hero__eyebrow { opacity: 1; background-color: var(--c-gold); }
+
+  /* Bouton or + outline */
+  .ms-hero__btn--primary { background-color: var(--c-gold); }
+  .ms-hero__btn--ghost   { border-color: var(--c-ink); }
+
+  /* Section — lignes visibles */
+  .ms-section__text-line { background-color: var(--c-ink); }
+  .ms-section__visual    { background-color: var(--c-ink); }
+
+  /* Équerre + shape */
+  .ms-visual__bracket { opacity: 1; }
+  .ms-visual__shape   { opacity: 1; }
+
+  /* Footer visible */
+  .ms-footer__item { opacity: 1; background-color: color-mix(in srgb, var(--c-ink) 30%, transparent); }
+
+  /* Pastille or */
+  .browser-delivered { opacity: 1; }
+}

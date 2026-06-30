@@ -1,0 +1,155 @@
+/* ============================================================
+   SK AGENCE — Design tokens (v3)
+   Direction « Sotheby's tech » : off-white + bleu nuit + or chaud.
+   ============================================================ */
+
+:root {
+  /* ---------- COULEUR ---------- */
+  --c-bg:        #F5F0E6;  /* crème chaude — fond principal */
+  --c-bg-2:      var(--c-cream-2);  /* DEPRECATED — alias vers --c-cream-2 (crème canonique Route B). À supprimer une fois toutes les occurrences migrées. */
+  --c-surface:   #EAE3D7;  /* carte / surface posée */
+  --c-paper:     var(--c-blanc);    /* DEPRECATED — alias vers --c-blanc (blanc canonique Route B). À supprimer une fois toutes les occurrences migrées. */
+
+  --c-ink:       #0E1F33;  /* bleu nuit profond — texte principal */
+  --c-ink-2:     #122439;  /* bleu nuit légèrement plus clair (cards dark) */
+  --c-ink-soft:  #3E5068;  /* bleu-gris secondaire */
+  --c-muted:     #8A8474;  /* gris chaud — labels, méta */
+  --c-mute-2:    #B8B0A2;  /* hairline visible */
+
+  --c-gold:      #A47731;  /* or terreux — accent principal */
+  --c-gold-2:    #C99043;  /* or hover plus lumineux */
+  --c-gold-3:    #7E5520;  /* or sombre — bordures sur fond clair */
+  --c-or:        var(--c-gold);  /* alias DA Route B — or principal (synonyme de --c-gold) */
+
+  /* ─── ROUTE B — Ajouts DA (palette injection wouah) ─── */
+  --c-blanc:     #FFFFFF;  /* blanc pur — cartes détachées (B1) */
+  --c-cream-2:   #EBE4D4;  /* crème un peu plus foncé — alternance subtile fonds (B2) */
+  --c-vert:      #1D6E56;  /* vert sapin — accent SECONDAIRE et RARE (validé, coches) */
+  --c-or-clair:  #C9A24B;  /* or plus lumineux — "€" et accents sur fond sombre */
+
+  /* Ombres profondeur (B1) — valeurs exactes du brief Route B */
+  --shadow-card-light: 0 8px 24px rgba(14, 31, 51, 0.10);   /* cartes sur fond clair */
+  --shadow-card-dark:  0 10px 30px rgba(0, 0, 0, 0.30);      /* cartes sur fond bleu nuit */
+
+  /* Ombres carte héros différenciateur (Pourquoi SK, première carte) */
+  --shadow-card-hero:        0 10px 28px rgba(14, 31, 51, 0.12), 0 2px 6px rgba(14, 31, 51, 0.06);
+  --shadow-card-hero-hover:  0 20px 56px rgba(14, 31, 51, 0.16), 0 6px 14px rgba(14, 31, 51, 0.08);
+
+  /* Ombres hover cartes standard (différenciateurs Pourquoi SK + services).
+     Nommage spécifique au composant pour éviter collision avec --shadow-card-hover
+     défini dans pricing.css (valeur distincte). */
+  --shadow-diff-hover:     0 14px 40px rgba(14, 31, 51, 0.14), 0 4px 10px rgba(14, 31, 51, 0.06);
+  --shadow-service-hover:  0 14px 36px rgba(14, 31, 51, 0.14), 0 4px 10px rgba(14, 31, 51, 0.06);
+
+  /* Ombres cartes sur fond crème-2 (#EBE4D4) — repos renforcé pour rester détaché
+     sur le crème légèrement plus foncé. Hovers existants conservés (blur 40-56px plus large). */
+  --shadow-card-cream2:       0 10px 28px rgba(14, 31, 51, 0.14), 0 2px 6px rgba(14, 31, 51, 0.07);
+  --shadow-card-hero-cream2:  0 12px 32px rgba(14, 31, 51, 0.17), 0 3px 8px rgba(14, 31, 51, 0.09);
+
+  /* Texte sur fond sombre */
+  --c-ink-on-dark:      #F5F0E6;
+  --c-ink-soft-on-dark: #B0AFA6;
+
+  --c-hairline:    rgba(14, 31, 51, 0.12);
+  --c-hairline-2:  rgba(14, 31, 51, 0.06);
+  --c-hairline-on: rgba(245, 240, 230, 0.14);
+
+  /* ---------- TYPOGRAPHIE ---------- */
+  --font-display: 'Fraunces', 'Times New Roman', Georgia, serif;
+  --font-stress:  'Saira Condensed', 'Arial Narrow', Impact, sans-serif;
+  --font-body:    'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-script:  'Caveat', cursive;  /* B3 — accent manuscrit rare et stratégique (5 occurrences max) */
+
+  /* Base body 17 px */
+  --t-xs:    13px;
+  --t-sm:    14px;
+  --t-base:  17px;
+  --t-md:    19px;
+  --t-lg:    22px;
+  --t-xl:    28px;
+
+  /* Display Fraunces */
+  --t-d-xs:  clamp(20px, 2.2vw, 32px);
+  --t-d-sm:  clamp(24px, 3vw, 44px);
+  --t-d-md:  clamp(28px, 5vw, 72px);
+  --t-d-lg:  clamp(30px, 5.5vw, 80px);   /* h2 standard — réduit pour mobile (était 44px) */
+  --t-d-xl:  clamp(36px, 6.5vw, 96px);   /* h1 secondaire — réduit pour mobile (était 52px) */
+  --t-d-2xl: clamp(56px, 12vw, 192px);   /* display géant — réduit pour mobile (était 88px) */
+
+  /* B3 ajustement V2 — tokens niveau de titre (harmonisation stricte) */
+  --t-h1:    clamp(28px, 5vw, 60px);    /* H1 unique — hero centré + p2-hero + legal h1 */
+  --t-h3:    clamp(24px, 2.8vw, 36px);  /* H3 sub unique — service__name, diff__title, group-title, why-title */
+
+  /* Stress Saira Condensed — chiffres et compteurs */
+  --t-s-sm:  clamp(28px, 3vw, 40px);
+  --t-s-md:  clamp(56px, 7vw, 96px);
+  --t-s-lg:  clamp(80px, 11vw, 160px);
+  --t-s-xl:  clamp(110px, 16vw, 240px);
+
+  /* Letter-spacing */
+  --ls-display: -0.02em;
+  --ls-stress:  -0.02em;
+  --ls-eyebrow: 0.22em;
+
+  /* Line-height */
+  --lh-display: 1.02;
+  --lh-stress:  0.88;
+  --lh-tight:   1.18;
+  --lh-body:    1.6;
+
+  /* ---------- ESPACEMENT ---------- */
+  --s-1:  4px;
+  --s-2:  8px;
+  --s-3:  12px;
+  --s-4:  16px;
+  --s-5:  24px;
+  --s-6:  32px;
+  --s-7:  48px;
+  --s-8:  72px;
+  --s-9:  96px;
+  --s-10: 128px;
+  --s-11: 160px;
+  --s-12: 200px;
+  --s-13: 256px;
+
+  /* ---------- RAYONS ---------- */
+  --r-1: 2px;
+  --r-2: 4px;
+  --r-3: 8px;
+  --r-4: 14px;
+  --r-5: 24px;
+  --r-full: 999px;
+
+  /* ---------- LAYOUT ---------- */
+  --maxw-tight: 720px;
+  --maxw-read:  840px;
+  --maxw:       1200px;
+  --maxw-wide:  1440px;
+  --pad-x:      clamp(24px, 5vw, 72px);
+  --nav-h:      72px;
+
+  /* ---------- EASING ---------- */
+  --ease-out:        cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-out-soft:   cubic-bezier(0.33, 1, 0.68, 1);
+  --ease-in-out:     cubic-bezier(0.65, 0, 0.35, 1);
+
+  /* ---------- DURÉES ---------- */
+  --d-1: 0.2s;
+  --d-2: 0.35s;
+  --d-3: 0.6s;
+  --d-4: 1s;
+
+  /* ---------- Z-INDEX ---------- */
+  --z-base:    1;
+  --z-nav:     50;
+  --z-menu:    80;
+  --z-cursor:  90;
+  --z-loader:  100;
+
+}
+
+/* Scrollbar discrète */
+* { scrollbar-color: var(--c-mute-2) transparent; scrollbar-width: thin; }
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-thumb { background: var(--c-mute-2); border-radius: 8px; }
+::-webkit-scrollbar-track { background: transparent; }

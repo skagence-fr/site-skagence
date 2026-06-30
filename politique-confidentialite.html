@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#F5F0E6" />
+    <meta name="description" content="Politique de confidentialité de SK Agence — données collectées via le formulaire de devis, finalités, durée de conservation, droits RGPD et sous-traitants." />
+    <meta name="robots" content="index,follow" />
+    <link rel="canonical" href="https://sk-agence.fr/politique-confidentialite.html" />
+    <title>Politique de confidentialité — SK Agence</title>
+
+    <!-- Fonts self-hosted via src/style.css (fonts.css importé en premier) -->
+
+    <link rel="stylesheet" href="/src/style.css" />
+    <script type="module" src="/src/legal-nav.js"></script>
+    <style>
+      .legal {
+        max-width: var(--maxw-read);
+        margin: 0 auto;
+        padding: calc(var(--nav-h) + var(--s-9)) var(--pad-x) var(--s-12);
+      }
+      .legal__back {
+        display: inline-flex; align-items: center; gap: 8px;
+        font-family: var(--font-body);
+        font-size: var(--t-xs);
+        font-weight: 500;
+        letter-spacing: var(--ls-eyebrow);
+        text-transform: uppercase;
+        color: var(--c-muted);
+        margin-bottom: var(--s-8);
+        transition: color .25s var(--ease-out);
+      }
+      .legal__back:hover { color: var(--c-ink); }
+      .legal h1 {
+        font-family: var(--font-display);
+        font-weight: 350;
+        font-size: var(--t-h1); /* B3 V2 — harmonisé sur token H1 unique */
+        line-height: var(--lh-display);
+        letter-spacing: var(--ls-display);
+        margin: 0 0 var(--s-9);
+        font-variation-settings: 'opsz' 96, 'SOFT' 100;
+        text-wrap: balance;
+      }
+      .legal h1 em { font-style: italic; color: var(--c-gold); font-weight: 350; }
+      .legal h2 {
+        font-family: var(--font-display);
+        font-weight: 350;
+        font-size: var(--t-d-xs);
+        line-height: 1.2;
+        margin: var(--s-8) 0 var(--s-4);
+        color: var(--c-ink);
+        font-variation-settings: 'opsz' 36, 'SOFT' 80;
+      }
+      .legal p {
+        font-family: var(--font-body);
+        color: var(--c-ink-soft);
+        margin-bottom: var(--s-4);
+        line-height: 1.7;
+        font-size: var(--t-md);
+        max-width: 64ch;
+      }
+      .legal ul {
+        font-family: var(--font-body);
+        color: var(--c-ink-soft);
+        margin: 0 0 var(--s-4) var(--s-5);
+        line-height: 1.7;
+        font-size: var(--t-md);
+        max-width: 64ch;
+      }
+      .legal ul li { margin-bottom: var(--s-2); }
+      .legal strong { color: var(--c-ink); font-weight: 600; }
+      .legal a { color: var(--c-ink); border-bottom: 1px solid var(--c-gold); transition: color .25s var(--ease-out); }
+      .legal a:hover { color: var(--c-gold); }
+      .legal__updated {
+        font-family: var(--font-body);
+        font-size: var(--t-xs);
+        font-weight: 500;
+        letter-spacing: var(--ls-eyebrow);
+        text-transform: uppercase;
+        color: var(--c-muted);
+        margin-bottom: var(--s-8);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ============== HEADER / NAV — pilule flottante ============== -->
+    <header class="nav" role="banner">
+      <a class="nav__brand" href="/" aria-label="SK Agence — accueil">SK</a>
+      <span class="nav__spacer" aria-hidden="true"></span>
+      <a class="nav__cta" href="/#contact">Demander un devis</a>
+      <button class="nav__burger" id="burger" aria-label="Ouvrir le menu" aria-controls="menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+      </button>
+    </header>
+
+    <!-- ============== MENU PLEIN ÉCRAN bleu nuit ============== -->
+    <div class="menu-overlay" id="menu" aria-hidden="true" role="dialog" aria-label="Menu principal">
+      <div class="menu-overlay__nav">
+        <span class="menu-overlay__brand" aria-hidden="true">SK</span>
+        <span class="menu-overlay__spacer" aria-hidden="true"></span>
+        <a class="menu-overlay__cta" href="/#contact">Demander un devis</a>
+        <button class="menu-overlay__close" id="menu-close" aria-label="Fermer le menu">✕</button>
+      </div>
+      <ol class="menu-overlay__list">
+        <li><a href="/"><span>Accueil</span><span class="menu-overlay__num">01</span></a></li>
+        <li><a href="/#services"><span>Ce que je fais</span><span class="menu-overlay__num">02</span></a></li>
+        <li><a href="/#pourquoi"><span>Pourquoi SK</span><span class="menu-overlay__num">03</span></a></li>
+        <li><a href="/#methode"><span>Ma méthode</span><span class="menu-overlay__num">04</span></a></li>
+        <li><a href="/en-savoir-plus.html"><span>Offres &amp; tarifs</span><span class="menu-overlay__num">05</span></a></li>
+        <li class="menu-overlay__link--highlight"><a href="/en-savoir-plus.html#faq"><span>FAQ</span><span class="menu-overlay__num">06</span></a></li>
+      </ol>
+      <div class="menu-overlay__foot">
+        <a class="menu-overlay__foot-mail" href="mailto:sk.agence@outlook.fr">sk.agence@outlook.fr</a>
+        <p class="menu-overlay__foot-loc">Aubagne — partout en France</p>
+        <p class="menu-overlay__foot-copy">© 2026</p>
+      </div>
+    </div>
+
+    <main>
+      <article class="legal">
+        <a href="/" class="legal__back">← Retour à l'accueil</a>
+        <p class="legal__updated">Mise à jour : juin 2026</p>
+        <h1>Politique de <em>confidentialité</em></h1>
+
+        <h2>1. Responsable de traitement</h2>
+        <p>
+          <strong>Kylian Sampol</strong>, entrepreneur individuel — <strong>SK Agence</strong>.<br />
+          SIREN&nbsp;: 105&nbsp;940&nbsp;159.<br />
+          Aubagne (13400), France.<br />
+          Contact&nbsp;: <a href="mailto:sk.agence@outlook.fr">sk.agence@outlook.fr</a>.
+        </p>
+
+        <h2>2. Données collectées</h2>
+        <p>
+          Lorsque vous remplissez le formulaire de demande de devis, les données suivantes sont collectées&nbsp;:
+        </p>
+        <ul>
+          <li>Prénom et nom.</li>
+          <li>Adresse email <strong>ou</strong> numéro de téléphone, selon le canal de contact choisi.</li>
+          <li>Activité professionnelle, type de projet souhaité, budget envisagé, message libre.</li>
+        </ul>
+        <p>
+          Aucune autre donnée n'est collectée automatiquement lors de votre navigation (pas de cookie de traçage, pas d'identifiant publicitaire).
+        </p>
+
+        <h2>3. Finalité du traitement</h2>
+        <p>
+          Les données collectées sont utilisées exclusivement pour&nbsp;:
+        </p>
+        <ul>
+          <li>Répondre à votre demande de devis ou de prise de contact.</li>
+          <li>Établir une proposition commerciale correspondant à votre projet.</li>
+          <li>Vous recontacter selon le canal indiqué dans le formulaire.</li>
+        </ul>
+
+        <h2>4. Base légale</h2>
+        <p>
+          Le traitement repose sur deux bases légales cumulées&nbsp;:
+        </p>
+        <ul>
+          <li><strong>Exécution de mesures précontractuelles à votre demande</strong> (art. 6.1.b RGPD)&nbsp;: la collecte est nécessaire pour traiter votre demande de devis.</li>
+          <li><strong>Consentement explicite</strong> (art. 6.1.a RGPD)&nbsp;: matérialisé par la case à cocher présente dans le formulaire, que vous cochez librement avant d'envoyer votre demande.</li>
+        </ul>
+
+        <h2>5. Destinataires</h2>
+        <p>
+          Vos données sont traitées par Kylian Sampol (SK Agence) uniquement. Elles ne sont ni revendues ni transmises à des tiers à des fins commerciales.
+        </p>
+
+        <h2>6. Sous-traitants techniques</h2>
+        <p>
+          Pour assurer le fonctionnement du site et l'acheminement des formulaires, SK Agence recourt aux sous-traitants suivants&nbsp;:
+        </p>
+        <ul>
+          <li>
+            <strong>Vercel Inc.</strong> (hébergement du site) — 340 S Lemon Ave #4133, Walnut, CA 91789, États-Unis.
+            Transfert encadré par le Data Privacy Framework UE–États-Unis.
+            Politique de confidentialité&nbsp;: <a href="https://vercel.com/legal/privacy-policy" target="_blank" rel="noopener noreferrer">vercel.com/legal/privacy-policy</a>.
+          </li>
+          <li>
+            <strong>Resend Inc.</strong> (acheminement des notifications email de formulaire) — États-Unis.
+            Transfert encadré par le Data Privacy Framework UE–États-Unis.
+            Politique de confidentialité&nbsp;: <a href="https://resend.com/legal/privacy-policy" target="_blank" rel="noopener noreferrer">resend.com/legal/privacy-policy</a>.
+          </li>
+        </ul>
+        <p>
+          Ces sous-traitants agissent sur instruction de SK Agence et ne peuvent utiliser vos données à leurs propres fins.
+        </p>
+
+        <h2>7. Durée de conservation</h2>
+        <p>
+          Vos données sont conservées <strong>trois ans à compter du dernier contact</strong>, conformément à la durée légale applicable à la prospection commerciale (art. L. 110-4 du Code de commerce). Au terme de ce délai, elles sont supprimées.
+        </p>
+
+        <h2>8. Vos droits</h2>
+        <p>
+          Conformément au RGPD, vous disposez des droits suivants sur vos données&nbsp;:
+        </p>
+        <ul>
+          <li><strong>Accès</strong>&nbsp;: obtenir une copie des données vous concernant.</li>
+          <li><strong>Rectification</strong>&nbsp;: corriger des données inexactes ou incomplètes.</li>
+          <li><strong>Effacement</strong>&nbsp;: demander la suppression de vos données ("droit à l'oubli").</li>
+          <li><strong>Opposition</strong>&nbsp;: vous opposer à un traitement fondé sur un intérêt légitime.</li>
+          <li><strong>Limitation</strong>&nbsp;: demander la suspension temporaire d'un traitement contesté.</li>
+          <li><strong>Portabilité</strong>&nbsp;: recevoir vos données dans un format structuré et lisible par machine.</li>
+          <li><strong>Retrait du consentement</strong>&nbsp;: révoquer à tout moment votre consentement, sans que cela n'affecte la licéité des traitements antérieurs.</li>
+        </ul>
+        <p>
+          Pour exercer l'un de ces droits, écrivez à&nbsp;: <a href="mailto:sk.agence@outlook.fr">sk.agence@outlook.fr</a>. Une réponse vous sera apportée dans un délai d'un mois.
+        </p>
+        <p>
+          En cas de désaccord persistant, vous pouvez introduire une réclamation auprès de la <a href="https://www.cnil.fr" target="_blank" rel="noopener noreferrer">CNIL (cnil.fr)</a>.
+        </p>
+
+        <h2>9. Cookies et traceurs</h2>
+        <p>
+          Ce site n'utilise pas de cookies de mesure d'audience ni de traceurs publicitaires à ce jour. Aucun consentement n'est donc requis pour naviguer sur ce site.
+        </p>
+        <p>
+          Si un outil d'analyse est installé ultérieurement, cette politique sera mise à jour. SK Agence privilégie des outils sans cookies ni consentement préalable (de type Plausible Analytics, exempté de consentement CNIL si configuré correctement). L'installation d'un outil de type Google Analytics 4 imposera un bandeau de consentement conforme à la recommandation CNIL.
+        </p>
+      </article>
+    </main>
+
+    <footer class="footer" role="contentinfo">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <span class="footer__mark">SK<span class="sk-dot" aria-hidden="true"></span><em>Agence</em></span>
+          <p>Studio indépendant à Aubagne — Livré vite, maintenu chaque mois.</p>
+        </div>
+        <div class="footer__col">
+          <h2 class="footer__col-title">Navigation</h2>
+          <ul>
+            <li><a href="/">Accueil</a></li>
+            <li><a href="/en-savoir-plus.html">Offres &amp; tarifs</a></li>
+            <li><a href="/#contact">Demander un devis</a></li>
+          </ul>
+        </div>
+        <div class="footer__col">
+          <h2 class="footer__col-title">Studio</h2>
+          <ul>
+            <li><a href="mailto:sk.agence@outlook.fr">sk.agence@outlook.fr</a></li>
+            <li><a href="/mentions-legales.html">Mentions légales</a></li>
+            <li><a href="/politique-confidentialite.html">Politique de confidentialité</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <span>© <span id="year">2026</span> SK Agence — SIREN 105 940 159 · Aubagne (13400), France · TVA non applicable, art. 293 B du CGI · <a href="/mentions-legales.html">Mentions légales</a> · <a href="/politique-confidentialite.html">Politique de confidentialité</a></span>
+      </div>
+    </footer>
+
+    <script>
+      document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
+  </body>
+</html>

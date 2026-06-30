@@ -1,0 +1,687 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#F5F0E6" />
+    <meta name="description" content="Studio de développement web à Aubagne. Vitrine, e-commerce, application — prix affichés, délai contractuel selon le projet, maintenance mensuelle incluse. Devis ferme sous 24 h." />
+    <meta name="robots" content="index,follow" />
+    <link rel="canonical" href="https://sk-agence.fr/" />
+
+    <!-- Open Graph -->
+    <meta property="og:site_name" content="SK Agence" />
+    <meta property="og:locale" content="fr_FR" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://sk-agence.fr/" />
+    <meta property="og:title" content="SK Agence — site pro, livraison rapide, prix affichés" />
+    <meta property="og:description" content="Studio de développement web à Aubagne. Prix affichés, délai contractuel, maintenance mensuelle incluse. Partout en France." />
+    <meta property="og:image" content="https://sk-agence.fr/assets/og-cover.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="SK Agence — studio de développement web à Aubagne, livraison rapide selon le projet." />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="SK Agence — site pro, livraison rapide" />
+    <meta name="twitter:description" content="Studio web à Aubagne. Prix affichés, délai contractuel, maintenance incluse. Devis ferme sous 24 h." />
+    <meta name="twitter:image" content="https://sk-agence.fr/assets/og-cover.jpg" />
+
+    <title>SK Agence — site pro, livraison rapide, prix affichés</title>
+
+    <!-- Font critique hero préchargée (self-hosted, une seule) -->
+    <link rel="preload" as="font" type="font/woff2" href="/fonts/fraunces-normal-variable.woff2" crossorigin />
+
+    <!-- B3 — Caveat (Google Fonts, accent manuscrit rare : 5 occurrences max sur le site) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&display=swap" />
+
+    <script type="module" src="/src/main.js"></script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ProfessionalService",
+      "@id": "https://sk-agence.fr/#agence",
+      "name": "SK Agence",
+      "alternateName": "SK Agence — studio web Aubagne",
+      "description": "Studio de développement web à Aubagne. Vitrine, e-commerce et application — prix affichés, délai contractuel selon le projet (vitrine 7 jours, e-commerce 2 à 3 semaines, application sur devis), maintenance mensuelle incluse.",
+      "url": "https://sk-agence.fr/",
+      "image": "https://sk-agence.fr/assets/og-cover.jpg",
+      "founder": { "@type": "Person", "name": "Kylian Sampol" },
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Aubagne",
+        "postalCode": "13400",
+        "addressRegion": "Provence-Alpes-Côte d'Azur",
+        "addressCountry": "FR"
+      },
+      "areaServed": [
+        { "@type": "Country", "name": "France" },
+        { "@type": "City", "name": "Aubagne" },
+        { "@type": "City", "name": "Marseille" }
+      ],
+      "priceRange": "€€",
+      "email": "sk.agence@outlook.fr",
+      "identifier": "SIREN 105940159"
+    }
+    </script>
+  </head>
+  <body>
+
+    <!-- ============== PRÉLOADER ============== -->
+    <div class="loader" id="loader" aria-hidden="true">
+      <p class="loader__mark">SK<span class="sk-dot" aria-hidden="true"></span><em>Agence</em></p>
+    </div>
+
+    <!-- ============== CURSEUR CUSTOM ============== -->
+    <div class="cursor" id="cursor" aria-hidden="true">
+      <div class="cursor__ring"></div>
+      <div class="cursor__dot"></div>
+    </div>
+
+    <!-- ============== HEADER / NAV — pilule flottante ============== -->
+    <header class="nav" role="banner">
+      <a class="nav__brand" href="/" aria-label="SK Agence — accueil">SK</a>
+      <span class="nav__spacer" aria-hidden="true"></span>
+      <a class="nav__cta" href="#contact">Demander un devis</a>
+      <button class="nav__burger" id="burger" aria-label="Ouvrir le menu" aria-controls="menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+      </button>
+    </header>
+
+    <!-- ============== MENU PLEIN ÉCRAN bleu nuit ============== -->
+    <div class="menu-overlay" id="menu" aria-hidden="true" role="dialog" aria-label="Menu principal">
+      <div class="menu-overlay__nav">
+        <span class="menu-overlay__brand" aria-hidden="true">SK</span>
+        <span class="menu-overlay__spacer" aria-hidden="true"></span>
+        <a class="menu-overlay__cta" href="#contact">Demander un devis</a>
+        <button class="menu-overlay__close" id="menu-close" aria-label="Fermer le menu">✕</button>
+      </div>
+      <ol class="menu-overlay__list">
+        <li><a href="/"><span>Accueil</span><span class="menu-overlay__num">01</span></a></li>
+        <li><a href="/#services"><span>Ce que je fais</span><span class="menu-overlay__num">02</span></a></li>
+        <li><a href="/#pourquoi"><span>Pourquoi SK</span><span class="menu-overlay__num">03</span></a></li>
+        <li><a href="/#methode"><span>Ma méthode</span><span class="menu-overlay__num">04</span></a></li>
+        <li><a href="/en-savoir-plus.html"><span>Offres &amp; tarifs</span><span class="menu-overlay__num">05</span></a></li>
+        <li class="menu-overlay__link--highlight"><a href="/en-savoir-plus.html#faq"><span>FAQ</span><span class="menu-overlay__num">06</span></a></li>
+      </ol>
+      <div class="menu-overlay__foot">
+        <a class="menu-overlay__foot-mail" href="mailto:sk.agence@outlook.fr">sk.agence@outlook.fr</a>
+        <p class="menu-overlay__foot-loc">Aubagne — partout en France</p>
+        <p class="menu-overlay__foot-copy">© 2026</p>
+      </div>
+    </div>
+
+    <main>
+
+      <!-- ==========================================================
+           1 · HERO
+           ========================================================== -->
+      <section class="hero hero--centered" id="hero" aria-labelledby="hero-title">
+        <div class="hero__inner">
+          <p class="tag hero__eyebrow">SK•Agence — studio web</p>
+          <h1 class="hero__title hero__title--centered" id="hero-title" data-reveal-text>Votre site en ligne à&nbsp;la</h1>
+          <p class="hero__accent accent-script accent-script--hero" data-reveal>date promise.</p>
+          <p class="hero__sub hero__sub--centered" data-reveal>Sites vitrines, e-commerce et applications sur-mesure — livrés à la date inscrite au contrat.</p>
+          <div class="hero__cta-row hero__cta-row--centered" data-reveal>
+            <a class="btn btn--primary" href="#contact">Configurer mon projet</a>
+            <a class="btn btn--ghost" href="/en-savoir-plus.html">Les tarifs</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================================
+           2 · CE QUE JE FAIS
+           ========================================================== -->
+      <section class="section ce-que-je-fais" id="services" aria-labelledby="services-title">
+        <div class="section__hd" data-reveal>
+          <div class="section__hd-left">
+            <p class="tag">Services</p>
+          </div>
+          <div class="section__hd-right">
+            <h2 class="section__title" id="services-title">Ce que <span class="accent-script">je fais.</span></h2>
+          </div>
+        </div>
+
+        <div class="services__grid">
+
+          <!-- Site vitrine -->
+          <article class="service__block">
+            <!-- Pictogramme SVG : écran de site stylisé -->
+            <svg class="service__picto" viewBox="0 0 56 56" aria-hidden="true" focusable="false">
+              <!-- Cadre écran -->
+              <rect class="picto-stroke" x="6" y="10" width="44" height="32" rx="2"/>
+              <!-- Barre chrome -->
+              <line class="picto-stroke" x1="6" y1="18" x2="50" y2="18"/>
+              <!-- Pied d'écran -->
+              <line class="picto-stroke" x1="20" y1="42" x2="36" y2="42"/>
+              <line class="picto-stroke" x1="28" y1="42" x2="28" y2="47"/>
+              <!-- Lignes de texte dans l'écran -->
+              <line class="picto-stroke" x1="13" y1="25" x2="35" y2="25"/>
+              <line class="picto-stroke" x1="13" y1="30" x2="30" y2="30"/>
+              <line class="picto-stroke" x1="13" y1="35" x2="26" y2="35"/>
+              <!-- Détail or : pastille en haut-droite dans le cadre -->
+              <circle class="picto-accent" cx="44" cy="14" r="3"/>
+            </svg>
+            <p class="service__num">01</p>
+            <h3 class="service__name">Site <span class="accent-script accent-script--service" data-word="vitrine">vitrine</span></h3>
+            <p class="service__line">Commerce, artisan, profession libérale : le site qui vous fait trouver, appeler, choisir.</p>
+            <p class="service__price">À partir de 1 490 €</p>
+          </article>
+
+          <!-- E-commerce -->
+          <article class="service__block">
+            <!-- Pictogramme SVG : panier stylisé + étiquette or -->
+            <svg class="service__picto" viewBox="0 0 56 56" aria-hidden="true" focusable="false">
+              <!-- Anse du panier -->
+              <path class="picto-stroke" d="M16 20 Q16 12 28 12 Q40 12 40 20"/>
+              <!-- Corps du panier -->
+              <path class="picto-stroke" d="M10 22 L13 42 Q13 44 15 44 L41 44 Q43 44 43 42 L46 22 Z"/>
+              <!-- Ligne centrale du panier -->
+              <line class="picto-stroke" x1="28" y1="22" x2="28" y2="44"/>
+              <!-- Étiquette or (tag) accrochée à l'anse droite -->
+              <path class="picto-accent-stroke" d="M40 20 L44 15 L49 15 L49 23 L44 23 Z"/>
+              <line class="picto-accent-stroke" x1="44" y1="15" x2="44" y2="23"/>
+            </svg>
+            <p class="service__num">02</p>
+            <h3 class="service__name"><span class="accent-script accent-script--service" data-word="E-commerce">E-commerce</span></h3>
+            <p class="service__line">Catalogue, paiement Stripe, gestion des commandes. Ouvert 24 h/24, sans commission de plateforme.</p>
+            <p class="service__price">À partir de 2 900 €</p>
+          </article>
+
+          <!-- Application web -->
+          <article class="service__block">
+            <!-- Pictogramme SVG : écran mobile ratio 9/16 + coche or -->
+            <svg class="service__picto" viewBox="0 0 56 56" aria-hidden="true" focusable="false">
+              <!-- Corps du mobile -->
+              <rect class="picto-stroke" x="17" y="6" width="22" height="38" rx="3"/>
+              <!-- Encoche haut -->
+              <line class="picto-stroke" x1="24" y1="6" x2="32" y2="6"/>
+              <!-- Bouton home bas -->
+              <line class="picto-stroke" x1="26" y1="42" x2="30" y2="42"/>
+              <!-- Ligne séparatrice écran -->
+              <line class="picto-stroke" x1="17" y1="11" x2="39" y2="11"/>
+              <line class="picto-stroke" x1="17" y1="40" x2="39" y2="40"/>
+              <!-- Coche or dans l'écran -->
+              <path class="picto-accent-stroke" d="M22 26 L26 30 L34 22"/>
+            </svg>
+            <p class="service__num">03</p>
+            <h3 class="service__name"><span class="accent-script accent-script--service" data-word="Application">Application</span> web</h3>
+            <p class="service__line">Outil métier, espace membre, application installable. Du sur-mesure cadré, livré par étapes visibles.</p>
+            <p class="service__price">À partir de 4 900 €</p>
+          </article>
+
+        </div>
+      </section>
+
+      <!-- ==========================================================
+           3 · POURQUOI SK AGENCE
+           ========================================================== -->
+      <section class="section section--alt pourquoi" id="pourquoi" aria-labelledby="pourquoi-title">
+        <div class="section__hd" data-reveal>
+          <div class="section__hd-left">
+            <p class="tag">Différenciateurs</p>
+          </div>
+          <div class="section__hd-right">
+            <h2 class="section__title" id="pourquoi-title">Pourquoi <span class="accent-script">SK Agence.</span></h2>
+            <p class="section__intro">Pas un freelance aléatoire, pas une agence à 3 mois de délai. Un studio cadré, à prix affiché.</p>
+          </div>
+        </div>
+
+        <div class="pourquoi__grid">
+
+          <article class="diff__block">
+            <span class="diff__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 1 0 10 10M12 6v6l4 2"/></svg>
+            </span>
+            <h3 class="diff__title">Délai dans le <em>contrat</em></h3>
+            <p class="diff__body">Vitrine 7 jours, e-commerce 2 à 3 semaines, application sur devis. La date de mise en ligne est inscrite — pas une promesse marketing, une clause.</p>
+          </article>
+
+          <article class="diff__block">
+            <span class="diff__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+            </span>
+            <h3 class="diff__title">Design <em>sur-mesure</em>, jamais générique</h3>
+            <p class="diff__body">Chaque site est conçu pour son secteur et son client. Pas de template sorti de la boîte.</p>
+          </article>
+
+          <article class="diff__block">
+            <span class="diff__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            </span>
+            <h3 class="diff__title">Maintenance <em>incluse</em></h3>
+            <p class="diff__body">Hébergement, mises à jour, modifications mensuelles. Un site jamais abandonné après livraison.</p>
+          </article>
+
+          <article class="diff__block">
+            <span class="diff__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            </span>
+            <h3 class="diff__title"><em>1 interlocuteur</em>, du début à la fin</h3>
+            <p class="diff__body">Du cadrage à la mise en ligne : la même personne. Pas de commercial, pas de prestataire externe.</p>
+          </article>
+
+        </div>
+
+        <div class="pourquoi__garantie" data-reveal>
+          <p class="garantie__label">Garanti à la livraison</p>
+          <p class="garantie__text">Lighthouse 90+ sur les 4 axes — performance, accessibilité, SEO, bonnes pratiques.</p>
+        </div>
+      </section>
+
+      <!-- ==========================================================
+           4 · LA MÉTHODE — Timeline or verticale, scroll-driven
+           Concept : ligne or qui se trace, marqueur unique qui avance,
+           3 états par étape (à venir / active / done), détails signature SVG.
+           ========================================================== -->
+      <section class="methode" id="methode" aria-labelledby="methode-title">
+
+        <!-- Header — pattern standard .section__hd (cohérent avec les autres sections du site) -->
+        <div class="section__hd" data-reveal>
+          <div class="section__hd-left">
+            <p class="tag">Méthode</p>
+          </div>
+          <div class="section__hd-right">
+            <h2 class="section__title" id="methode-title">La méthode,<br>en <span class="accent-script">4 étapes.</span></h2>
+            <p class="section__intro">Une chaîne de production outillée, un interlocuteur unique, du cadrage à la mise en ligne.</p>
+          </div>
+        </div>
+
+        <div class="methode__wrap">
+
+          <!-- Corps timeline : rail or à gauche, steps à droite -->
+          <div class="methode__body">
+
+            <!-- Rail vertical — ligne + 4 dots + marqueur (UN SEUL) -->
+            <div class="methode__rail" aria-hidden="true">
+              <div class="methode__track-bg"></div>
+              <div class="methode__track-line" id="methode-track-line"></div>
+              <!-- 4 dots fixes, positionnés par JS sur l'axe du rail -->
+              <div class="methode__dot" data-dot="1"></div>
+              <div class="methode__dot" data-dot="2"></div>
+              <div class="methode__dot" data-dot="3"></div>
+              <div class="methode__dot" data-dot="4"></div>
+              <!-- Marqueur mobile — tête de la ligne, UN SEUL -->
+              <div class="methode__track-head" id="methode-track-head"></div>
+            </div>
+
+            <!-- Steps -->
+            <ol class="methode__steps" role="list">
+
+              <!-- 01 · Cadrage -->
+              <li class="methode__step" data-step="1" aria-label="Étape 01 — Cadrage">
+
+                <!-- Numéro grand -->
+                <span class="methode__num" aria-hidden="true">01</span>
+
+                <!-- Contenu textuel + mini-interface illustrée -->
+                <div class="methode__content">
+                  <div class="methode__eyebrow">
+                    <span class="methode__day">J1</span>
+                    <span class="methode__name">Cadrage</span>
+                  </div>
+                  <p class="methode__desc">On clarifie votre activité, vos clients, l'objectif. Devis ferme le lendemain.</p>
+                  <span class="methode__badge" aria-label="Statut : Validé">Validé ✓</span>
+
+                  <!-- Mini-interface : messagerie SK ↔ client + devis (B5 Temps 1 — statique) -->
+                  <div class="methode__visual methode__visual--01" aria-hidden="true">
+                    <div class="ui-msg">
+                      <div class="ui-msg__hd">
+                        <span class="ui-msg__avatar">SK</span>
+                        <span class="ui-msg__title">Brief client</span>
+                        <span class="ui-msg__time">14:02</span>
+                      </div>
+                      <div class="ui-msg__bubble ui-msg__bubble--in">On ouvre en mars, il me faut un site&nbsp;+ réservations.</div>
+                      <div class="ui-msg__out-wrap">
+                        <div class="ui-msg__bubble ui-msg__bubble--out">Reçu. Je cadre tout ça aujourd'hui.</div>
+                        <div class="ui-msg__typing" aria-hidden="true"><i></i><i></i><i></i></div>
+                      </div>
+                      <div class="ui-msg__quote">
+                        <div class="ui-msg__quote-left">
+                          <span class="ui-msg__quote-label">Devis — Site réservation</span>
+                          <span class="ui-msg__quote-amount">1&nbsp;490&nbsp;€</span>
+                        </div>
+                        <span class="ui-msg__quote-badge">✓ J+1</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </li>
+
+              <!-- 02 · Design -->
+              <li class="methode__step" data-step="2" aria-label="Étape 02 — Design">
+
+                <span class="methode__num" aria-hidden="true">02</span>
+                <div class="methode__content">
+                  <div class="methode__eyebrow">
+                    <span class="methode__day">J2</span>
+                    <span class="methode__name">Design</span>
+                  </div>
+                  <p class="methode__desc">Direction artistique et design system, rien de générique.</p>
+                  <span class="methode__badge" aria-label="Statut : Design figé">Design figé</span>
+
+                  <!-- Mini-interface : atelier design (palette + typo) -->
+                  <div class="methode__visual methode__visual--02" aria-hidden="true">
+                    <div class="ui-design">
+                      <div class="ui-design__hd">
+                        <span class="ui-design__title">Design system</span>
+                        <span class="ui-design__dots" aria-hidden="true"><i></i><i></i></span>
+                      </div>
+                      <div class="ui-design__swatches">
+                        <span class="ui-design__sw ui-design__sw--cream"></span>
+                        <span class="ui-design__sw ui-design__sw--ink"></span>
+                        <span class="ui-design__sw ui-design__sw--gold"></span>
+                        <span class="ui-design__sw ui-design__sw--gold-light"></span>
+                      </div>
+                      <div class="ui-design__typo">
+                        <span class="ui-design__aa">Aa</span>
+                        <span class="ui-design__typo-label">Fraunces — titres / Inter — texte</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </li>
+
+              <!-- 03 · Build -->
+              <li class="methode__step" data-step="3" aria-label="Étape 03 — Build">
+
+                <span class="methode__num" aria-hidden="true">03</span>
+                <div class="methode__content">
+                  <div class="methode__eyebrow">
+                    <span class="methode__day">J3–J5</span>
+                    <span class="methode__name">Build</span>
+                  </div>
+                  <p class="methode__desc">Intégration sur notre chaîne outillée, 1<sup>re</sup> version dès J3.</p>
+                  <span class="methode__badge" aria-label="Statut : Build en cours">Build en cours</span>
+
+                  <!-- Mini-interface : éditeur de code (carte bleu nuit) -->
+                  <div class="methode__visual methode__visual--03" aria-hidden="true">
+                    <div class="ui-code">
+                      <div class="ui-code__tab">
+                        <span class="ui-code__pastille"></span>
+                        <span class="ui-code__filename">index.html</span>
+                      </div>
+                      <div class="ui-code__body">
+                        <div class="ui-code__line"><span class="tk-tag">&lt;section class=</span><span class="tk-str">"hero"</span><span class="tk-tag">&gt;</span></div>
+                        <div class="ui-code__line ui-code__line--indent"><span class="tk-cmt">// chaîne outillée</span></div>
+                        <div class="ui-code__line ui-code__line--indent"><span class="tk-tag">&lt;h1&gt;</span><span class="tk-txt">Réserver</span><span class="tk-tag">&lt;/h1&gt;</span></div>
+                        <div class="ui-code__line"><span class="tk-tag">&lt;/section&gt;</span></div>
+                      </div>
+                      <div class="ui-code__foot">
+                        <span class="ui-code__cmd">▸ deploy</span>
+                        <span class="ui-code__ver">1<sup>re</sup> version · J3</span>
+                      </div>
+                      <div class="ui-code__progress" aria-hidden="true"><span></span></div>
+                    </div>
+                  </div>
+                </div>
+              </li>
+
+              <!-- 04 · QA + Livraison -->
+              <li class="methode__step" data-step="4" aria-label="Étape 04 — QA + Livraison">
+
+                <span class="methode__num" aria-hidden="true">04</span>
+                <div class="methode__content">
+                  <div class="methode__eyebrow">
+                    <span class="methode__day">J6–J7</span>
+                    <span class="methode__name">QA + Livraison</span>
+                  </div>
+                  <p class="methode__desc">Tests, domaine, mise en ligne. La maintenance prend le relais le lendemain.</p>
+                  <span class="methode__badge" aria-label="Statut : En ligne">En ligne</span>
+
+                  <!-- Mini-interface : navigateur + site live + badge LIVE -->
+                  <div class="methode__visual methode__visual--04" aria-hidden="true">
+                    <div class="ui-live">
+                      <div class="ui-live__bar">
+                        <span class="ui-live__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+                        <span class="ui-live__url"><span class="ui-live__lock" aria-hidden="true">🔒</span>votre-resto.fr</span>
+                      </div>
+                      <div class="ui-live__site">
+                        <div class="ui-live__site-hd">
+                          <span class="ui-live__site-mono">SK</span>
+                          <span class="ui-live__site-nav" aria-hidden="true"><i></i><i></i></span>
+                        </div>
+                        <div class="ui-live__site-hero">
+                          <h4 class="ui-live__site-title">Réservez votre table</h4>
+                          <span class="ui-live__site-cta">Réserver</span>
+                        </div>
+                      </div>
+                      <span class="ui-live__badge"><span class="ui-live__pulse" aria-hidden="true"></span>LIVE EN PROD</span>
+                    </div>
+                    <div class="ui-live__foot">
+                      <span class="ui-live__online"><i></i>En ligne</span>
+                      <span class="ui-live__perf">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+                        <span class="ui-live__perf-num" data-target="100">100</span>/100 perf
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </li>
+
+            </ol><!-- /.methode__steps -->
+
+          </div><!-- /.methode__body -->
+
+        </div><!-- /.methode__wrap -->
+      </section>
+
+      <!-- ==========================================================
+           5 · CTA FINAL + FORMULAIRE DE CONTACT
+           ========================================================== -->
+      <section class="cta" id="contact" aria-labelledby="cta-title">
+        <div class="cta__inner">
+          <header class="cta__head cta__head--centered">
+            <p class="tag tag--on-dark">Contact</p>
+            <h2 class="cta__title cta__title--stacked" id="cta-title">
+              <span class="cta__title-line">Un projet en tête ?</span>
+              <span class="accent-script cta__title-script">Parlons-en.</span>
+            </h2>
+          </header>
+
+          <!-- ============================================================
+               CARTE AVATAR — joindre SK directement (au-dessus du formulaire)
+               ============================================================ -->
+          <div class="cta-card" data-reveal>
+            <!-- Avatar réel SK Agence — image contient déjà l'enseigne néon "SK Agence" -->
+            <div class="cta-card__avatar-wrap">
+              <img
+                class="cta-card__avatar"
+                src="/assets/avatar-sk.webp"
+                alt="Kylian — SK Agence, développeur web à Aubagne"
+                loading="lazy"
+                width="1313"
+                height="1198"
+              />
+            </div>
+
+            <!-- Voile + coordonnées (mail cliquable + localisation) -->
+            <div class="cta-card__foot">
+              <a class="cta-card__mail" href="mailto:sk.agence@outlook.fr">
+                <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><polyline points="3,7 12,13 21,7"/></svg>
+                sk.agence@outlook.fr
+              </a>
+              <span class="cta-card__sep" aria-hidden="true">·</span>
+              <span class="cta-card__loc">
+                <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-7.6-7-12a7 7 0 1 1 14 0c0 4.4-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/></svg>
+                Aubagne
+              </span>
+            </div>
+          </div>
+
+          <!-- ============================================================
+               BOUTON RÉSERVER UN APPEL (style contour or, pleine largeur)
+               TODO: remplacer href="#" par le lien Calendly/Cal.com quand
+               l'outil de réservation sera créé.
+               ============================================================ -->
+          <a class="cta-book" href="#" target="_blank" rel="noopener">
+            <svg class="cta-book__icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="8" y1="3" x2="8" y2="7"/><line x1="16" y1="3" x2="16" y2="7"/></svg>
+            <span class="cta-book__label">Réserver un appel · 15&nbsp;min</span>
+            <svg class="cta-book__arrow" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="9,7 17,7 17,15"/></svg>
+          </a>
+
+          <!-- Séparateur : transition contact direct → devis -->
+          <div class="cta-divider" aria-hidden="true">
+            <span class="cta-divider__line"></span>
+            <span class="cta-divider__text">ou demandez un devis</span>
+            <span class="cta-divider__line"></span>
+          </div>
+
+          <form class="quote" id="quote-form" novalidate>
+
+            <!-- Barre de progression dorée -->
+            <div class="quote__progress" aria-hidden="true">
+              <span></span>
+            </div>
+
+            <!-- Honeypot anti-spam -->
+            <div aria-hidden="true" style="position:absolute;width:1px;height:1px;overflow:hidden;opacity:0;pointer-events:none;">
+              <label for="qf-website">Ne pas remplir</label>
+              <input id="qf-website" type="text" name="website" value="" tabindex="-1" autocomplete="off" />
+            </div>
+
+            <div class="quote__grid">
+
+              <div class="quote__field">
+                <label for="qf-prenom">Prénom</label>
+                <input id="qf-prenom" type="text" name="prenom" autocomplete="given-name" required placeholder="Votre prénom" />
+              </div>
+
+              <div class="quote__field">
+                <label for="qf-nom">Nom</label>
+                <input id="qf-nom" type="text" name="nom" autocomplete="family-name" required placeholder="Votre nom" />
+              </div>
+
+              <div class="quote__field">
+                <label for="qf-type">Type de site</label>
+                <div class="quote__select-wrap">
+                  <select id="qf-type" name="type" required>
+                    <option value="" disabled selected>Choisir un type…</option>
+                    <option value="Site vitrine">Site vitrine</option>
+                    <option value="Site restaurant">Site restaurant</option>
+                    <option value="Site de réservation">Site de réservation</option>
+                    <option value="Boutique en ligne">Boutique en ligne</option>
+                    <option value="Application web">Application web</option>
+                    <option value="Je ne sais pas encore">Je ne sais pas encore</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="quote__field">
+                <label for="qf-budget">Budget</label>
+                <div class="quote__select-wrap">
+                  <select id="qf-budget" name="budget" required>
+                    <option value="" disabled selected>Choisir une fourchette…</option>
+                    <option value="Moins de 2 000 €">Moins de 2 000 €</option>
+                    <option value="2 000 à 4 000 €">2 000 à 4 000 €</option>
+                    <option value="4 000 à 6 000 €">4 000 à 6 000 €</option>
+                    <option value="Plus de 6 000 €">Plus de 6 000 €</option>
+                    <option value="Paiement en 24 fois (vitrine seulement)">Paiement en 24 fois (vitrine seulement)</option>
+                    <option value="Je ne sais pas encore">Je ne sais pas encore</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="quote__field quote__field--full">
+                <label for="qf-activite">Activité</label>
+                <input id="qf-activite" type="text" name="activite" required placeholder="Ex : pizzeria, salon de coiffure…" />
+              </div>
+
+              <div class="quote__field quote__field--full">
+                <label for="qf-message">Votre projet</label>
+                <textarea id="qf-message" name="message" required rows="3" placeholder="Votre objectif en quelques mots…"></textarea>
+              </div>
+
+              <div class="quote__field quote__field--full">
+                <p class="quote__channel-q">Pour être recontacté</p>
+                <div class="quote__channel-tabs" role="tablist">
+                  <label class="quote__channel-tab is-active">
+                    <input type="radio" name="contact_type" value="email" checked/>Par email
+                  </label>
+                  <label class="quote__channel-tab">
+                    <input type="radio" name="contact_type" value="tel"/>Par téléphone
+                  </label>
+                </div>
+              </div>
+
+              <div class="quote__field quote__field--full quote__field--toggleable" data-channel="email">
+                <label for="qf-email">Email</label>
+                <input id="qf-email" type="email" name="email" autocomplete="email" placeholder="prenom@domaine.fr" required />
+              </div>
+              <div class="quote__field quote__field--full quote__field--toggleable is-collapsed" data-channel="tel" hidden aria-hidden="true">
+                <label for="qf-tel">Téléphone</label>
+                <input id="qf-tel" type="tel" name="tel" autocomplete="tel" placeholder="06 12 34 56 78"
+                  pattern="[\d\s.\-\+]{9,}" title="Numéro de téléphone valide (ex : 06 12 34 56 78)" />
+              </div>
+
+              <label class="quote__consent quote__field--full">
+                <input type="checkbox" name="consent" required/>
+                <span>J'accepte d'être recontacté au sujet de ma demande. <a href="/politique-confidentialite.html">Politique de confidentialité</a>.</span>
+              </label>
+
+            </div>
+
+            <div class="quote__submit-row">
+              <button type="submit" class="btn btn--on-dark" id="quote-submit">
+                Envoyer ma demande
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+            </div>
+
+            <p class="quote__reassurance">Réponse sous 24 h ouvrées.</p>
+
+            <p class="quote__send-error" id="quote-send-error" role="alert" hidden></p>
+
+          </form>
+
+          <!-- Écran de confirmation -->
+          <div class="quote__success" id="quote-success" hidden role="status" aria-live="polite">
+            <div class="quote__success-mark" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <h3 class="quote__success-title">Merci <span data-success-name>—</span><em>.</em></h3>
+            <p class="quote__success-body">Demande bien reçue. Je vous recontacte sous 24 h ouvrées avec une proposition concrète.</p>
+          </div>
+
+          <p class="cta__loc">Aubagne — interventions partout en France</p>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- ============== FOOTER ============== -->
+    <footer class="footer" role="contentinfo">
+      <div class="footer__grid" data-reveal-group>
+        <div class="footer__brand" data-reveal>
+          <span class="footer__mark">SK<span class="sk-dot" aria-hidden="true"></span><em>Agence</em></span>
+          <p>Studio indépendant à Aubagne — Livré vite, maintenu chaque mois.</p>
+        </div>
+        <div class="footer__col" data-reveal>
+          <h2 class="footer__col-title">Navigation</h2>
+          <ul>
+            <li><a href="/" aria-current="page">Accueil</a></li>
+            <li><a href="/en-savoir-plus.html">Offres &amp; tarifs</a></li>
+            <li><a href="#contact">Demander un devis</a></li>
+          </ul>
+        </div>
+        <div class="footer__col" data-reveal>
+          <h2 class="footer__col-title">Studio</h2>
+          <ul>
+            <li><a href="mailto:sk.agence@outlook.fr">sk.agence@outlook.fr</a></li>
+            <li><a href="/mentions-legales.html">Mentions légales</a></li>
+            <li><a href="/politique-confidentialite.html">Politique de confidentialité</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer__bottom">
+        <span>© <span id="year">2026</span> SK Agence — SIREN 105 940 159 · Aubagne (13400), France · TVA non applicable, art. 293 B du CGI · <a href="/mentions-legales.html">Mentions légales</a> · <a href="/politique-confidentialite.html">Politique de confidentialité</a></span>
+        <span class="footer__proof">Ce site a été produit en 7 jours — la même méthode que pour le vôtre.</span>
+      </div>
+    </footer>
+  </body>
+</html>

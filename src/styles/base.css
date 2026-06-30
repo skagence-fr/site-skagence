@@ -1,0 +1,121 @@
+/* ============================================================
+   SK AGENCE — Base & reset (v3)
+   ============================================================ */
+
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+
+html {
+  background: var(--c-bg);
+  color: var(--c-ink);
+  font-family: var(--font-body);
+  font-size: var(--t-base);
+  line-height: var(--lh-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: 'ss01', 'cv11';
+  overflow-x: hidden; /* garde-fou anti-débordement horizontal, aussi sur <html> */
+}
+
+body {
+  min-height: 100dvh;
+  overflow-x: hidden;
+  background: var(--c-bg);
+  font-weight: 400;
+}
+
+/* curseur natif masqué côté desktop, fallback OK mobile/tablette */
+@media (hover: hover) and (pointer: fine) {
+  body { cursor: none; }
+  a, button, summary, [data-cursor="hover"] { cursor: none; }
+}
+
+img, svg, video { display: block; max-width: 100%; }
+button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+a { color: inherit; text-decoration: none; }
+ol, ul { margin: 0; padding: 0; list-style: none; }
+p { margin: 0; }
+hr { border: 0; height: 1px; background: var(--c-hairline); margin: 0; }
+em, i { font-style: normal; }
+
+::selection { background: var(--c-gold); color: var(--c-paper); }
+
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0, 0, 0, 0);
+  white-space: nowrap; border: 0;
+}
+
+:focus-visible {
+  outline: 2px solid var(--c-gold);
+  outline-offset: 4px;
+  border-radius: var(--r-1);
+}
+
+/* Wrappers */
+.wrap        { width: 100%; max-width: var(--maxw);       margin: 0 auto; padding-left: var(--pad-x); padding-right: var(--pad-x); }
+.wrap--wide  { width: 100%; max-width: var(--maxw-wide);  margin: 0 auto; padding-left: var(--pad-x); padding-right: var(--pad-x); }
+.wrap--read  { width: 100%; max-width: var(--maxw-read);  margin: 0 auto; padding-left: var(--pad-x); padding-right: var(--pad-x); }
+.wrap--tight { width: 100%; max-width: var(--maxw-tight); margin: 0 auto; padding-left: var(--pad-x); padding-right: var(--pad-x); }
+
+/* ============================================================
+   TYPO — utilitaires éditoriaux
+   ============================================================ */
+
+.eyebrow {
+  font-family: var(--font-body);
+  font-size: var(--t-xs);
+  font-weight: 500;
+  letter-spacing: var(--ls-eyebrow);
+  text-transform: uppercase;
+  color: var(--c-muted);
+}
+
+.display {
+  font-family: var(--font-display);
+  font-weight: 350;
+  line-height: var(--lh-display);
+  letter-spacing: var(--ls-display);
+  color: var(--c-ink);
+  font-variation-settings: 'opsz' 144, 'SOFT' 100, 'WONK' 0;
+}
+.display em { color: var(--c-gold); font-style: italic; font-weight: 350; }
+
+.stress {
+  font-family: var(--font-stress);
+  font-weight: 800;
+  line-height: var(--lh-stress);
+  letter-spacing: var(--ls-stress);
+  text-transform: uppercase;
+}
+
+.lead {
+  font-family: var(--font-display);
+  font-weight: 350;
+  font-size: var(--t-d-xs);
+  line-height: 1.3;
+  color: var(--c-ink-soft);
+  font-style: italic;
+}
+
+.body-soft  { color: var(--c-ink-soft); }
+.body-muted { color: var(--c-muted); }
+
+/* Petit point or — signature SK utilisée rare */
+.sk-dot {
+  display: inline-block;
+  width: 0.32em; height: 0.32em;
+  border-radius: 50%;
+  background: var(--c-gold);
+  transform: translateY(-0.06em);
+  margin: 0 0.04em;
+}
+
+/* Texte sur fond sombre */
+.on-dark .display { color: var(--c-ink-on-dark); }
+.on-dark .display em { color: var(--c-gold-2); }
+.on-dark .body-soft { color: var(--c-ink-soft-on-dark); }
+.on-dark .eyebrow { color: var(--c-gold-2); }
