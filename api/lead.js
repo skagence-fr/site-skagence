@@ -13,7 +13,7 @@
  */
 
 const DEST_EMAIL = 'sk.agence@outlook.fr';
-const FROM_EMAIL = 'SK Agence <onboarding@resend.dev>'; // remplacer par le domaine vérifié en prod
+const FROM_EMAIL = 'SK Agence <contact@skagence.fr>'; // domaine skagence.fr vérifié dans Resend
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export default async function handler(req, res) {
