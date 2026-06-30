@@ -208,16 +208,29 @@ main { padding-top: var(--nav-h); }
   gap: var(--s-3);
   margin-top: var(--s-3);
 }
-/* Mobile (M1 validée) : on DONNE une hauteur au hero (88vh) pour activer le
-   centrage vertical déjà présent (align-items + justify-content center hérités
-   de la base). Contenu réparti au milieu de l'écran, début de Services deviné
-   en bas, plus de vide concentré sous les boutons. Padding 48/48 inchangé.
-   Le halo doré (top/left 50% + translate) reste auto-centré, aucun ajustement. */
+/* Mobile (M2 validée) : centrage vertical EXPLICITE (flex column + justify center)
+   + titre nettement agrandi sur 2 lignes équilibrées. Halo auto-centré (50/50). */
 @media (max-width: 720px) {
   .hero--centered {
     min-height: 88vh;
     padding-top: var(--s-7);
     padding-bottom: var(--s-7);
+    /* Verrouillage explicite du centrage vertical (ne pas se fier au héritage seul) */
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  /* Titre mobile M2 : on libère le wrap (override le nowrap desktop) et on
+     agrandit nettement pour qu'il pèse sur le bloc. text-wrap: balance équilibre
+     les 2 lignes ; max-width 16ch force un découpage compact (~12-14 chars/ligne)
+     évitant qu'une ligne soit trop longue et l'autre trop courte. */
+  .hero__title--centered {
+    font-size: clamp(24px, 7vw, 30px);
+    white-space: normal;
+    text-wrap: balance;
+    max-width: 16ch;
+    line-height: 1.2;
   }
 }
 
