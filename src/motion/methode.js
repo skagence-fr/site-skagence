@@ -272,8 +272,12 @@ export function initMethode() {
       }
     }
 
-    /* Écriture DOM — au même frame, sans inertie */
-    trackHead.style.top = `${headPx}px`;
+    /* Écriture DOM — au même frame, sans inertie.
+       Piste 1 fluidité mobile : track-head déplacée via TRANSFORM (compositor GPU)
+       au lieu de "top" (layout+paint). Position visuelle identique — le translate
+       compose le centrage initial (-50% -50% du CSS) avec le déplacement dynamique.
+       track-line inchangée (scaleY déjà en transform, cheap). */
+    trackHead.style.transform = `translate(-50%, calc(-50% + ${headPx}px))`;
     const scaleY = Math.max(0, Math.min(1, headPx / cachedRailH));
     trackLine.style.transform = `translateX(-50%) scaleY(${scaleY})`;
 
@@ -301,17 +305,33 @@ export function initMethode() {
   readGeometry();
   sync();
 
+  /* Piste 2 fluidité mobile : scheduleSync dédup via requestAnimationFrame.
+     Garantit au plus 1 exécution de sync() par frame écran (aligné sur le
+     refresh natif), même si iOS Safari fire onUpdate plusieurs fois dans
+     le même frame pendant le momentum scroll. Le dédup préserve le dernier
+     état demandé : le rAF final exécutera sync() avec la géométrie la plus
+     récente (position finale correcte à l'arrêt du scroll). */
+  let syncScheduled = false;
+  function scheduleSync() {
+    if (syncScheduled) return;
+    syncScheduled = true;
+    requestAnimationFrame(() => {
+      syncScheduled = false;
+      sync();
+    });
+  }
+
   /* ─── ScrollTrigger : un seul, range large (section visible), PAS de scrub.
      onUpdate fire à chaque scroll-frame pendant que la section est visible.
-     sync() lit la géométrie réelle → aucune compression possible. ─── */
+     Passe par scheduleSync (rAF dédup) — sync() lit la géométrie réelle. ─── */
   ScrollTrigger.create({
     trigger: section,
     start: 'top bottom',
     end:   'bottom top',
-    onUpdate: sync,
+    onUpdate: scheduleSync,
     onRefresh: () => {
       readGeometry();
-      sync();
+      sync(); /* refresh = event rare, appel direct OK (pas besoin de dédup) */
     },
   });
 
