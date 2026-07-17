@@ -88,6 +88,16 @@ export function initMethode() {
   let cachedRailH = 0;
   let dotPositionsPx = []; // position absolue (px) du centre de chaque dot dans le rail
 
+  /* ─── Lissage visuel (lerp) — boucle rAF continue pour glissement beurré.
+     sync() écrit la CIBLE (targetHeadPx) ; tick() interpole current → target
+     à chaque frame écran et écrit head + line (solidaires).
+     SMOOTH = 0.18 : ~90 % de la distance parcourue en ~12 frames (~200 ms à
+     60 fps). Bon compromis douceur / réactivité — imperceptible sur desktop,
+     gomme le "grain" iOS où les events scroll arrivent par paquets. */
+  const SMOOTH = 0.18;
+  let targetHeadPx  = 0;
+  let currentHeadPx = 0;
+
   function readGeometry() {
     positionDots(section); // place dot.style.top = centre vertical de chaque étape
     cachedRailH = rail.offsetHeight;
@@ -272,14 +282,11 @@ export function initMethode() {
       }
     }
 
-    /* Écriture DOM — au même frame, sans inertie.
-       Piste 1 fluidité mobile : track-head déplacée via TRANSFORM (compositor GPU)
-       au lieu de "top" (layout+paint). Position visuelle identique — le translate
-       compose le centrage initial (-50% -50% du CSS) avec le déplacement dynamique.
-       track-line inchangée (scaleY déjà en transform, cheap). */
-    trackHead.style.transform = `translate(-50%, calc(-50% + ${headPx}px))`;
-    const scaleY = Math.max(0, Math.min(1, headPx / cachedRailH));
-    trackLine.style.transform = `translateX(-50%) scaleY(${scaleY})`;
+    /* Écriture CIBLE (pas de DOM ici pour head/line) — la position visuelle
+       est ensuite lissée par tick() dans une boucle rAF continue.
+       Track-head ET track-line sont pilotées par currentHeadPx dans tick()
+       pour rester solidaires (aucun décalage visuel head/line). */
+    targetHeadPx = headPx;
 
     /* États des steps — calés sur les centres réels :
        active ⇔ viewportMid ∈ [center_i, center_(i+1)) ; dernier reste active. */
@@ -301,37 +308,48 @@ export function initMethode() {
     }
   }
 
-  /* ─── Init géométrie + 1re sync ─── */
-  readGeometry();
-  sync();
-
-  /* Piste 2 fluidité mobile : scheduleSync dédup via requestAnimationFrame.
-     Garantit au plus 1 exécution de sync() par frame écran (aligné sur le
-     refresh natif), même si iOS Safari fire onUpdate plusieurs fois dans
-     le même frame pendant le momentum scroll. Le dédup préserve le dernier
-     état demandé : le rAF final exécutera sync() avec la géométrie la plus
-     récente (position finale correcte à l'arrêt du scroll). */
-  let syncScheduled = false;
-  function scheduleSync() {
-    if (syncScheduled) return;
-    syncScheduled = true;
-    requestAnimationFrame(() => {
-      syncScheduled = false;
-      sync();
-    });
+  /* ─── Boucle rAF continue — lisse la track-head (et la track-line solidaire).
+     Interpolation linéaire (lerp) current → target à chaque frame écran :
+       current += (target - current) * SMOOTH
+     Snap final anti-oscillation quand |delta| < 0.1 px : garantit que le head
+     atteint exactement sa position finale à l'arrêt du scroll (pas figé court).
+     ÉTATS des dots (is-active/is-done) restent pilotés directement par sync() —
+     l'allumage reste synchro avec le scroll réel, seul le glissement visuel
+     de la track-head/line est lissé. */
+  function tick() {
+    const delta = targetHeadPx - currentHeadPx;
+    if (Math.abs(delta) < 0.1) {
+      currentHeadPx = targetHeadPx;
+    } else {
+      currentHeadPx += delta * SMOOTH;
+    }
+    trackHead.style.transform = `translate(-50%, calc(-50% + ${currentHeadPx}px))`;
+    const scaleY = cachedRailH > 0
+      ? Math.max(0, Math.min(1, currentHeadPx / cachedRailH))
+      : 0;
+    trackLine.style.transform = `translateX(-50%) scaleY(${scaleY})`;
+    requestAnimationFrame(tick);
   }
 
+  /* ─── Init géométrie + 1re sync + init anti-flash + démarrage boucle ─── */
+  readGeometry();
+  sync();                          /* calcule targetHeadPx */
+  currentHeadPx = targetHeadPx;    /* cale current sur target → pas de flash 0→pos */
+  requestAnimationFrame(tick);     /* démarre la boucle continue */
+
   /* ─── ScrollTrigger : un seul, range large (section visible), PAS de scrub.
-     onUpdate fire à chaque scroll-frame pendant que la section est visible.
-     Passe par scheduleSync (rAF dédup) — sync() lit la géométrie réelle. ─── */
+     onUpdate fire à chaque scroll-frame → sync() met à jour targetHeadPx +
+     états. tick() (boucle continue) lisse la position visuelle. Pas besoin
+     de dédup rAF ici : sync() lui-même est léger (pas d'écriture DOM head/line),
+     et tick() garantit au plus 1 écriture head/line par frame écran. ─── */
   ScrollTrigger.create({
     trigger: section,
     start: 'top bottom',
     end:   'bottom top',
-    onUpdate: scheduleSync,
+    onUpdate: sync,
     onRefresh: () => {
       readGeometry();
-      sync(); /* refresh = event rare, appel direct OK (pas besoin de dédup) */
+      sync();
     },
   });
 
