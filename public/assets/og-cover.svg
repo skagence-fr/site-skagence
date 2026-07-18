@@ -1,30 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
-  <!-- Fond bleu nuit -->
-  <rect width="1200" height="630" fill="#0E1F33"/>
-
-  <!-- Halo doré subtil (rappel du hero) -->
   <defs>
-    <radialGradient id="halo" cx="50%" cy="45%" r="55%">
-      <stop offset="0%" stop-color="#C9A24B" stop-opacity="0.20"/>
-      <stop offset="35%" stop-color="#C9A24B" stop-opacity="0.08"/>
-      <stop offset="70%" stop-color="#C9A24B" stop-opacity="0"/>
+    <radialGradient id="halo" cx="52%" cy="42%" r="52%">
+      <stop offset="0%" stop-color="#C9A24B" stop-opacity="0.22"/>
+      <stop offset="35%" stop-color="#C9A24B" stop-opacity="0.09"/>
+      <stop offset="72%" stop-color="#C9A24B" stop-opacity="0"/>
     </radialGradient>
   </defs>
+
+  <!-- Fond bleu nuit + halo doré subtil + cadre or fin -->
+  <rect width="1200" height="630" fill="#0E1F33"/>
   <rect width="1200" height="630" fill="url(#halo)"/>
+  <rect x="16" y="16" width="1168" height="598" rx="4" ry="4" fill="none" stroke="#C9A24B" stroke-opacity="0.28" stroke-width="1"/>
 
-  <!-- Trait fin doré en haut (signature graphique) -->
-  <line x1="80" y1="80" x2="200" y2="80" stroke="#C9A24B" stroke-width="2"/>
-  <text x="220" y="88" font-family="'Inter', 'Helvetica Neue', Arial, sans-serif" font-size="16" font-weight="500" letter-spacing="3.5" fill="#C9A24B">SK · AGENCE</text>
+  <!-- BRANDMARK (haut gauche) : trait + SK · AGENCE -->
+  <line x1="90" y1="105" x2="194" y2="105" stroke="#C9A24B" stroke-width="1"/>
+  <text x="210" y="112" font-family="Inter" font-size="26" font-weight="600" letter-spacing="8.3" fill="#C9A24B">SK · AGENCE</text>
 
-  <!-- Ligne 1 du titre (Fraunces italique — fallback serif) -->
-  <text x="80" y="290" font-family="'Fraunces', 'Iowan Old Style', Georgia, serif" font-size="52" font-style="italic" font-weight="350" fill="#F5F0E6" letter-spacing="-0.5">Votre site en ligne à la</text>
+  <!-- TITRE bloc -->
+  <text x="90" y="290" font-family="Fraunces" font-style="italic" font-weight="400" font-size="84" letter-spacing="-0.84" fill="#F5F0E6">Votre site en ligne à la</text>
+  <text x="86" y="475" font-family="Caveat" font-weight="700" font-size="200" fill="#C9A24B">date promise.</text>
 
-  <!-- Accent Caveat or — vedette (fallback cursive) -->
-  <text x="80" y="430" font-family="'Caveat', 'Brush Script MT', cursive" font-size="140" font-weight="700" fill="#C9A24B">date promise.</text>
-
-  <!-- Ligne du bas : signature + URL -->
-  <line x1="80" y1="540" x2="1120" y2="540" stroke="#C9A24B" stroke-width="1" opacity="0.35"/>
-  <text x="80" y="580" font-family="'Inter', 'Helvetica Neue', Arial, sans-serif" font-size="20" font-weight="500" fill="#F5F0E6">Studio de développement web · Aubagne · partout en France</text>
-  <text x="1120" y="580" font-family="'Inter', 'Helvetica Neue', Arial, sans-serif" font-size="20" font-weight="600" fill="#C9A24B" text-anchor="end">skagence.fr</text>
+  <!-- PIED DE PAGE -->
+  <line x1="90" y1="565" x2="1110" y2="565" stroke="#C9A24B" stroke-opacity="0.25" stroke-width="1"/>
+  <text x="90" y="605" font-family="Inter" font-size="29" font-weight="400" fill="#C9CCD1">Studio de développement web · Aubagne · partout en France</text>
+  <text x="1110" y="605" font-family="Inter" font-size="30" font-weight="600" fill="#C9A24B" text-anchor="end">skagence.fr</text>
 </svg>
