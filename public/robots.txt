@@ -1,0 +1,7 @@
+# SK Agence — https://www.skagence.fr
+# Site vitrine, tout le contenu est crawlable et indexable.
+
+User-agent: *
+Allow: /
+
+Sitemap: https://www.skagence.fr/sitemap.xml
