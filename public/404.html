@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#0E1F33" />
+    <meta name="description" content="Page introuvable — SK Agence." />
+    <meta name="robots" content="noindex,follow" />
+    <title>Page introuvable — SK Agence</title>
+
+    <!-- Fonts self-hosted (indépendante du bundle Vite : la 404 doit fonctionner
+         même si un asset du site principal est cassé) -->
+    <style>
+      @font-face {
+        font-family: 'Fraunces';
+        font-style: normal;
+        font-weight: 100 900;
+        font-display: swap;
+        src: url('/fonts/fraunces-normal-variable.woff2') format('woff2');
+      }
+      @font-face {
+        font-family: 'Fraunces';
+        font-style: italic;
+        font-weight: 100 900;
+        font-display: swap;
+        src: url('/fonts/fraunces-italic-variable.woff2') format('woff2');
+      }
+      @font-face {
+        font-family: 'Inter';
+        font-style: normal;
+        font-weight: 100 900;
+        font-display: swap;
+        src: url('/fonts/inter-variable.woff2') format('woff2');
+      }
+
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+
+      :root {
+        --c-ink:      #0E1F33;
+        --c-bg:       #F5F0E6;
+        --c-or:       #A47731;
+        --c-or-clair: #C9A24B;
+      }
+
+      html, body { min-height: 100vh; }
+      body {
+        font-family: 'Inter', system-ui, sans-serif;
+        background: var(--c-ink);
+        color: var(--c-bg);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 32px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      /* Halo doré subtil derrière le contenu (cohérent hero/og-cover) */
+      body::before {
+        content: '';
+        position: absolute;
+        top: 50%; left: 50%;
+        transform: translate(-50%, -50%);
+        width: clamp(320px, 70vw, 760px);
+        height: clamp(260px, 55vh, 520px);
+        background: radial-gradient(circle at center,
+          rgba(201, 162, 75, 0.18) 0%,
+          rgba(201, 162, 75, 0.06) 35%,
+          transparent 70%);
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .card {
+        position: relative;
+        z-index: 1;
+        max-width: 560px;
+        text-align: center;
+      }
+
+      .eye {
+        display: inline-flex;
+        align-items: center;
+        gap: 14px;
+        font-size: 12px;
+        font-weight: 500;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--c-or-clair);
+        margin-bottom: 32px;
+      }
+      .eye::before, .eye::after {
+        content: '';
+        width: 26px;
+        height: 1px;
+        background: var(--c-or-clair);
+      }
+
+      .num {
+        font-family: 'Fraunces', 'Iowan Old Style', Georgia, serif;
+        font-style: italic;
+        font-weight: 350;
+        font-size: clamp(96px, 18vw, 180px);
+        line-height: 0.9;
+        color: var(--c-or-clair);
+        letter-spacing: -0.03em;
+        margin-bottom: 24px;
+        font-variation-settings: 'opsz' 96, 'SOFT' 100;
+      }
+
+      .title {
+        font-family: 'Fraunces', 'Iowan Old Style', Georgia, serif;
+        font-style: italic;
+        font-weight: 350;
+        font-size: clamp(24px, 4.5vw, 34px);
+        line-height: 1.2;
+        color: var(--c-bg);
+        margin-bottom: 18px;
+        letter-spacing: -0.005em;
+      }
+
+      .sub {
+        font-family: 'Inter', system-ui, sans-serif;
+        font-size: 15px;
+        font-weight: 400;
+        line-height: 1.55;
+        color: rgba(245, 240, 230, 0.68);
+        max-width: 44ch;
+        margin: 0 auto 40px;
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        min-height: 44px;
+        padding: 12px 24px;
+        background: var(--c-or);
+        color: var(--c-bg);
+        font-family: 'Inter', system-ui, sans-serif;
+        font-size: 13px;
+        font-weight: 600;
+        letter-spacing: 0.02em;
+        text-decoration: none;
+        border-radius: 999px;
+        transition: background-color 0.22s ease, transform 0.22s ease;
+      }
+      .btn:hover, .btn:focus-visible {
+        background: var(--c-or-clair);
+        color: var(--c-ink);
+        transform: translateY(-2px);
+      }
+      .btn svg {
+        width: 14px;
+        height: 14px;
+      }
+
+      .foot {
+        position: absolute;
+        bottom: 24px;
+        left: 0;
+        right: 0;
+        text-align: center;
+        font-family: 'Inter', system-ui, sans-serif;
+        font-size: 11px;
+        font-weight: 500;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: rgba(245, 240, 230, 0.35);
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .btn { transition: none; }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="card">
+      <p class="eye">Erreur 404</p>
+      <p class="num">404</p>
+      <h1 class="title">Cette page n'existe pas ou a été déplacée.</h1>
+      <p class="sub">Le lien est peut-être obsolète, ou l'adresse a été mal saisie. Rejoignez l'accueil pour retrouver le studio et ses offres.</p>
+      <a class="btn" href="/">
+        <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M19 12H5M11 18l-6-6 6-6"/>
+        </svg>
+        Retourner à l'accueil
+      </a>
+    </main>
+    <p class="foot">SK · AGENCE · Aubagne</p>
+  </body>
+</html>

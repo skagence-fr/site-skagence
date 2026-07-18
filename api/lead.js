@@ -16,10 +16,70 @@ const DEST_EMAIL = 'sk.agence@outlook.fr';
 const FROM_EMAIL = 'SK Agence <contact@skagence.fr>'; // domaine skagence.fr vérifié dans Resend
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+/* ─── LIMITES DE VALIDATION (LOT 2 sécurité) ───────────────────────────────
+   Bornes hautes défensives sur les champs texte : au-delà, on considère
+   que c'est un bot ou une saisie anormale. Les tailles UI côté form sont
+   largement en-dessous. Les vrais utilisateurs ne sont jamais bloqués. */
+const MAX_NAME    = 100;   // prénom, nom
+const MAX_LINE    = 500;   // type, activite, budget, email, tel
+const MAX_MESSAGE = 5000;  // textarea
+
+/* ─── RATE-LIMIT EN MÉMOIRE (LOT 2 sécurité) ───────────────────────────────
+   Map IP → timestamps des dernières requêtes. Fenêtre glissante 10 min,
+   plafond MAX_REQ_PER_WINDOW = 5 requêtes.
+
+   ⚠️ LIMITE ASSUMÉE : la mémoire d'une fonction serverless Vercel n'est
+   PAS partagée entre instances et se réinitialise à chaque cold start.
+   Ce rate-limit est "best-effort" — il attrape efficacement les rafales
+   sur une même instance chaude (cas 90% du spam), mais un attaquant
+   distribué (multi-IPs) ou qui déclenche des cold starts n'est pas bloqué.
+   Choix assumé "simple et gratuit sans service externe". Pour du "vrai"
+   rate-limit distribué, il faudrait Vercel KV / Upstash Redis (payant). */
+const RATE_WINDOW_MS       = 10 * 60 * 1000; // 10 minutes
+const MAX_REQ_PER_WINDOW   = 5;
+const rateLimitStore       = new Map(); // ip → [ts, ts, ...]
+
+function getClientIp(req) {
+  // Vercel expose l'IP réelle via x-forwarded-for (premier IP de la liste)
+  const xff = req.headers['x-forwarded-for'];
+  if (typeof xff === 'string' && xff.length > 0) {
+    return xff.split(',')[0].trim();
+  }
+  const xreal = req.headers['x-real-ip'];
+  if (typeof xreal === 'string' && xreal.length > 0) return xreal.trim();
+  return req.socket?.remoteAddress || 'unknown';
+}
+
+function checkRateLimit(ip) {
+  const now = Date.now();
+  const cutoff = now - RATE_WINDOW_MS;
+  const history = (rateLimitStore.get(ip) || []).filter((ts) => ts > cutoff);
+  if (history.length >= MAX_REQ_PER_WINDOW) {
+    return { allowed: false, retryAfter: Math.ceil((history[0] + RATE_WINDOW_MS - now) / 1000) };
+  }
+  history.push(now);
+  rateLimitStore.set(ip, history);
+  // Cleanup opportuniste : purger les IPs sans activité récente pour éviter fuite mémoire
+  if (rateLimitStore.size > 500) {
+    for (const [k, v] of rateLimitStore) {
+      if (v.every((ts) => ts <= cutoff)) rateLimitStore.delete(k);
+    }
+  }
+  return { allowed: true };
+}
+
 export default async function handler(req, res) {
   // Seul POST accepté
   if (req.method !== 'POST') {
     return res.status(405).json({ ok: false, error: 'Method not allowed' });
+  }
+
+  // Rate-limit best-effort (voir doc en tête de fichier)
+  const ip = getClientIp(req);
+  const rl = checkRateLimit(ip);
+  if (!rl.allowed) {
+    res.setHeader('Retry-After', String(rl.retryAfter));
+    return res.status(429).json({ ok: false, error: 'Trop de demandes. Merci de réessayer dans quelques minutes.' });
   }
 
   // Clé API présente ?
@@ -66,6 +126,17 @@ export default async function handler(req, res) {
   if (!activite.trim()) errors.push('Activité requise.');
   if (!message.trim()) errors.push('Message requis.');
   if (!budget.trim()) errors.push('Budget requis.');
+
+  // Bornes hautes défensives (anti-bot / anti-payload énorme). Tailles largement
+  // au-dessus de tout usage humain légitime → aucun vrai utilisateur bloqué.
+  if (prenom.length   > MAX_NAME)    errors.push('Prénom trop long.');
+  if (nom.length      > MAX_NAME)    errors.push('Nom trop long.');
+  if (type.length     > MAX_LINE)    errors.push('Type invalide.');
+  if (activite.length > MAX_LINE)    errors.push('Activité trop longue.');
+  if (budget.length   > MAX_LINE)    errors.push('Budget invalide.');
+  if (email.length    > MAX_LINE)    errors.push('Email trop long.');
+  if (tel.length      > MAX_LINE)    errors.push('Téléphone trop long.');
+  if (message.length  > MAX_MESSAGE) errors.push('Message trop long.');
 
   if (contact_type === 'email') {
     if (!email.trim()) {
